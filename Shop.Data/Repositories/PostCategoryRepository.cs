@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Data.Infrastructure
+namespace Shop.Data.Repositories
 {
-    public interface IDbFactory : IDisposable
+    internal class PostCategoryRepository
     {
-        ShopDbContext Init();
     }
 }

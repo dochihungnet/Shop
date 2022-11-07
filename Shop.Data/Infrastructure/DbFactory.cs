@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Infrastructure
 {
-    public interface DbFactory : IDisposable
+    public class DbFactory : Disposable, IDbFactory
     {
+        private ShopDbContext context;
+        public ShopDbContext Init()
+        {
+            // nếu context = null thì sẽ khởi tạo context =  new ....
+            return context ?? (context = new ShopDbContext());
+        }
+        public override void DisposeCore()
+        {
+            if (context != null) context.Dispose();
+        }
     }
 }

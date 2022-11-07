@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Infrastructure
 {
-    public interface IDbFactory : IDisposable
+    public interface IUnitOfWork
     {
-        ShopDbContext Init();
+        void Commit();
     }
 }
