@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Data.Infrastructure;
+using Shop.Model.Models;
 
 namespace Shop.Data.Repositories
 {
-    internal class PostRepository
+    public interface IPostRepository : IRepository<Post>
     {
+
+    }
+
+    public class PostRepository : RepositoryBase<Post>, IPostRepository
+    {
+        protected PostRepository(IDbFactory dbFactory) : base(dbFactory)
+        {
+        }
     }
 }

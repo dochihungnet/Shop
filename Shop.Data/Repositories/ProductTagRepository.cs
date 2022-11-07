@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Shop.Data.Infrastructure;
+using Shop.Model.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,14 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Repositories
 {
-    internal class ProductTagRepository
+    public interface IProductTagRepository : IRepository<ProductTag>
     {
+    }
+
+    public class ProductTagRepository : RepositoryBase<ProductTag>, IProductTagRepository
+    {
+        protected ProductTagRepository(IDbFactory dbFactory) : base(dbFactory)
+        {
+        }
     }
 }

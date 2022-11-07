@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Data.Infrastructure;
+using Shop.Model.Models;
 
 namespace Shop.Data.Repositories
 {
-    internal class OrderDetailRepository
+    public interface IOrderDetailRepository : IRepository<OrderDetail>
     {
+
+    }
+    public class OrderDetailRepository : RepositoryBase<OrderDetail>, IOrderDetailRepository
+    {
+        protected OrderDetailRepository(IDbFactory dbFactory) : base(dbFactory)
+        {
+        }
     }
 }

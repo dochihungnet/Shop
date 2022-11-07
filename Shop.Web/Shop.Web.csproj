@@ -141,6 +141,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -159,6 +160,12 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app\components\admin\home\" />
+    <Folder Include="app\components\admin\order\" />
+    <Folder Include="app\components\admin\product\" />
+    <Folder Include="app\components\admin\product_category\" />
+    <Folder Include="app\components\client\home\" />
+    <Folder Include="app\shared\" />
     <Folder Include="App_Data\" />
     <Folder Include="Assets\admin\" />
     <Folder Include="Assets\client\" />
