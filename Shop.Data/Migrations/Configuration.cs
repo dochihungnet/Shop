@@ -21,11 +21,28 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
             CreateProductCategorySimple(context);
+            CreateBrandSimple(context);
 
 
 
         }
-
+        private void CreateBrandSimple(Shop.Data.ShopDbContext context)
+        {
+            if (context.Brands.Count() == 0)
+            {
+                List<Brand> listBrand = new List<Brand>()
+                {
+                    new Brand(){ Name = "Apple", Alias = "apple", HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin", Status = true },
+                    new Brand(){ Name = "FPT", Alias = "fpt",  HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin", Status = true },
+                    new Brand(){ Name = "Yody", Alias = "yody", HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin",  Status = true },
+                    new Brand(){ Name = "Teko VietNam", Alias = "teko-vietnam", HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin", Status = true },
+                    new Brand(){ Name = "NashTech", Alias = "nashtech",  HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin", Status = true },
+                    new Brand(){ Name = "VNG Game", Alias = "vng-game",  HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin", Status = true },
+                    new Brand(){ Name = "Computer", Alias = "computer", HomeFlag = true, CreatedDate = DateTime.Now, CreatedBy = "admin", Status = true }
+                };
+                context.Brands.AddRange(listBrand);
+            }
+        }
         private void CreateProductCategorySimple(Shop.Data.ShopDbContext context)
         {
             if (context.ProductCategories.Count() == 0)

@@ -36,6 +36,7 @@ namespace Shop.Data
         public DbSet<Tag> Tags { get; set; }
         //public DbSet<VisitorStatistic> VisitorStatistics { get; set; }
         public DbSet<Error> Errors { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
 
         // method create return new ShopDbContext();

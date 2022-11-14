@@ -27,8 +27,6 @@ namespace Shop.Model.Models
 
         [MaxLength(500)]
         public string Description { get; set; }
-        public int? ParentId { get; set; }
-        public int? DisplayOrder { get; set; }
 
         [MaxLength(256)]
         public string Image { set; get; }

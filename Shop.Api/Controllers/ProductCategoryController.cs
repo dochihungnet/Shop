@@ -29,11 +29,14 @@ namespace Shop.Api.Controllers
         {
             return CreateHttpResponse(request, () =>
             {
+                HttpResponseMessage response = null;
+
                 var listProductCategory = _productCategoryService.GetAll();
 
                 var listProductCategoryViewModel = Mapper.Map<List<ProductCategoryViewModel>>(listProductCategory);
 
-                HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryViewModel);
+                response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryViewModel);
+                
                 return response;
             });
         }
@@ -72,10 +75,11 @@ namespace Shop.Api.Controllers
         [HttpGet]
         public HttpResponseMessage GetById(HttpRequestMessage request, int id)
         {
-            HttpResponseMessage response = null;
 
             return CreateHttpResponse(request, () =>
             {
+                HttpResponseMessage response = null;
+
                 var productCategory = _productCategoryService.GetById(id);
 
                 var productCategoryViewModel = Mapper.Map<ProductCategoryViewModel>(productCategory);
@@ -99,17 +103,18 @@ namespace Shop.Api.Controllers
                     response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                     return response;
                 }
+
                 var newProductCategory = new ProductCategory();
-
                 newProductCategory = Mapper.Map<ProductCategory>(productCategoryViewModel);
-
                 newProductCategory.CreatedDate = DateTime.Now;
                 newProductCategory.CreatedBy = "admin";
 
-                _productCategoryService.Add(newProductCategory);
+                newProductCategory = _productCategoryService.Add(newProductCategory);
                 _productCategoryService.SaveChanges();
 
-                response = request.CreateResponse(HttpStatusCode.Created, productCategoryViewModel);
+                var newProductCategoryViewModel = Mapper.Map<ProductCategoryViewModel>(newProductCategory);
+
+                response = request.CreateResponse(HttpStatusCode.Created, newProductCategoryViewModel);
                 return response;
 
             });
@@ -131,7 +136,6 @@ namespace Shop.Api.Controllers
 
                 var dbProductCategory = _productCategoryService.GetById(productCategoryViewModel.Id);
 
-
                 dbProductCategory = Mapper.Map<ProductCategory>(productCategoryViewModel);
                 dbProductCategory.UpdatedDate = DateTime.Now;
                 dbProductCategory.UpdatedBy = "admin";
@@ -147,7 +151,8 @@ namespace Shop.Api.Controllers
             });
         }
 
-
+        [Route("delete")]
+        [HttpDelete]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
             return CreateHttpResponse(request, () =>

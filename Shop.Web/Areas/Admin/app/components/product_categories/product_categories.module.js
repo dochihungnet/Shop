@@ -16,7 +16,7 @@
                 controller: 'productCategoryAddController'
             })
             .state('product_category_edit', {
-                url: '/product_category_edit',
+                url: '/product_category_edit/:id',
                 templateUrl: '/Areas/Admin/app/components/product_categories/product_category_edit.view.html',
                 controller: 'productCategoryEditController'
             });
