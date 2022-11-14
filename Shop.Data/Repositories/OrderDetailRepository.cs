@@ -9,7 +9,7 @@ namespace Shop.Data.Repositories
     }
     public class OrderDetailRepository : RepositoryBase<OrderDetail>, IOrderDetailRepository
     {
-        protected OrderDetailRepository(IDbFactory dbFactory) : base(dbFactory)
+        public OrderDetailRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

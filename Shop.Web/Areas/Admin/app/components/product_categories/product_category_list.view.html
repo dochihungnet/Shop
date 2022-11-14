@@ -1,0 +1,151 @@
+﻿            <!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Hàng hóa</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Danh mục sản phẩm</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Settings</button>
+            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                <a class="dropdown-item" href="javascript:;">Action</a>
+                <a class="dropdown-item" href="javascript:;">Another action</a>
+                <a class="dropdown-item" href="javascript:;">Something else here</a>
+                <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-lg-3 col-xl-2">
+                <a href="javascript:;" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill pr-3" style="padding-right:6px"></i>Thêm danh mục</a>
+            </div>
+            <div class="col-lg-4 col-xl-3">
+                <a href="javascript:;" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill pr-3" style="padding-right:6px"></i>Xóa nhiều danh mục</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header py-3 mb-2">
+        <div class="row">
+            <h5 class="mb-0 col-12 col-lg-4 d-flex align-items-center justify-content-center">Thêm danh mục sản phẩm</h5>
+            <div class="col-12 col-lg-8">
+                <div class="ms-auto position-relative">
+                    <button ng-click="search()" class="position-absolute top-50 translate-middle-y search-icon px-3" style="border: none; background: none;"><i class="bi bi-search"></i></button>
+                    <input ng-model="keyword" ng-change="search()" class="form-control ps-5" type="text" placeholder="Tìm kiếm danh mục sản phẩm">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-lg-4 d-flex">
+                <div class="card border shadow-none w-100">
+                    <div class="card-body">
+                        <form class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label">Tên danh mục</label>
+                                <input type="text" class="form-control" placeholder="Tên danh mục">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Alias</label>
+                                <input type="text" class="form-control" placeholder="Alist danh mục">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Danh mục cha</label>
+                                <select class="form-select">
+                                    <option>Cha</option>
+                                    <option>Fashion</option>
+                                    <option>Electronics</option>
+                                    <option>Furniture</option>
+                                    <option>Sports</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Mô tả</label>
+                                <textarea class="form-control" rows="3" cols="3" placeholder="Mô tả danh mục"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary">Thêm danh mục</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 d-flex">
+                <div class="card border shadow-none w-100">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th><input class="form-check-input" type="checkbox"></th>
+                                        <th>#ID</th>
+                                        <th>Tên danh mục</th>
+                                        <th>Alias</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in productCategories">
+                                        <td><input class="form-check-input" type="checkbox"></td>
+                                        <td>#{{item.Id}}</td>
+                                        <td>{{item.Name}}</td>
+                                        <td>/{{item.Alias}}</td>
+                                        <td>{{item.CreatedDate | date : "dd/MM/yyyy"}}</td>
+                                        <td>
+                                            <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
+                                                {{item.Status | statusFilter}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3 fs-6">
+                                                <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
+                                                <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
+                                                <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info"
+                                     id="example_info"
+                                     role="status"
+                                     aria-live="polite">
+                                    Hiển thị từ {{page * pageSize}} đến {{page * pageSize + productCategories.length}} trong tổng số {{totalCount}}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7 d-flex justify-content-end ">
+                                <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="getListProductCategory(page)"></pager-directive>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--end row-->
+    </div>
+</div>

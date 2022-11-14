@@ -15,7 +15,7 @@ namespace Shop.Data.Repositories
 
     public class PostTagRepository : RepositoryBase<PostTag>, IPostTagRepository
     {
-        protected PostTagRepository(IDbFactory dbFactory) : base(dbFactory)
+        public PostTagRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

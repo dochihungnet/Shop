@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Service
 {
-    internal class PostTagService
+    public class PostTagService
     {
     }
 }

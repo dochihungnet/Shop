@@ -14,7 +14,7 @@ namespace Shop.Data.Repositories
 
     public class TagRepository : RepositoryBase<Tag>, ITagRepository
     {
-        protected TagRepository(IDbFactory dbFactory) : base(dbFactory)
+        public TagRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

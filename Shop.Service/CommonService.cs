@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Service
 {
-    internal class CommonService
+    public class CommonService
     {
     }
 }

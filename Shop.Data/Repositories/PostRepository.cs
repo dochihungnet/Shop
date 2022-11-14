@@ -10,7 +10,7 @@ namespace Shop.Data.Repositories
 
     public class PostRepository : RepositoryBase<Post>, IPostRepository
     {
-        protected PostRepository(IDbFactory dbFactory) : base(dbFactory)
+        public PostRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

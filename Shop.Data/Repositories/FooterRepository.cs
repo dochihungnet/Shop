@@ -14,7 +14,7 @@ namespace Shop.Data.Repositories
 
     public class FooterRepository : RepositoryBase<Footer>, IFooterRepository
     {
-        protected FooterRepository(IDbFactory dbFactory) : base(dbFactory)
+        public FooterRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

@@ -45,7 +45,7 @@
     <Compile Include="ErrorService.cs" />
     <Compile Include="OrderDetailService.cs" />
     <Compile Include="OrderService.cs" />
-    <Compile Include="Post.cs" />
+    <Compile Include="PostService.cs" />
     <Compile Include="PostCategoryService.cs" />
     <Compile Include="PostTagService.cs" />
     <Compile Include="ProductCategoryService.cs" />

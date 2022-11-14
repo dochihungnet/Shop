@@ -14,7 +14,7 @@ namespace Shop.Data.Repositories
     }
     public class OrderRepository : RepositoryBase<Order>, IOrderRepository
     {
-        protected OrderRepository(IDbFactory dbFactory) : base(dbFactory)
+        public OrderRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

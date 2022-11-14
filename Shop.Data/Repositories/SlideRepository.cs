@@ -15,7 +15,7 @@ namespace Shop.Data.Repositories
 
     public class SlideRepository : RepositoryBase<Slide>, ISlideRepository
     {
-        protected SlideRepository(IDbFactory dbFactory) : base(dbFactory)
+        public SlideRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

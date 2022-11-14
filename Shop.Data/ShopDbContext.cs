@@ -23,7 +23,7 @@ namespace Shop.Data
         //public DbSet<MenuGroup> MenuGroups { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        //public DbSet<Page> Pages { get; set; }
+        public DbSet<Page> Pages { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<PostTag> PostTags { get; set; }

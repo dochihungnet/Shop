@@ -15,7 +15,7 @@ namespace Shop.Data.Repositories
 
     public class PostCategoryRepository : RepositoryBase<PostCategory>, IPostCategoryRepository
     {
-        protected PostCategoryRepository(IDbFactory dbFactory) : base(dbFactory)
+        public PostCategoryRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

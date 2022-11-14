@@ -12,6 +12,7 @@ namespace Shop.Model.Models
     public class Error
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Message { get; set; }
         public string StackTrace { get; set; }

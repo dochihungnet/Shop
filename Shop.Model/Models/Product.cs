@@ -28,6 +28,9 @@ namespace Shop.Model.Models
         [Required]
         public int CategoryId { get; set; }
 
+        [Required]
+        public int? BrandId { get; set; }
+
         [MaxLength(256)]
         public string Image { get; set; }
 
@@ -57,6 +60,8 @@ namespace Shop.Model.Models
         [ForeignKey("CategoryId")]
         public virtual ProductCategory ProductCategory { set; get; }
 
+        [ForeignKey("BrandId")]
+        public virtual Brand Brand { set; get; }
         public virtual IEnumerable<ProductTag> ProductTags { set; get; }
 
     }
