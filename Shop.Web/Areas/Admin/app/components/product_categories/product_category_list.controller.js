@@ -53,6 +53,11 @@
 
         // Lấy danh sách danh mục sản phẩm
         $scope.getListProductCategory();
+
+        //==========================================================
+        // PRODUCT CATYGORY ADD
+
+
     }
 
 

@@ -11,9 +11,6 @@ namespace Shop.Api
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            // New code
-            var cors = new EnableCorsAttribute("https://localhost:44396", "*", "*");
-            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 

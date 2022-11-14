@@ -24,7 +24,7 @@ namespace Shop.Data.Infrastructure
 
         public void Commit()
         {
-            _dbContext.SaveChanges();
+            DbContext.SaveChanges();
         }
     }
 }

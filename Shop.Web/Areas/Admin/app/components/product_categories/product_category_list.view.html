@@ -29,23 +29,13 @@
 <!--end breadcrumb-->
 
 <div class="card">
-    <div class="card-body">
-        <div class="row align-items-center">
-            <div class="col-lg-3 col-xl-2">
-                <a href="javascript:;" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill pr-3" style="padding-right:6px"></i>Thêm danh mục</a>
-            </div>
-            <div class="col-lg-4 col-xl-3">
-                <a href="javascript:;" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill pr-3" style="padding-right:6px"></i>Xóa nhiều danh mục</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
     <div class="card-header py-3 mb-2">
         <div class="row">
-            <h5 class="mb-0 col-12 col-lg-4 d-flex align-items-center justify-content-center">Thêm danh mục sản phẩm</h5>
-            <div class="col-12 col-lg-8">
+            <div class="row col-12 col-lg-6 gap-2">
+                <a class="btn btn-primary col-3" ui-sref="product_category_add">Thêm danh mục</a>
+                <button class="btn btn-primary col-3">Xóa danh mục đã chọn</button>
+            </div>
+            <div class="col-12 col-lg-6">
                 <div class="ms-auto position-relative">
                     <button ng-click="search()" class="position-absolute top-50 translate-middle-y search-icon px-3" style="border: none; background: none;"><i class="bi bi-search"></i></button>
                     <input ng-model="keyword" ng-change="search()" class="form-control ps-5" type="text" placeholder="Tìm kiếm danh mục sản phẩm">
@@ -55,42 +45,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-lg-4 d-flex">
-                <div class="card border shadow-none w-100">
-                    <div class="card-body">
-                        <form class="row g-3">
-                            <div class="col-12">
-                                <label class="form-label">Tên danh mục</label>
-                                <input type="text" class="form-control" placeholder="Tên danh mục">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Alias</label>
-                                <input type="text" class="form-control" placeholder="Alist danh mục">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Danh mục cha</label>
-                                <select class="form-select">
-                                    <option>Cha</option>
-                                    <option>Fashion</option>
-                                    <option>Electronics</option>
-                                    <option>Furniture</option>
-                                    <option>Sports</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Mô tả</label>
-                                <textarea class="form-control" rows="3" cols="3" placeholder="Mô tả danh mục"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <div class="d-grid">
-                                    <button class="btn btn-primary">Thêm danh mục</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-8 d-flex">
+            <div class="col-12 col-lg-12 d-flex">
                 <div class="card border shadow-none w-100">
                     <div class="card-body">
                         <div class="table-responsive">
