@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace Shop.Api.Controllers
 {
@@ -135,13 +136,12 @@ namespace Shop.Api.Controllers
                 }
 
                 var dbBrand = _brandService.GetById(brandViewModel.Id);
-                dbBrand = Mapper.Map<Brand>(brandViewModel);
-                dbBrand.CreatedDate = DateTime.Now;
-                dbBrand.CreatedBy = "admin";
+                Mapper.Map(brandViewModel, dbBrand);
+                dbBrand.UpdatedDate = DateTime.Now;
+                dbBrand.UpdatedBy = "admin";
 
                 _brandService.Update(dbBrand);
                 _brandService.SaveChanges();
-
 
                 brandViewModel = Mapper.Map<BrandViewModel>(dbBrand);
                 response = request.CreateResponse(HttpStatusCode.Created, brandViewModel);
@@ -170,6 +170,26 @@ namespace Shop.Api.Controllers
             });
         }
 
+        [Route("deletemultiple")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteMultiple(HttpRequestMessage request, string checkedBrands)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
 
+                var listBrand = new JavaScriptSerializer().Deserialize<List<int>>(checkedBrands);
+
+                foreach (var item in listBrand)
+                {
+                    _brandService.Delete(item);
+                }
+                _brandService.SaveChanges();
+
+                response = request.CreateResponse(HttpStatusCode.OK, listBrand.Count);
+
+                return response;
+            });
+        }
     }
 }

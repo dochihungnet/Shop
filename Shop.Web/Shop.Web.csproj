@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -6531,6 +6532,18 @@
     <Content Include="assets\libs\ng-ckeditor\ng-ckeditor.css" />
     <Content Include="assets\libs\ng-ckeditor\ng-ckeditor.js" />
     <Content Include="assets\libs\ng-ckeditor\ng-ckeditor.min.js" />
+    <Content Include="assets\libs\ngBootbox\dist\ngBootbox.js" />
+    <Content Include="assets\libs\ngBootbox\dist\ngBootbox.min.js" />
+    <Content Include="assets\libs\ngBootbox\examples\example-1\app.js" />
+    <Content Include="assets\libs\ngBootbox\examples\example-1\custom-dialog.tpl.html" />
+    <Content Include="assets\libs\ngBootbox\examples\example-1\index.html" />
+    <Content Include="assets\libs\ngBootbox\examples\example-2\app.js" />
+    <Content Include="assets\libs\ngBootbox\examples\example-2\index.html" />
+    <Content Include="assets\libs\ngBootbox\examples\example-2\main.js" />
+    <Content Include="assets\libs\ngBootbox\examples\example-2\require.js" />
+    <Content Include="assets\libs\ngBootbox\examples\index.html" />
+    <Content Include="assets\libs\ngBootbox\gulpfile.js" />
+    <Content Include="assets\libs\ngBootbox\ngBootbox.js" />
     <Content Include="assets\libs\perfect-scrollbar\css\perfect-scrollbar.css" />
     <Content Include="assets\libs\perfect-scrollbar\css\perfect-scrollbar.min.css" />
     <Content Include="assets\libs\perfect-scrollbar\perfect-scrollbar.common.js" />
@@ -6539,10 +6552,6 @@
     <Content Include="assets\libs\perfect-scrollbar\perfect-scrollbar.esm.min.js" />
     <Content Include="assets\libs\perfect-scrollbar\perfect-scrollbar.js" />
     <Content Include="assets\libs\perfect-scrollbar\perfect-scrollbar.min.js" />
-    <Content Include="assets\libs\simplebar\simplebar.css" />
-    <Content Include="assets\libs\simplebar\simplebar.js" />
-    <Content Include="assets\libs\simplebar\simplebar.min.css" />
-    <Content Include="assets\libs\simplebar\simplebar.min.js" />
     <Content Include="assets\libs\toast\toastr.css" />
     <Content Include="assets\libs\toast\toastr.min.css" />
     <Content Include="assets\libs\toast\toastr.min.js" />
@@ -6771,10 +6780,17 @@
     <Content Include="assets\libs\bootstrap\scss\mixins\_visually-hidden.scss" />
     <Content Include="assets\libs\bootstrap\scss\utilities\_api.scss" />
     <Content Include="assets\libs\bootstrap\scss\vendor\_rfs.scss" />
+    <Content Include="assets\libs\ngBootbox\.bower.json" />
+    <Content Include="assets\libs\ngBootbox\bower.json" />
+    <Content Include="assets\libs\ngBootbox\package.json" />
+    <Content Include="assets\libs\ngBootbox\README.md" />
+    <Content Include="assets\libs\ngBootbox\tsd.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="assets\libs\simplebar\simplebar.d.ts" />
+    <TypeScriptCompile Include="assets\libs\ngBootbox\typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="assets\libs\ngBootbox\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="assets\libs\ngBootbox\typings\tsd.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -6812,7 +6828,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

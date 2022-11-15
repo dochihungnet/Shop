@@ -32,7 +32,7 @@
                 'https://localhost:44353/api/productcategory/update',
                 $scope.productCategory,
                 function (result) {
-                    notificationService.displaySuccess(result.data.Name + ' đã được cập nhật.');
+                    notificationService.displaySuccess('Cập nhập thành công.');
                     $state.go('product_categories');
                 },
                 function (error) {

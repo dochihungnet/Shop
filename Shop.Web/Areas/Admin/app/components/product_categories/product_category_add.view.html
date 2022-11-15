@@ -43,7 +43,7 @@
                         <div class="row mb-3">
                             <label for="inputEnterName" class="col-sm-3 col-form-label">Tên danh mục</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputEnterName" name="name"  ng-maxlength="256" required ng-model="productCategory.Name">
+                                <input type="text" class="form-control" id="inputEnterName" name="name"  ng-maxlength="256" required ng-model="productCategory.Name" ng-change="GetSeoTitle()">
                                 <div ng-show="frmAddProductCategory.name.$invalid" class="invalid-feedback d-block">Tên danh mục không được để trống.</div>
                                 <div ng-show="frmAddProductCategory.name.$error.maxlength" class="invalid-feedback d-block">Tên danh mục quá dài ( phải < 256 ký tự ).</div>
                             </div>

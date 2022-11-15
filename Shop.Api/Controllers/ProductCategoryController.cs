@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace Shop.Api.Controllers
 {
@@ -136,7 +137,8 @@ namespace Shop.Api.Controllers
 
                 var dbProductCategory = _productCategoryService.GetById(productCategoryViewModel.Id);
 
-                dbProductCategory = Mapper.Map<ProductCategory>(productCategoryViewModel);
+                //dbProductCategory = Mapper.Map<ProductCategory>(productCategoryViewModel);
+                AutoMapper.Mapper.Map(productCategoryViewModel, dbProductCategory);
                 dbProductCategory.UpdatedDate = DateTime.Now;
                 dbProductCategory.UpdatedBy = "admin";
 
@@ -165,6 +167,28 @@ namespace Shop.Api.Controllers
                 var productCategoryViewModel = Mapper.Map<ProductCategoryViewModel>(oldProductCategory);
 
                 response = request.CreateResponse(HttpStatusCode.OK, productCategoryViewModel);
+                return response;
+            });
+        }
+
+        [Route("deletemultiple")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteMultiple(HttpRequestMessage request, string checkedProductCategories)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductCategory = new JavaScriptSerializer().Deserialize<List<int>>(checkedProductCategories);
+
+                foreach (var item in listProductCategory)
+                {
+                    _productCategoryService.Delete(item);
+                }
+                _productCategoryService.SaveChanges();
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductCategory.Count);
+
                 return response;
             });
         }
