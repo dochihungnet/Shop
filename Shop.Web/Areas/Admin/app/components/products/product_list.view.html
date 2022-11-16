@@ -1,13 +1,13 @@
-﻿            <!--breadcrumb-->
+﻿<!--breadcrumb-->
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">eCommerce</div>
+    <div class="breadcrumb-title pe-3">Hàng hóa</div>
     <div class="ps-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item">
                     <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Products Grid</li>
+                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
             </ol>
         </nav>
     </div>
@@ -32,7 +32,7 @@
     <div class="card-body">
         <div class="row align-items-center">
             <div class="col-lg-3 col-xl-2">
-                <a href="javascript:;" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill" style="padding-right:6px"></i>Thêm sản phẩm</a>
+                <a ui-sref="product_add" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill" style="padding-right:6px"></i>Thêm sản phẩm</a>
             </div>
             <div class="col-lg-9 col-xl-10">
                 <form class="float-lg-end">
@@ -50,257 +50,155 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header py-3">
-        <div class="row g-3 align-items-center">
-            <div class="col-lg-6 col-md-8 me-auto">
-                <div class="ms-auto position-relative">
-                    <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-search"></i></div>
-                    <input class="form-control ps-5" type="text" placeholder="Tìm kiếm sản phẩm">
-                </div>
-            </div>
-            <div class="col-lg-2 col-6 col-md-3">
-                <select class="form-select">
-                    <option>All category</option>
-                    <option>Fashion</option>
-                    <option>Electronics</option>
-                    <option>Furniture</option>
-                    <option>Sports</option>
-                </select>
-            </div>
-            <div class="col-lg-2 col-6 col-md-3">
-                <select class="form-select">
-                    <option>Latest added</option>
-                    <option>Cheap first</option>
-                    <option>Most viewed</option>
-                </select>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-3">
+        <!--start sidebar -->
+        <aside class="sidebar-wrapper" data-simplebar="true">
+            <!--navigation-->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                        <div class="menu-title">Dashboard</div>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="index.html"><i class="bi bi-arrow-right-short"></i>eCommerce</a>
+                        </li>
+                        <li>
+                            <a href="index2.html"><i class="bi bi-arrow-right-short"></i>Sales</a>
+                        </li>
+                        <li>
+                            <a href="index3.html"><i class="bi bi-arrow-right-short"></i>Analytics</a>
+                        </li>
+                        <li>
+                            <a href="index4.html"><i class="bi bi-arrow-right-short"></i>Project Management</a>
+                        </li>
+                        <li>
+                            <a href="index5.html"><i class="bi bi-arrow-right-short"></i>CMS Dashboard</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                        <div class="menu-title">Dashboard</div>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="index.html"><i class="bi bi-arrow-right-short"></i>eCommerce</a>
+                        </li>
+                        <li>
+                            <a href="index2.html"><i class="bi bi-arrow-right-short"></i>Sales</a>
+                        </li>
+                        <li>
+                            <a href="index3.html"><i class="bi bi-arrow-right-short"></i>Analytics</a>
+                        </li>
+                        <li>
+                            <a href="index4.html"><i class="bi bi-arrow-right-short"></i>Project Management</a>
+                        </li>
+                        <li>
+                            <a href="index5.html"><i class="bi bi-arrow-right-short"></i>CMS Dashboard</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>   
+            <!--end navigation-->
+        </aside>
+        <!--end sidebar -->
     </div>
-    <div class="card-body">
-        <div class="product-grid">
-            <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-3">
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/01.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </div>
-                            <small>74 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
+    <div class="col-9">
+        <div class="card">
+            <div class="card-header py-3">
+                <div class="row align-items-center m-0">
+                    <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                        <select class="form-select">
+                            <option>All category</option>
+                            <option>Fashion</option>
+                            <option>Electronics</option>
+                            <option>Furniture</option>
+                            <option>Sports</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <select class="form-select">
+                            <option>Status</option>
+                            <option>Active</option>
+                            <option>Disabled</option>
+                            <option>Show all</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/02.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </div>
-                            <small>65 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th><label><input name="all" type="checkbox" ng-click="selectAll()" /> All </label></th>
+                                <th>#ID</th>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="old" ng-repeat="item in products">
+                                <td> <input type="checkbox" ng-model="item.checked" name="all" /> </td>
+                                <td>#{{item.Id}}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="product-box border">
+                                            <img src="{{item.Image}}" alt="">
+                                        </div>
+                                        <div class="product-info">
+                                            <h6 class="product-name mb-1">{{item.Name}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.Quantity}}</td>
+                                <td>{{ item.Price | currency : ""}}</td>
+                                <td>
+                                    <div ng-class="{'badge bg-success':item.Status === false, 'badge bg-danger':item.Status === true }">
+                                        {{item.Status | statusFilter}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </button>
+                                    <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button ng-click="deleteProduct(item.Id)" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xóa sản phẩm">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/03.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                            </div>
-                            <small>96 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/04.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                            </div>
-                            <small>65 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/05.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                            </div>
-                            <small>35 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/06.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </div>
-                            <small>74 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/07.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </div>
-                            <small>42 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/08.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                            </div>
-                            <small>24 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/09.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-secondary"></i>
-                            </div>
-                            <small>55 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card border shadow-none mb-0">
-                        <div class="card-body text-center">
-                            <img src="assets/images/products/10.png" class="img-fluid mb-3" alt="" />
-                            <h6 class="product-title">Men White Polo T-shirt</h6>
-                            <p class="product-price fs-5 mb-1"><span>$250.99</span></p>
-                            <div class="rating mb-0">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </div>
-                            <small>74 Reviews</small>
-                            <div class="actions d-flex align-items-center justify-content-center gap-2 mt-3">
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--end row-->
-        </div>
-        <nav class="float-end mt-4" aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
 
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info"
+                             id="example_info"
+                             role="status"
+                             aria-live="polite">
+                            <!--Hiển thị từ {{}} đến {{}} trong tổng số {{}}-->
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="getListProduct(page)"></pager-directive>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -31,9 +31,9 @@
 <div class="card">
     <div class="card-header py-3 mb-2">
         <div class="row">
-            <div class="row col-12 col-lg-6 gap-2">
+            <div class="col-12 col-lg-6">
                 <a class="btn btn-primary col-3" ui-sref="product_category_add">Thêm danh mục</a>
-                <button class="btn btn-primary col-3">Xóa danh mục</button>
+                <button ng-click="deleteMultiple()" id="btnDelete" class="btn btn-danger col-3">Xóa danh mục</button>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="ms-auto position-relative">
@@ -52,7 +52,7 @@
                             <table class="table align-middle">
                                 <thead class="table-light">
                                     <tr>
-                                        <th><input class="form-check-input" type="checkbox"></th>
+                                        <th><input ng-click="selectAll()" class="form-check-input" type="checkbox"></th>
                                         <th>#ID</th>
                                         <th>Tên danh mục</th>
                                         <th>Alias</th>
@@ -63,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in productCategories">
-                                        <td><input class="form-check-input" type="checkbox"></td>
+                                        <td><input ng-model="item.checked" class="form-check-input" type="checkbox"></td>
                                         <td>#{{item.Id}}</td>
                                         <td>{{item.Name}}</td>
                                         <td>/{{item.Alias}}</td>

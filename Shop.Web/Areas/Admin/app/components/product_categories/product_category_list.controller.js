@@ -2,9 +2,9 @@
 
     app.controller('productCategoryListController', productCategoryListController);
 
-    productCategoryListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox'];
+    productCategoryListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter'];
 
-    function productCategoryListController($scope, apiService, notificationService, $ngBootbox) {
+    function productCategoryListController($scope, apiService, notificationService, $ngBootbox, $filter) {
 
         $scope.productCategories = [];
 
@@ -25,11 +25,11 @@
                         }
                     };
                     apiService.del(
-                        'api/productcategory/delete',
+                        'https://localhost:44353/api/productcategory/delete',
                         config,
                         function () {
                             notificationService.displaySuccess('Xóa danh mục thành công.');
-                            search();
+                            $scope.search();
                         },
                         function () {
                             notificationService.displayError('Xóa danh mục không thành công.');
@@ -39,6 +39,57 @@
             );
         }
 
+        $scope.isAll = false;
+        $scope.selectAll = function () {
+            if ($scope.isAll) {
+                angular.forEach($scope.productCategories, function (item) {
+                    item.checked = false;
+                });
+                $scope.isAll = false;
+            }
+            else {
+                angular.forEach($scope.productCategories, function (item) {
+                    item.checked = true;
+                });
+                $scope.isAll = true;
+            }
+        };
+
+        $scope.deleteMultiple = function () {
+            var listId = [];
+            $.each($scope.selected, function (i, item) {
+                listId.push(item.Id);
+            })
+            var config = {
+                params: {
+                    checkedProductCategories: JSON.stringify(listId)
+                }
+            }
+            apiService.del(
+                'https://localhost:44353/api/productcategory/deletemultiple',
+                config,
+                function (result) {
+                    notificationService.displaySuccess('Xóa thành công các danh mục sản phẩm.');
+                    $scope.search();
+                },
+                function (error) {
+                    notificationService.displaySuccess('Xóa thất bại rùi..., buồn ghê.');
+                },
+            );
+        }
+
+        $scope.$watch("productCategories", function (newValue, oldValue) {
+            // filter (lọc) những giá trị có giá trị mới có checked = true
+            var checked = $filter("filter")(newValue, { checked: true })
+
+            if (checked.length) {
+                $scope.selected = checked;
+                $('#btnDelete').removeAttr('disabled');
+            }
+            else {
+                $('#btnDelete').attr('disabled', 'disabled');
+            }
+        }, true);
 
         $scope.search = function () {
             $scope.getListProductCategory();

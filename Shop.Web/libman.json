@@ -26,10 +26,10 @@
       "library": "fastclick@1.0.6",
       "destination": "assets/libs/fastclick"
     },
-    //{
-    //  "library": "simplebar@5.3.9",
-    //  "destination": "assets/libs/simplebar"
-    //},
+    {
+      "library": "simplebar@5.3.9",
+      "destination": "assets/libs/simplebar"
+    },
     {
       "library": "perfect-scrollbar@1.5.5",
       "destination": "assets/libs/perfect-scrollbar"

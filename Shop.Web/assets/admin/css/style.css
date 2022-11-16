@@ -66,6 +66,7 @@ a:hover{
     z-index: 10;
     padding: 0 1.5rem;
     transition: all .2s;
+	z-index: 9999999;
 }
 
 
@@ -403,15 +404,10 @@ a:hover{
 .nav-container {
 
 	position: fixed;
-
 	top: 60px;
-
 	right: 0;
-
 	left: 0;
-
-	z-index: 9;
-
+	z-index: 999999;
 	background-color: #f7f8fa;
     border-bottom: 1px solid #e2e3e4;
 	
@@ -1924,3 +1920,339 @@ a:hover{
 		display: none
 	}
 }
+
+
+.bootbox-close-button.close {
+	font-size: 25px;
+	font-weight: 700;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	border: none;
+	font-weight: 300;
+	background: #fff;
+}
+
+.bootbox-close-button.close:hover{
+	opacity: .2;
+}
+.bootbox-body {
+	font-size: 20px;
+	margin-top: 8px;
+}
+
+/* Sidebar */
+
+.sidebar-wrapper {
+	background-color: #f7f8fa;
+	background-clip: padding-box;
+	border-right: 1px solid #e2e3e4;
+	transition: all .2s;
+	z-index: 16;
+}
+
+
+	.sidebar-wrapper .sidebar-header {
+		width: 250px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		padding: 0 15px;
+		z-index: 5;
+		background: #f7f8fa;
+		border-right: 1px solid #e2e3e4;
+		border-bottom: 1px solid #e4e4e4;
+		transition: all .2s;
+	}
+
+		.sidebar-wrapper .sidebar-header .logo-icon {
+			width: 30px;
+		}
+
+		.sidebar-wrapper .sidebar-header .logo-text {
+			font-size: 22px;
+			margin-left: 10px;
+			margin-bottom: 0;
+			letter-spacing: 1px;
+			color: #3461ff;
+		}
+
+.toggle-icon {
+	font-size: 22px;
+	cursor: pointer;
+	color: #3461ff;
+}
+
+
+
+.sidebar-wrapper ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	background: 0 0
+}
+
+.sidebar-wrapper .metismenu {
+	background: 0 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	padding: 10px;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column
+}
+
+	.sidebar-wrapper .metismenu li + li {
+		margin-top: 5px
+	}
+
+	.sidebar-wrapper .metismenu li:first-child {
+		margin-top: 5px
+	}
+
+	.sidebar-wrapper .metismenu li:last-child {
+		margin-bottom: 5px
+	}
+
+	.sidebar-wrapper .metismenu > li {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		position: relative
+	}
+
+	.sidebar-wrapper .metismenu a {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: left;
+		padding: 10px 15px;
+		font-size: 15px;
+		color: #5f5f5f;
+		outline-width: 0;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		letter-spacing: .5px;
+		border: 1px solid #ffffff00;
+		transition: all .2s ease-out
+	}
+
+		.sidebar-wrapper .metismenu a .parent-icon {
+			font-size: 21px;
+			line-height: 1
+		}
+
+		.sidebar-wrapper .metismenu a .menu-title {
+			margin-left: 10px
+		}
+
+	.sidebar-wrapper .metismenu ul a {
+		padding: 6px 15px 6px 15px;
+		font-size: 15px;
+		border: 0
+	}
+
+		.sidebar-wrapper .metismenu ul a i {
+			margin-right: 10px
+		}
+
+	.sidebar-wrapper .metismenu ul {
+		border: 1px solid #ededed;
+		background: rgb(255 255 255 / 0%);
+	}
+
+		.sidebar-wrapper .metismenu ul ul a {
+			padding: 8px 15px 8px 30px
+		}
+
+		.sidebar-wrapper .metismenu ul ul ul a {
+			padding: 8px 15px 8px 45px
+		}
+
+	.sidebar-wrapper .metismenu .mm-active > a,
+	.sidebar-wrapper .metismenu a:active,
+	.sidebar-wrapper .metismenu a:focus,
+	.sidebar-wrapper .metismenu a:hover {
+		color: #3461ff;
+		text-decoration: none;
+		background-color: rgb(52 97 255 / 10%);
+	}
+
+.menu-label {
+	padding: 20px 15px 5px 5px;
+	color: #b0afaf;
+	text-transform: uppercase;
+	font-size: 12px;
+	letter-spacing: .5px
+}
+
+.metismenu .has-arrow:after {
+	position: absolute;
+	content: "";
+	width: .5em;
+	height: .5em;
+	border-style: solid;
+	border-width: 1.2px 0 0 1.2px;
+	border-color: initial;
+	right: 15px;
+	transform: rotate(-45deg) translateY(-50%);
+	transform-origin: top;
+	top: 50%;
+	transition: all .3s ease-out
+}
+
+
+
+
+@media screen and (min-width:1025px) {
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header .logo-text {
+		display: none
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper {
+		width: 70px
+	}
+
+	.wrapper.toggled.sidebar-hovered .sidebar-wrapper {
+		box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12) !important
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
+		width: 70px
+	}
+
+		.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header .toggle-icon {
+			display: none
+		}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
+		justify-content: center
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
+		width: 70px
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a {
+		justify-content: center
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .menu-title {
+		display: none
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu li ul {
+		display: none
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu li.menu-label {
+		display: none
+	}
+
+	.wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .has-arrow:after {
+		display: none
+	}
+
+	.email-toggle-btn {
+		display: none !important
+	}
+
+	.chat-toggle-btn {
+		display: none !important
+	}
+}
+
+
+
+.wrapper.toggled .top-header .navbar {
+	left: 70px
+}
+
+.wrapper.toggled .page-content {
+	margin-left: 70px
+}
+
+
+
+/* Start css upload image*/
+.uploader[_ngcontent-pry-c423] {
+	display: block;
+	clear: both;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 520px
+}
+
+.uploader[_ngcontent-pry-c423] input[type=file][_ngcontent-pry-c423] {
+	display: none
+}
+
+.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] {
+	float: left;
+	clear: both;
+	width: 100%;
+	text-align: center;
+	background: #fff;
+	transition: all .2s ease;
+	-webkit-user-select: none;
+	user-select: none;
+	font-weight: 600;
+	color: #5f6982;
+	position: relative;
+	overflow: hidden;
+	border: 2px solid transparent
+}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423]:hover #image-placeholder[_ngcontent-pry-c423] {
+		opacity: 1
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423]:hover .action-button[_ngcontent-pry-c423] {
+		display: block
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] img#file-image[_ngcontent-pry-c423] {
+		display: inline;
+		max-width: 100%
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] img#file-image.hidden[_ngcontent-pry-c423] {
+		display: none
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] #image-placeholder[_ngcontent-pry-c423] {
+		opacity: .7;
+		padding: 2rem 1.5rem;
+		border-radius: 7px;
+		border: 2px dashed #979797
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .upload-icon[_ngcontent-pry-c423],
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .upload-label[_ngcontent-pry-c423] {
+		margin: 0 0 1rem
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .upload-icon[_ngcontent-pry-c423] {
+		font-size: 50px;
+		transition: all .2s ease-in-out;
+		width: 100%;
+		height: 100%
+	}
+
+	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .action-button[_ngcontent-pry-c423] {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		display: none
+	}
+
+/* End css upload image*/
