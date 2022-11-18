@@ -1939,6 +1939,7 @@ a:hover{
 .bootbox-body {
 	font-size: 20px;
 	margin-top: 8px;
+	z-index: 999999999999;
 }
 
 /* Sidebar */
@@ -2172,87 +2173,54 @@ a:hover{
 }
 
 
-
-.wrapper.toggled .top-header .navbar {
-	left: 70px
+.modal{
+	z-index: 999999999999999999;
+}
+.modal-backdrop.show {
+	z-index: 999999990;
 }
 
-.wrapper.toggled .page-content {
-	margin-left: 70px
+
+.autocomplete-standard-template .md-autocomplete-suggestion,
+.autocomplete-virtual-template .md-autocomplete-suggestion {
+	border-bottom: 1px solid #ccc;
+	height: auto;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	white-space: normal;
 }
 
+	.autocomplete-virtual-template .md-autocomplete-suggestion:last-child,
+	.autocomplete-standard-template .md-autocomplete-suggestion:last-child {
+		border-bottom-width: 0;
+	}
 
-
-/* Start css upload image*/
-.uploader[_ngcontent-pry-c423] {
+.autocomplete-virtual-template .item-title,
+.autocomplete-virtual-template .item-metadata,
+.autocomplete-standard-template .item-title,
+.autocomplete-standard-template .item-metadata {
 	display: block;
-	clear: both;
-	margin: 0 auto;
-	width: 100%;
-	max-width: 520px
+	line-height: 2;
 }
 
-.uploader[_ngcontent-pry-c423] input[type=file][_ngcontent-pry-c423] {
-	display: none
+	.autocomplete-virtual-template .item-title md-icon,
+	.autocomplete-standard-template .item-title md-icon {
+		height: 18px;
+		width: 18px;
+	}
+
+.autocomplete-virtual-template .item-desc,
+.autocomplete-standard-template .item-desc {
+	font-size: 12px;
+	margin: 0.8em 0 .8em;
+	max-width: 300px;
 }
 
-.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] {
-	float: left;
-	clear: both;
-	width: 100%;
-	text-align: center;
-	background: #fff;
-	transition: all .2s ease;
-	-webkit-user-select: none;
-	user-select: none;
-	font-weight: 600;
-	color: #5f6982;
-	position: relative;
-	overflow: hidden;
-	border: 2px solid transparent
+.standard-container,
+.virtual-container {
+	width: 300px;
 }
 
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423]:hover #image-placeholder[_ngcontent-pry-c423] {
-		opacity: 1
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423]:hover .action-button[_ngcontent-pry-c423] {
-		display: block
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] img#file-image[_ngcontent-pry-c423] {
-		display: inline;
-		max-width: 100%
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] img#file-image.hidden[_ngcontent-pry-c423] {
-		display: none
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] #image-placeholder[_ngcontent-pry-c423] {
-		opacity: .7;
-		padding: 2rem 1.5rem;
-		border-radius: 7px;
-		border: 2px dashed #979797
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .upload-icon[_ngcontent-pry-c423],
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .upload-label[_ngcontent-pry-c423] {
-		margin: 0 0 1rem
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .upload-icon[_ngcontent-pry-c423] {
-		font-size: 50px;
-		transition: all .2s ease-in-out;
-		width: 100%;
-		height: 100%
-	}
-
-	.uploader[_ngcontent-pry-c423] label[_ngcontent-pry-c423] .action-button[_ngcontent-pry-c423] {
-		position: absolute;
-		top: 5px;
-		right: 5px;
-		display: none
-	}
-
-/* End css upload image*/
+.instance-wrapper {
+	padding: 0 8px;
+}

@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Shop.Model.Models
@@ -36,13 +33,6 @@ namespace Shop.Model.Models
 
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
-
-        [NotMapped]
-        public XElement MoreImagesDetail
-        {
-            get { return MoreImages != null ? XElement.Parse(MoreImages) : null; }
-            set { MoreImages = value.ToString(); }
-        }
         public decimal Price { get; set; }
         public decimal? PromotionPrice { get; set; } // giá khuyến mãi
         public int? Warranty { get; set; }

@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Areas\Admin\Libs\CKFinder.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -129,6 +133,8 @@
   <ItemGroup>
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\home\home.controller.js" />
+    <Content Include="Areas\Admin\app\components\products\product_details.view.html" />
+    <Content Include="Areas\Admin\app\components\products\product_details.controller.js" />
     <Content Include="Areas\Admin\app\components\products\product_edit.view.html" />
     <Content Include="Areas\Admin\app\components\products\product_list.view.html" />
     <Content Include="Areas\Admin\app\components\products\product_add.view.html" />
@@ -885,12 +891,22 @@
     <Content Include="assets\admin\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
     <Content Include="assets\admin\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="assets\admin\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="assets\libs\angular-animate\angular-animate.js" />
+    <Content Include="assets\libs\angular-animate\angular-animate.min.js" />
+    <Content Include="assets\libs\angular-aria\angular-aria.js" />
+    <Content Include="assets\libs\angular-aria\angular-aria.min.js" />
     <Content Include="assets\libs\angular-loading-bar\loading-bar.css" />
     <Content Include="assets\libs\angular-loading-bar\loading-bar.js" />
     <Content Include="assets\libs\angular-loading-bar\loading-bar.min.css" />
     <Content Include="assets\libs\angular-loading-bar\loading-bar.min.js" />
     <Content Include="assets\libs\angular-local-storage\angular-local-storage.js" />
     <Content Include="assets\libs\angular-local-storage\angular-local-storage.min.js" />
+    <Content Include="assets\libs\angular-material\angular-animate.js" />
+    <Content Include="assets\libs\angular-material\angular-animate.min.js" />
+    <Content Include="assets\libs\angular-material\angular-material.css" />
+    <Content Include="assets\libs\angular-material\angular-material.js" />
+    <Content Include="assets\libs\angular-material\angular-material.min.css" />
+    <Content Include="assets\libs\angular-material\angular-material.min.js" />
     <Content Include="assets\libs\angular-ui-router\angular-ui-router.js" />
     <Content Include="assets\libs\angular-ui-router\angular-ui-router.min.js" />
     <Content Include="assets\libs\angular-ui-router\resolveService.js" />
@@ -7210,6 +7226,7 @@
     <Folder Include="Areas\Admin\app\shared\views\" />
     <Folder Include="assets\admin\plugins\nicescroll\css\" />
     <Folder Include="assets\client\" />
+    <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
@@ -7418,12 +7435,16 @@
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="assets\libs\angular-material\angular-animate.min.js.map" />
+    <Content Include="assets\libs\angular-animate\angular-animate.min.js.map" />
+    <Content Include="assets\libs\angular-aria\angular-aria.min.js.map" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="assets\libs\ngBootbox\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="assets\libs\ngBootbox\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="assets\libs\ngBootbox\typings\tsd.d.ts" />
+    <TypeScriptCompile Include="assets\libs\simplebar\simplebar.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

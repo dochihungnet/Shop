@@ -81,6 +81,18 @@
     {
       "library": "jqueryui@1.13.2",
       "destination": "assets/libs/jqueryui"
+    },
+    {
+      "library": "angular-material@1.2.5",
+      "destination": "assets/libs/angular-material"
+    },
+    {
+      "library": "angular-animate@1.8.3",
+      "destination": "assets/libs/angular-animate"
+    },
+    {
+      "library": "angular-aria@1.8.3",
+      "destination": "assets/libs/angular-aria"
     }
   ]
 }

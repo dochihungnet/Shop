@@ -60,18 +60,16 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <label class="form-label">Danh mục sản phẩm</label>
-                                            <select class="form-select mb-3" name="CategoryId" required ng-model="product.CategoryId" ng-options="option.Id as option.Name for option in productCategories">
-                                                <option value="">Danh mục cha</option>
+                                            <select class="form-select" name="CategoryId" required ng-model="product.CategoryId" ng-options="option.Id as option.Name for option in productCategories">
+                                                <option value="">-- Chọn danh mục --</option>
                                             </select>
-                                            <div ng-show="frmAddProduct.CategoryId.$invalid" class="invalid-feedback d-block">Chưa chọn danh mục sản phẩm.</div>
                                             <input type="hidden" name="CategoryId" ng-model="product.CategoryId" />
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <label class="form-label">Thương hiệu sản phẩm</label>
-                                            <select class="form-select mb-3" name="brandId" required ng-model="product.BrandId" ng-options="option.Id as option.Name for option in brands">
-                                                <option value="">Đỗ Chí Hùng</option>
+                                            <select class="form-select" name="brandId" required ng-model="product.BrandId" ng-options="option.Id as option.Name for option in brands">
+                                                <option value="">-- Chọn thương hiệu --</option>
                                             </select>
-                                            <div ng-show="frmAddProduct.BrandId.$invalid" class="invalid-feedback d-block">Chưa chọn thương hiệu sản phấm.</div>
                                             <input type="hidden" name="brandId" ng-model="product.BrandId" />
                                         </div>
                                         <div class="col-12">
@@ -83,8 +81,8 @@
                                             <label class="form-label">Hình ảnh</label>
                                             <div class="col-sm-12">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="product.Image">
                                                     <button type="button" class="input-group-text" ng-click="ChooseImage()">Chọn ảnh</button>
+                                                    <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="product.Image">
                                                 </div>
                                                 <div ng-show="frmAddProduct.image.$error.maxlength" class="invalid-feedback d-block">Đường dẫn quá dài ( phải < 256 ký tự ).</div>
                                             </div>
@@ -92,9 +90,12 @@
                                         <div class="col-12">
                                             <label class="form-label">Thêm hình ảnh</label>
                                             <div class="col-sm-12">
-                                                <ul class="col-sm-9 form-control d-flex gap-3 flex-wrap" style="min-height: 100px">
+                                                <ul class="col-sm-12 form-control d-flex gap-3 flex-wrap" style="min-height: 168px">
                                                     <li class="list-unstyled" ng-repeat="img in moreImages">
-                                                        <img ng-src="{{img}}" width="100" />
+                                                        <div class="p-3 border border-1 rounded position-relative">
+                                                            <img ng-src="{{img}}" width="120" />
+                                                            <button ng-click="deleteImage(img)" type="button" class="btn-close position-absolute" style=" top: 10px; right: 10px; font-size: 12px;" aria-label="Close"></button>
+                                                        </div>
                                                     </li>
                                                 </ul>
 
@@ -153,8 +154,8 @@
                                         <div class="col-12">
                                             <label class="form-label">Trạng thái</label>
                                             <select class="form-select" placeholder="Trạng thái" ng-model="product.Status">
+                                                <option value="1">Mở bán</option>
                                                 <option value="0">Chưa mở bán</option>
-                                                <option value="1" ng-selected="selected">Mở bán</option>
                                             </select>
                                         </div>
                                         <div class="col-12">
@@ -163,11 +164,11 @@
                                         </div>
                                         <div class="col-12">
                                             <input id="inputCheckedHomeFlag" class="form-check-input" type="checkbox" name="homeFlag" ng-model="product.HomeFlag" ng-checked="product.HomeFlag">
-                                            <label id="inputCheckedHomeFlag" class="form-check-label">Hiển thị trang chủ</label>
+                                            <label for="inputCheckedHomeFlag" class="form-check-label">Hiển thị trang chủ</label>
                                         </div>
                                         <div class="col-12">
                                             <input id="inputCheckedHotFlag" class="form-check-input" type="checkbox" name="hotFlag" ng-model="product.HotFlag" ng-checked="product.HotFlag">
-                                            <label id="inputCheckedHotFlag" class="form-check-label">Sản phẩm đang hot</label>
+                                            <label for="inputCheckedHotFlag" class="form-check-label">Sản phẩm đang hot</label>
                                         </div>
 
                                     </div><!--end row-->

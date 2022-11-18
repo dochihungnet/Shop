@@ -31,10 +31,52 @@
 <div class="card">
     <div class="card-body">
         <div class="row align-items-center">
-            <div class="col-lg-3 col-xl-2">
-                <a ui-sref="product_add" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill" style="padding-right:6px"></i>Thêm sản phẩm</a>
+            <div class="col-lg-6 col-xl-6">
+                <md-content class="md-padding" ng-cloak>
+                    <div layout="row" layout-xs="column">
+
+                        <div flex-gt-xs="100">
+                            <form ng-submit="$event.preventDefault()">
+                                <md-autocomplete id="virtual-autocomplete"
+                                                 ng-disabled="isDisabled"
+                                                 md-no-cache="noCache"
+                                                 md-selected-item="selectedItem"
+                                                 md-search-text-change="searchTextChange(searchText)"
+                                                 md-search-text="searchText"
+                                                 md-selected-item-change="selectedItemChange(item)"
+                                                 md-items="item in querySearch(searchText)"
+                                                 md-item-text="item.name"
+                                                 md-min-length="0"
+                                                 md-escape-options="clear"
+                                                 input-aria-describedby="virtual-autocomplete-description"
+                                                 input-aria-label="Current Repository"
+                                                 placeholder="Tìm kiếm sản phẩm"
+                                                 md-menu-class="autocomplete-virtual-template"
+                                                 md-menu-container-class="virtual-container"
+                                                 md-mode="virtual">
+                                    <md-item-template>
+                                        <span class="item-title">
+                                            <span> {{item.name}} </span>
+                                        </span>
+                                        <p class="item-desc">
+                                            {{item.desc | limitTo:40}}{{item.desc.length > 40 ? '...': ''}}
+                                        </p>
+                                        <span class="item-metadata">
+                                            <span>
+                                                <strong>{{item.watchers}}</strong> watchers
+                                            </span>
+                                            <span>
+                                                <strong>{{item.forks}}</strong> forks
+                                            </span>
+                                        </span>
+                                    </md-item-template>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                    </div>
+                </md-content>
             </div>
-            <div class="col-lg-9 col-xl-10">
+            <div class="col-lg-6 col-xl-6">
                 <form class="float-lg-end">
                     <div class="row row-cols-lg-auto g-2">
                         <div class="col-12">
@@ -115,21 +157,15 @@
         <div class="card">
             <div class="card-header py-3">
                 <div class="row align-items-center m-0">
-                    <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                        <select class="form-select">
-                            <option>All category</option>
-                            <option>Fashion</option>
-                            <option>Electronics</option>
-                            <option>Furniture</option>
-                            <option>Sports</option>
-                        </select>
+                    <div class="col-md-6 col-12 me-auto mb-md-0 mb-3">
+                        <a ui-sref="product_add" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill" style="padding-right:6px"></i>Thêm sản phẩm</a>
+                        <button ng-click="deleteMultiple()" id="btnDelete" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill" style="padding-right:6px"></i>Xóa sản phẩm</button>
                     </div>
-                    <div class="col-md-2 col-6">
+                    <div class="col-md-3 col-6">
                         <select class="form-select">
-                            <option>Status</option>
-                            <option>Active</option>
-                            <option>Disabled</option>
-                            <option>Show all</option>
+                            <option value="all">Tất cả</option>
+                            <option value="">Đang mở bán</option>
+                            <option value="">Chưa mở bán</option>
                         </select>
                     </div>
                 </div>
@@ -165,12 +201,12 @@
                                 <td>{{item.Quantity}}</td>
                                 <td>{{ item.Price | currency : ""}}</td>
                                 <td>
-                                    <div ng-class="{'badge bg-success':item.Status === false, 'badge bg-danger':item.Status === true }">
+                                    <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
                                         {{item.Status | statusFilter}}
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
+                                    <button ng-click="showProductDetails(item.Id)" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
                                     <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm">

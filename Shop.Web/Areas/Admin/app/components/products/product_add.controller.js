@@ -4,10 +4,11 @@
     productAddController.$inject = ['apiService', '$scope', '$state', 'notificationService', 'commonService'];
 
     function productAddController(apiService, $scope, $state, notificationService, commonService) {
+
         $scope.product = {
             CreatedDate: new Date,
             Status: true,
-
+            HomeFlag: true,
 
         };
 
@@ -77,14 +78,25 @@
         $scope.moreImages = [];
 
         $scope.ChooseMoreImage = function () {
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (fileUrl) {
-                $scope.$apply(function () {
-                    $scope.moreImages.push(fileUrl);
-                });
+            if ($scope.moreImages.length === 5) {
+                notificationService.displayWarning('Thêm được tối đa 5 ảnh.');
             }
-            finder.popup();
-            console.log($scope.moreImages);
+            else {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $scope.$apply(function () {
+                        $scope.moreImages.push(fileUrl);
+                    });
+                }
+                finder.popup();
+            }
+        }
+
+        $scope.deleteImage = function (img) {
+            const index = $scope.moreImages.indexOf(img);
+            if (index > -1) {
+                $scope.moreImages.splice(index, 1);
+            }
         }
 
         getListProductCategory();

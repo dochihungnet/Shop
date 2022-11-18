@@ -137,7 +137,6 @@ namespace Shop.Api.Controllers
 
                 var dbProductCategory = _productCategoryService.GetById(productCategoryViewModel.Id);
 
-                //dbProductCategory = Mapper.Map<ProductCategory>(productCategoryViewModel);
                 AutoMapper.Mapper.Map(productCategoryViewModel, dbProductCategory);
                 dbProductCategory.UpdatedDate = DateTime.Now;
                 dbProductCategory.UpdatedBy = "admin";
