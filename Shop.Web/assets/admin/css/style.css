@@ -2061,10 +2061,16 @@ a:hover{
 		font-size: 15px;
 		border: 0
 	}
+	.sidebar-wrapper .metismenu ul > div {
+		padding: 6px 15px 6px 15px;
+		font-size: 15px;
+		border: 0
+	}
 
 		.sidebar-wrapper .metismenu ul a i {
 			margin-right: 10px
 		}
+
 
 	.sidebar-wrapper .metismenu ul {
 		border: 1px solid #ededed;

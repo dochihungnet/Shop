@@ -42,6 +42,26 @@ namespace Shop.Api.Controllers
         }
 
         [Route("getall")]
+        [HttpGet]
+        public HttpResponseMessage GetAll(HttpRequestMessage request) 
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProduct = _productService.GetAll();
+
+                var listProductViewModel = Mapper.Map<List<ProductViewModel>>(listProduct);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModel);
+
+                return response;
+            });
+        }
+
+        // getall
+        [Route("getall")]
+        [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request,string keyword, int page, int pageSize)
         {
             HttpResponseMessage response = null;

@@ -495,15 +495,19 @@ md-autocomplete[md-floating-label] .md-show-clear-button input {
   padding-left: 30px;
 }
 md-autocomplete md-autocomplete-wrap {
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  position: relative;
-  overflow: visible;
-  height: 40px;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+    height: 40px;
+    border: 1px solid #e2e3e4;
+    box-shadow: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 md-autocomplete md-autocomplete-wrap.md-menu-showing {
-  z-index: 51;
+    z-index: 51;
 }
 md-autocomplete md-autocomplete-wrap md-input-container,
 md-autocomplete md-autocomplete-wrap input {
@@ -549,6 +553,7 @@ md-autocomplete md-autocomplete-wrap md-progress-linear .md-mode-indeterminate.n
 md-autocomplete input:not(.md-input) {
     font-size: 14px;
     box-sizing: border-box;
+    border:none;
     box-shadow: none;
     outline: none;
     background: transparent;
@@ -556,7 +561,6 @@ md-autocomplete input:not(.md-input) {
     padding: 0 15px;
     line-height: 40px;
     height: 40px;
-    border: 1px solid #e2e3e4;
 }
 md-autocomplete input:not(.md-input)::-ms-clear {
   display: none;
@@ -660,8 +664,8 @@ md-autocomplete .md-show-clear-button button.ng-leave.ng-leave-active {
   font-size: 14px;
   overflow: hidden;
   padding: 0 15px;
-  line-height: 48px;
-  height: 48px;
+  line-height: 72px;
+  height: 72px;
   transition: background 0.15s linear;
   margin: 0;
   white-space: nowrap;
@@ -6220,6 +6224,7 @@ md-toolbar ~ md-content > md-list md-list-item:last-child md-divider {
   overflow: hidden;
   padding: 0;
   position: relative;
+  width: 290px;
 }
 .md-virtual-repeat-container .md-virtual-repeat-scroller {
   bottom: 0;

@@ -5,6 +5,8 @@
 
     function productListController($scope, apiService, notificationService, $ngBootbox, $filter, $timeout, $q, $log) {
         $scope.products = [];
+        $scope.productCategories = [];
+        $scope.brands = [];
 
         $scope.page = 0;
         $scope.pageSize = 10;
@@ -13,14 +15,11 @@
         $scope.keyword = '';
 
         $scope.getListProduct = getListProduct;
-
         $scope.search = search;
-
         $scope.deleteProduct = deleteProduct;
-
         $scope.selectAll = selectAll;
-
         $scope.deleteMultiple = deleteMultiple;
+        $scope.handlerCheckedInput = handlerCheckedInput;
 
         function deleteMultiple() {
             var listId = [];
@@ -134,118 +133,121 @@
             );
         }
 
-        $scope.getListProduct();
-
-
-        // ==================================
-
-        $scope.simulateQuery = false;
-        $scope.isDisabled = false;
-
-        $scope.repos = loadAll();
-        $scope.querySearch = querySearch;
-        $scope.selectedItemChange = selectedItemChange;
-        $scope.searchTextChange = searchTextChange;
-
-        // ******************************
-        // Internal methods
-        // ******************************
-
-        /**
-            * Search for repos... use $timeout to simulate
-            * remote dataservice call.
-            */
-        function querySearch(query) {
-            var results = query ? $scope.repos.filter(createFilterFor(query)) : $scope.repos,
-                deferred;
-            if ($scope.simulateQuery) {
-                deferred = $q.defer();
-                $timeout(function () { deferred.resolve(results); }, Math.random() * 1000, false);
-                return deferred.promise;
-            } else {
-                return results;
-            }
-        }
-
-        function searchTextChange(text) {
-            $log.info('Text changed to ' + text);
-        }
-
-       function selectedItemChange(item) {
-            $log.info('Item changed to ' + JSON.stringify(item));
-        }
-
-        /**
-            * Build `components` list of key/value pairs
-            */
-        function loadAll() {
-            var repos = [
-                {
-                    'name': 'AngularJS',
-                    'url': 'https://github.com/angular/angular.js',
-                    'desc': 'AngularJS is JavaScript MVC made easy.',
-                    'watchers': '3,623',
-                    'forks': '16,175',
+        function getListProductCategory() {
+            apiService.get('https://localhost:44353/api/productcategory/getallparents',
+                null,
+                function (result) {
+                    $scope.productCategories = result.data;
+                    console.log('Lấy danh sách danh mục sản phẩm thành công.');
                 },
-                {
-                    'name': 'Angular',
-                    'url': 'https://github.com/angular/angular',
-                    'desc': 'Angular is a development platform for building mobile ' +
-                        'and desktop web applications using Typescript/JavaScript ' +
-                        'and other languages.',
-                    'watchers': '469',
-                    'forks': '760',
-                },
-                {
-                    'name': 'AngularJS Material',
-                    'url': 'https://github.com/angular/material',
-                    'desc': 'An implementation of Google\'s Material Design Specification ' +
-                        '(2014-2017) for AngularJS developers',
-                    'watchers': '727',
-                    'forks': '1,241',
-                },
-                {
-                    'name': 'Angular Material',
-                    'url': 'https://github.com/angular/components',
-                    'desc': 'Material Design (2018+) components built for and with Angular ' +
-                        'and Typescript',
-                    'watchers': '727',
-                    'forks': '1,241',
-                },
-                {
-                    'name': 'Bower Material',
-                    'url': 'https://github.com/angular/bower-material',
-                    'desc': 'the repository used for publishing the AngularJS Material ' +
-                        'v1.x library and localized installs using npm.',
-                    'watchers': '42',
-                    'forks': '84',
-                },
-                {
-                    'name': 'Material Start',
-                    'url': 'https://github.com/angular/material-start',
-                    'desc': 'A sample application purposed as both a learning tool and a ' +
-                        'skeleton application for a typical AngularJS Material web app.',
-                    'watchers': '81',
-                    'forks': '303',
+                function (error) {
+                    console.log('Lấy danh sách danh mục sản phẩm thất bại.');
                 }
-            ];
-            return repos.map(function (repo) {
-                repo.value = repo.name.toLowerCase();
-                return repo;
+            )
+        }
+
+        function getListBrand() {
+            apiService.get('https://localhost:44353/api/brand/getall',
+                null,
+                function (result) {
+                    $scope.brands = result.data;
+                    console.log('Lấy danh sách thương hiệu thành công.');
+                },
+                function (error) {
+                    console.log('Lấy danh sách thương hiệu thất bại.');
+                }
+            )
+        }
+
+        function handlerCheckedInput(id) {
+            console.log(id);
+            $scope.productCategories = $scope.productCategories.map(function (pc) {
+                if (id === -1) {
+                    pc.checked = false;
+                    return pc;
+                }
+                else if (pc.Id === id && pc.checked) {
+                    $scope.allProductCategory.checked = false;
+                }
+                else {
+                    pc.checked = false;
+                }
+                return pc;
             });
         }
 
-        /**
-            * Create filter function for a query string
-            */
-        function createFilterFor (query) {
-            var lowercaseQuery = query.toLowerCase();
+        getListProduct();
+        getListProductCategory();
+        getListBrand();
 
-            return function filterFn(item) {
-                return (item.value.indexOf(lowercaseQuery) === 0);
-            };
 
-        }
+        // ==================================
+        handleSearchProduct($scope, $q, $log, apiService);
+        
 
     }
 })(angular.module('shop.products'));
+
+
+
+function handleSearchProduct($scope, $q, $log, apiService) {
+    $scope.simulateQuery = false;
+    $scope.isDisabled = false;
+
+    $scope.repos = loadAll().then(res => {
+        $scope.repos = res;
+    }).catch();
+    $scope.querySearch = querySearch;
+    $scope.selectedItemChange = selectedItemChange;
+    $scope.searchTextChange = searchTextChange;
+
+
+    function querySearch(query) {
+        console.log($scope.repos);
+        var results = query ? $scope.repos.filter(createFilterFor(query)) : $scope.repos, deferred;
+        return results;
+    }
+
+    function searchTextChange(text) {
+        $log.info('Text changed to ' + text);
+    }
+
+    function selectedItemChange(item) {
+        $log.info('Item changed to ' + JSON.stringify(item));
+    }
+
+    function loadAll() {
+
+        var repos = [];
+        var deferred = $q.defer();
+        apiService.get(
+            'https://localhost:44353/api/product/getall',
+            null,
+            function (result) {
+                repos = result.data;
+                repos = repos.map(function (repo) {
+                    repo.value = repo.Name.toLowerCase();
+                    return repo;
+                });
+                deferred.resolve(repos);
+
+            },
+            function () {
+                console.log('Lay danh sach san pham that bai.');
+                deferred.reject(repos);
+            }
+        );
+
+        return deferred.promise;
+
+    }
+
+    function createFilterFor(query) {
+        var lowercaseQuery = query.toLowerCase();
+
+        return function filterFn(item) {
+            return (item.value.indexOf(lowercaseQuery) === 0);
+        };
+
+    }
+}

@@ -31,7 +31,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row align-items-center">
-            <div class="col-lg-6 col-xl-6">
+            <div class="col-lg-4 col-xl-4">
                 <md-content class="md-padding" ng-cloak>
                     <div layout="row" layout-xs="column">
 
@@ -55,20 +55,15 @@
                                                  md-menu-container-class="virtual-container"
                                                  md-mode="virtual">
                                     <md-item-template>
-                                        <span class="item-title">
-                                            <span> {{item.name}} </span>
-                                        </span>
-                                        <p class="item-desc">
-                                            {{item.desc | limitTo:40}}{{item.desc.length > 40 ? '...': ''}}
-                                        </p>
-                                        <span class="item-metadata">
-                                            <span>
-                                                <strong>{{item.watchers}}</strong> watchers
-                                            </span>
-                                            <span>
-                                                <strong>{{item.forks}}</strong> forks
-                                            </span>
-                                        </span>
+                                        <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                            <div class="product-box border">
+                                                <img src="{{item.Image}}" alt="">
+                                            </div>
+                                            <div class="product-info">
+                                                <h5 class="product-name mb-1">{{item.Name}}</h5>
+                                                <h6 class="product-info mb-1">{{ item.Price | currency : ""}}đ</h6>
+                                            </div>
+                                        </div>
                                     </md-item-template>
                                 </md-autocomplete>
                             </form>
@@ -103,23 +98,24 @@
                         <div class="parent-icon">
                             <i class="bi bi-house-door"></i>
                         </div>
-                        <div class="menu-title">Dashboard</div>
+                        <div class="menu-title">Danh mục sản phẩm</div>
                     </a>
                     <ul>
                         <li>
-                            <a href="index.html"><i class="bi bi-arrow-right-short"></i>eCommerce</a>
+                            <a href="javascript:;" class="d-flex align-content-center">
+                                <div class="m-1">
+                                    <input id="allProductCategory" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="allProductCategory.checked" ng-change="handlerCheckedInput(-1)">
+                                    <label for="allProductCategory" class="form-check-label" style="padding-left:5px;">Tất cả</label>
+                                </div>
+                            </a>
                         </li>
-                        <li>
-                            <a href="index2.html"><i class="bi bi-arrow-right-short"></i>Sales</a>
-                        </li>
-                        <li>
-                            <a href="index3.html"><i class="bi bi-arrow-right-short"></i>Analytics</a>
-                        </li>
-                        <li>
-                            <a href="index4.html"><i class="bi bi-arrow-right-short"></i>Project Management</a>
-                        </li>
-                        <li>
-                            <a href="index5.html"><i class="bi bi-arrow-right-short"></i>CMS Dashboard</a>
+                        <li ng-repeat="item in productCategories">
+                            <a class="d-flex align-content-center">
+                                <div class="m-1">
+                                    <input id="{{item.Alias}}-id" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="item.checked" ng-change="handlerCheckedInput(item.Id)">
+                                    <label for="{{item.Alias}}-id" class="form-check-label" style="padding-left:5px;">{{item.Name}}</label>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -128,23 +124,24 @@
                         <div class="parent-icon">
                             <i class="bi bi-house-door"></i>
                         </div>
-                        <div class="menu-title">Dashboard</div>
+                        <div class="menu-title">Thương hiệu</div>
                     </a>
                     <ul>
                         <li>
-                            <a href="index.html"><i class="bi bi-arrow-right-short"></i>eCommerce</a>
+                            <a href="javascript:;"  class="d-flex align-content-center">
+                                <div class="m-1">
+                                    <input id="allBrands" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="allBrand.checked">
+                                    <label for="allBrands" class="form-check-label" style="padding-left:5px;">Tất cả</label>
+                                </div>
+                            </a>
                         </li>
-                        <li>
-                            <a href="index2.html"><i class="bi bi-arrow-right-short"></i>Sales</a>
-                        </li>
-                        <li>
-                            <a href="index3.html"><i class="bi bi-arrow-right-short"></i>Analytics</a>
-                        </li>
-                        <li>
-                            <a href="index4.html"><i class="bi bi-arrow-right-short"></i>Project Management</a>
-                        </li>
-                        <li>
-                            <a href="index5.html"><i class="bi bi-arrow-right-short"></i>CMS Dashboard</a>
+                        <li ng-repeat="item in brands">
+                            <a href="javascript:;" class="d-flex align-content-center">
+                                <div class="m-1">
+                                    <input id="{{item.Alias}}-id" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="item.checked">
+                                    <label for="{{item.Alias}}-id" class="form-check-label" style="padding-left:5px;">{{item.Name}}</label>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </li>
