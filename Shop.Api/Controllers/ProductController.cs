@@ -62,7 +62,7 @@ namespace Shop.Api.Controllers
         // getall
         [Route("getall")]
         [HttpGet]
-        public HttpResponseMessage GetAll(HttpRequestMessage request,string keyword, int page, int pageSize)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, int page, int pageSize, bool? status = null, int? categoryId = null, int? brandId = null)
         {
             HttpResponseMessage response = null;
 
@@ -70,7 +70,11 @@ namespace Shop.Api.Controllers
             {
                 int totalRow = 0;
 
-                var listProduct = _productService.GetAll(keyword);
+                categoryId = categoryId != null ?  categoryId : null;
+                brandId = brandId != null ? brandId : null;
+                status = status != null ? status : null;
+
+                var listProduct = status == null ? _productService.GetAll(categoryId, brandId)  : _productService.GetAll(categoryId, brandId, status) ;
 
                 totalRow = listProduct.Count();
 
@@ -153,6 +157,7 @@ namespace Shop.Api.Controllers
             });
         }
 
+        
         // delete
         [Route("delete")]
         [HttpDelete]

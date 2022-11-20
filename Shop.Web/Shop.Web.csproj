@@ -133,6 +133,8 @@
   <ItemGroup>
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\home\home.controller.js" />
+    <Content Include="Areas\Admin\app\components\login\login.controller.js" />
+    <Content Include="Areas\Admin\app\components\login\login.view.html" />
     <Content Include="Areas\Admin\app\components\products\product_details.view.html" />
     <Content Include="Areas\Admin\app\components\products\product_details.controller.js" />
     <Content Include="Areas\Admin\app\components\products\product_edit.view.html" />
@@ -901,8 +903,6 @@
     <Content Include="assets\libs\angular-loading-bar\loading-bar.min.js" />
     <Content Include="assets\libs\angular-local-storage\angular-local-storage.js" />
     <Content Include="assets\libs\angular-local-storage\angular-local-storage.min.js" />
-    <Content Include="assets\libs\angular-material\angular-animate.js" />
-    <Content Include="assets\libs\angular-material\angular-animate.min.js" />
     <Content Include="assets\libs\angular-material\angular-material.css" />
     <Content Include="assets\libs\angular-material\angular-material.js" />
     <Content Include="assets\libs\angular-material\angular-material.min.css" />
@@ -7435,7 +7435,6 @@
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="assets\libs\angular-material\angular-animate.min.js.map" />
     <Content Include="assets\libs\angular-animate\angular-animate.min.js.map" />
     <Content Include="assets\libs\angular-aria\angular-aria.min.js.map" />
     <None Include="packages.config" />

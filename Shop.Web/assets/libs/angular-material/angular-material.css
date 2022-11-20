@@ -158,6 +158,10 @@ input:-webkit-autofill {
     opacity: 0;
   }
 }
+.md-padding {
+  padding: 8px 0;
+}
+
 .md-margin {
   margin: 8px;
 }
@@ -190,6 +194,11 @@ input:-webkit-autofill {
   -webkit-filter: blur(0px);
 }
 
+@media (min-width: 960px) {
+  .md-padding {
+    padding: 8px 0;
+  }
+}
 html[dir=rtl], html[dir=ltr], body[dir=rtl], body[dir=ltr] {
   unicode-bidi: embed;
 }
@@ -503,11 +512,9 @@ md-autocomplete md-autocomplete-wrap {
     height: 40px;
     border: 1px solid #e2e3e4;
     box-shadow: none;
-    overflow-y: hidden;
-    overflow-x: hidden;
 }
 md-autocomplete md-autocomplete-wrap.md-menu-showing {
-    z-index: 51;
+  z-index: 51;
 }
 md-autocomplete md-autocomplete-wrap md-input-container,
 md-autocomplete md-autocomplete-wrap input {
@@ -551,16 +558,16 @@ md-autocomplete md-autocomplete-wrap md-progress-linear .md-mode-indeterminate.n
   opacity: 0;
 }
 md-autocomplete input:not(.md-input) {
-    font-size: 14px;
-    box-sizing: border-box;
-    border:none;
-    box-shadow: none;
-    outline: none;
-    background: transparent;
-    width: 100%;
-    padding: 0 15px;
-    line-height: 40px;
-    height: 40px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding: 0 15px;
+  line-height: 40px;
+  height: 40px;
 }
 md-autocomplete input:not(.md-input)::-ms-clear {
   display: none;
@@ -663,7 +670,7 @@ md-autocomplete .md-show-clear-button button.ng-leave.ng-leave-active {
 .md-autocomplete-suggestions .md-autocomplete-suggestion {
   font-size: 14px;
   overflow: hidden;
-  padding: 0 15px;
+  padding: 15px;
   line-height: 72px;
   height: 72px;
   transition: background 0.15s linear;
@@ -1700,6 +1707,7 @@ md-content {
   position: relative;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  background: none;
 }
 md-content[md-scroll-y] {
   overflow-y: auto;
@@ -6224,7 +6232,6 @@ md-toolbar ~ md-content > md-list md-list-item:last-child md-divider {
   overflow: hidden;
   padding: 0;
   position: relative;
-  width: 290px;
 }
 .md-virtual-repeat-container .md-virtual-repeat-scroller {
   bottom: 0;

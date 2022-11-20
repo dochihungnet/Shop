@@ -17,12 +17,12 @@
                 controller: 'productAddController'
             })
             .state('product_edit', {
-                url: '/product_edit',
+                url: '/product_edit/:id',
                 templateUrl: '/Areas/Admin/app/components/products/product_edit.view.html',
                 controller: 'productEditController'
             })
             .state('product_details', {
-                url: '/product_details',
+                url: '/product_details/:id',
                 templateUrl: '/Areas/Admin/app/components/products/product_details.view.html',
                 controller: 'productDetailsController'
             })

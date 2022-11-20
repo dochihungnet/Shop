@@ -18,6 +18,8 @@ namespace Shop.Service
         Product Delete(int id);
         IEnumerable<Product> GetAll();
         IEnumerable<Product> GetAll(string keyword);
+        IEnumerable<Product> GetAll(int? categoryId, int? brandId);
+        IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
 
         IEnumerable<Product> GetFeatured(int top);
         IEnumerable<Product> GetHotProduct(int top);
@@ -108,6 +110,33 @@ namespace Shop.Service
             return _productRepository.GetAll();
         }
 
+        public IEnumerable<Product> GetAll(int? categoryId, int? brandId)
+        {
+           
+            if(categoryId.HasValue && brandId.HasValue)
+            {
+                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && x.CategoryId == categoryId.Value);
+            }
+            else if(categoryId.HasValue && !brandId.HasValue)
+            {
+                return _productRepository.GetMulti(x => x.CategoryId == categoryId.Value);
+            }
+            else if(brandId.HasValue && !categoryId.HasValue)
+            {
+                return _productRepository.GetMulti(x => x.BrandId == brandId.Value);
+            }
+            else
+            {
+                return _productRepository.GetAll();
+            }
+            
+        }
+
+        public IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status)
+        {
+            return GetAll(categoryId, brandId).Where(x => x.Status == status);
+        }
+
         public Product GetById(int id)
         {
             return _productRepository.GetSingleById(id);
@@ -172,28 +201,30 @@ namespace Shop.Service
         {
             _productRepository.Update(product);
 
-            string[] tags = product.Tags.Split(',');
-
-            for(int i = 0; i < tags.Length; i++)
+            if (!string.IsNullOrEmpty(product.Tags))
             {
-                if (!string.IsNullOrEmpty(product.Tags))
+                string[] tags = product.Tags.Split(',');
+                for(int i = 0; i < tags.Length; i++)
                 {
-                    var tagId  = StringHelper.ToUnsignString(product.Tags);
-                    if(!_tagRepository.CheckContains(x => x.Id == tagId))
+                    if (!string.IsNullOrEmpty(product.Tags))
                     {
-                        Tag tag = new Tag()
+                        var tagId  = StringHelper.ToUnsignString(product.Tags);
+                        if(!_tagRepository.CheckContains(x => x.Id == tagId))
                         {
-                            Id = tagId,
-                            Name = tags[i],
-                            Type = CommonConstants.ProductTag
-                        };
+                            Tag tag = new Tag()
+                            {
+                                Id = tagId,
+                                Name = tags[i],
+                                Type = CommonConstants.ProductTag
+                            };
 
-                        _tagRepository.Add(tag);
+                            _tagRepository.Add(tag);
+                        }
                     }
-                }
 
+                }
+                _unitOfWork.Commit();
             }
-            _unitOfWork.Commit();
 
         }
     }

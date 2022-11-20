@@ -31,8 +31,8 @@
 <div class="card">
     <div class="card-body">
         <div class="row align-items-center">
-            <div class="col-lg-4 col-xl-4">
-                <md-content class="md-padding" ng-cloak>
+            <div class="col-lg-6 col-xl-6">
+                <md-content class="md-padding w-75" ng-cloak>
                     <div layout="row" layout-xs="column">
 
                         <div flex-gt-xs="100">
@@ -45,7 +45,7 @@
                                                  md-search-text="searchText"
                                                  md-selected-item-change="selectedItemChange(item)"
                                                  md-items="item in querySearch(searchText)"
-                                                 md-item-text="item.name"
+                                                 md-item-text="item.Name"
                                                  md-min-length="0"
                                                  md-escape-options="clear"
                                                  input-aria-describedby="virtual-autocomplete-description"
@@ -55,7 +55,7 @@
                                                  md-menu-container-class="virtual-container"
                                                  md-mode="virtual">
                                     <md-item-template>
-                                        <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                        <div class="d-flex align-items-center gap-3 w-100 h-100" style="padding: 15px 0px;">
                                             <div class="product-box border">
                                                 <img src="{{item.Image}}" alt="">
                                             </div>
@@ -101,18 +101,10 @@
                         <div class="menu-title">Danh mục sản phẩm</div>
                     </a>
                     <ul>
-                        <li>
+                        <li ng-repeat="item in productCategories">
                             <a href="javascript:;" class="d-flex align-content-center">
                                 <div class="m-1">
-                                    <input id="allProductCategory" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="allProductCategory.checked" ng-change="handlerCheckedInput(-1)">
-                                    <label for="allProductCategory" class="form-check-label" style="padding-left:5px;">Tất cả</label>
-                                </div>
-                            </a>
-                        </li>
-                        <li ng-repeat="item in productCategories">
-                            <a class="d-flex align-content-center">
-                                <div class="m-1">
-                                    <input id="{{item.Alias}}-id" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="item.checked" ng-change="handlerCheckedInput(item.Id)">
+                                    <input id="{{item.Alias}}-id" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="item.checked" ng-change="handlerCheckedInputProductCategory(item.Id)">
                                     <label for="{{item.Alias}}-id" class="form-check-label" style="padding-left:5px;">{{item.Name}}</label>
                                 </div>
                             </a>
@@ -127,18 +119,10 @@
                         <div class="menu-title">Thương hiệu</div>
                     </a>
                     <ul>
-                        <li>
-                            <a href="javascript:;"  class="d-flex align-content-center">
-                                <div class="m-1">
-                                    <input id="allBrands" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="allBrand.checked">
-                                    <label for="allBrands" class="form-check-label" style="padding-left:5px;">Tất cả</label>
-                                </div>
-                            </a>
-                        </li>
                         <li ng-repeat="item in brands">
                             <a href="javascript:;" class="d-flex align-content-center">
                                 <div class="m-1">
-                                    <input id="{{item.Alias}}-id" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="item.checked">
+                                    <input id="{{item.Alias}}-id" class="form-check-input ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" type="checkbox" ng-model="item.checked" ng-change="handlerCheckedInputBrand(item.Id)">
                                     <label for="{{item.Alias}}-id" class="form-check-label" style="padding-left:5px;">{{item.Name}}</label>
                                 </div>
                             </a>
@@ -159,10 +143,10 @@
                         <button ng-click="deleteMultiple()" id="btnDelete" class="btn btn-primary mb-3 mb-lg-0"><i class="bi bi-plus-square-fill" style="padding-right:6px"></i>Xóa sản phẩm</button>
                     </div>
                     <div class="col-md-3 col-6">
-                        <select class="form-select">
-                            <option value="all">Tất cả</option>
-                            <option value="">Đang mở bán</option>
-                            <option value="">Chưa mở bán</option>
+                        <select class="form-select" ng-model="status" ng-change="handlerEventChangeStatus()">
+                            <option ng-value="null">Tất cả</option>
+                            <option ng-value="true">Đang mở bán</option>
+                            <option ng-value="false">Chưa mở bán</option>
                         </select>
                     </div>
                 </div>
@@ -198,12 +182,15 @@
                                 <td>{{item.Quantity}}</td>
                                 <td>{{ item.Price | currency : ""}}</td>
                                 <td>
-                                    <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
-                                        {{item.Status | statusFilter}}
+                                    <div class="d-flex align-content-center gap-1">
+                                        <input type="checkbox" ng-model="item.Status" ng-change="handlerEventChangeInputStatusProduct(item.Id)" />
+                                        <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
+                                            {{item.Status | statusFilter}}
+                                        </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <button ng-click="showProductDetails(item.Id)" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
+                                    <button ui-sref="product_details({id:item.Id})" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
                                     <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm">

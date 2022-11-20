@@ -11,15 +11,22 @@
         $scope.page = 0;
         $scope.pageSize = 10;
         $scope.pageCount = 0;
+        $scope.categoryId; 
+        $scope.brandId;
+        $scope.status = null;
 
-        $scope.keyword = '';
 
         $scope.getListProduct = getListProduct;
         $scope.search = search;
         $scope.deleteProduct = deleteProduct;
         $scope.selectAll = selectAll;
         $scope.deleteMultiple = deleteMultiple;
-        $scope.handlerCheckedInput = handlerCheckedInput;
+
+        $scope.handlerCheckedInputProductCategory = handlerCheckedInputProductCategory;
+        $scope.handlerCheckedInputBrand = handlerCheckedInputBrand;
+        $scope.handlerEventChangeInputStatusProduct = handlerEventChangeInputStatusProduct;
+        $scope.handlerEventChangeStatus = handlerEventChangeStatus;
+
 
         function deleteMultiple() {
             var listId = [];
@@ -68,7 +75,7 @@
 
             var checked = $filter("filter")(newVal, { checked: true });
 
-            if (checked.length) {
+            if (checked && checked.length) {
                 $scope.selected = checked;
                 $('#btnDelete').removeAttr('disabled');
             }
@@ -111,11 +118,20 @@
         // lấy danh sách sản phẩm theo page
         function getListProduct(page) {
             page = page || 0;
+
+            var category = $scope.productCategories.find(x => x.checked);
+            $scope.categoryId = category ? category.Id : null;
+
+            var brand = $scope.brands.find(x => x.checked);
+            $scope.brandId = brand ? brand.Id : null;
+
             var config = {
                 params: {
-                    keyword: $scope.keyword,
                     page: page,
-                    pageSize: $scope.pageSize
+                    pageSize: $scope.pageSize,
+                    status: $scope.status,
+                    categoryId: $scope.categoryId,
+                    brandId: $scope.brandId,
                 }
             };
             apiService.get(
@@ -159,21 +175,86 @@
             )
         }
 
-        function handlerCheckedInput(id) {
-            console.log(id);
+        function handlerEventChangeInputStatusProduct(id) {
+
+            var product = $scope.products.find(x => x.Id == id);
+
+            $ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
+                .then(function (result) {
+                    apiService.put(
+                        'https://localhost:44353/api/product/update',
+                        product,
+                        function (result) {
+                            notificationService.displaySuccess('Cập nhập trạng thái thành công!');
+                            search();
+                        },
+                        function (error) {
+                            notificationService.displayError('Cập nhập trạng thái thất bại!')
+                        }
+                    )
+                }, function () {
+                    $scope.products = $scope.products.map(x => {
+                        if (x.Id == product.Id) {
+                            x.Status = !product.Status;
+                        }
+                        return x;
+                    })
+                }
+                    
+
+            )
+        }
+
+        function handlerCheckedInputProductCategory(id) {
+            // nếu productcategory == id và checked == true thì tất cả các ô input khác checked = false và ô input có id thì checked == true
+            // nếu productcategory == id và checked == false thì return
+            var input = $scope.productCategories.find(x => x.Id == id);
+
+            if (!input.checked) {
+                console.log($scope.productCategories);
+                getListProduct();
+                return;
+            }
+
             $scope.productCategories = $scope.productCategories.map(function (pc) {
-                if (id === -1) {
+                if (pc.Id === id)
+                {
+                    return pc;
+                }
+                else
+                {
                     pc.checked = false;
                     return pc;
                 }
-                else if (pc.Id === id && pc.checked) {
-                    $scope.allProductCategory.checked = false;
-                }
-                else {
-                    pc.checked = false;
-                }
-                return pc;
             });
+
+            // call data
+            getListProduct();
+
+        }
+
+        function handlerCheckedInputBrand(id) {
+            var input = $scope.brands.find(x => x.Id == id);
+            if (!input.checked) {
+                // call data
+                getListProduct();
+                return;
+            }
+
+            $scope.brands = $scope.brands.map(function (b) {
+                if (b.Id === id) { return b; }
+                else {
+                    b.checked = false;
+                    return b;
+                }
+            });
+
+            // call data
+            getListProduct();
+        }
+
+        function handlerEventChangeStatus() {
+            $scope.getListProduct();
         }
 
         getListProduct();

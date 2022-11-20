@@ -1,1 +1,165 @@
-﻿<h1>Đây là Chi tiết sản phẩm</h1>
+﻿<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Hàng hóa</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhập sản phẩm</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Settings</button>
+            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                <a class="dropdown-item" href="javascript:;">Action</a>
+                <a class="dropdown-item" href="javascript:;">Another action</a>
+                <a class="dropdown-item" href="javascript:;">Something else here</a>
+                <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="row">
+    <div class="col-lg-12 mx-auto">
+        <form novalidate name="frmUpdateProduct" role="form" ng-submit="UpdateProduct()">
+            <div class="card">
+                <div class="card-header py-3 bg-transparent">
+                    <div class="d-sm-flex align-items-center">
+                        <h5 class="mb-2 mb-sm-0">Cập nhập sản phẩm</h5>
+                        <div class="ms-auto">
+                            <button ui-sref="products" class="btn btn-primary">Quay lại</button>
+                            <button ng-click="deleteProduct(item.Id)" class="btn btn-primary">Xoá sản phẩm</button>
+                            <button ui-sref="product_edit({id:item.Id})" class="btn btn-primary">Cập nhập</button>
+                            <button ui-sref="product_add" class="btn btn-primary">Thêm mới</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12 col-lg-8">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <tbody>
+                                        <tr role="row" class="old">
+                                            <td class="col-4">Tên sản phẩm</td>
+                                            <td class="col-8">{{product.Name}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-4">Alias</td>
+                                            <td class="col-8">/{{product.Alias}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-4">Danh mục</td>
+                                            <td class="col-8">{{product.CategoryId}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-4">Thương hiệu</td>
+                                            <td class="col-8">{{product.BrandId}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-4">Bảo hành</td>
+                                            <td class="col-8">{{product.Warranty}} tháng</td>
+                                        </tr>
+
+                                        <div ng-if="moreImages.lenth === 0" class="col-12">
+                                            <label class="form-label col-4">Nhiều hình ảnh</label>
+                                            <div class="col-sm-12">
+                                                <ul class="col-sm-9 form-control d-flex gap-3 flex-wrap" style="min-height: 100px">
+                                                    <li class="list-unstyled" ng-repeat="img in moreImages">
+                                                        <img ng-src="{{img}}" width="100" />
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <tr role="row" class="old">
+                                            <td class="col-4">Hình ảnh</td>
+                                            <td class="col-8"><img src="{{product.Image}}" alt="" width="100"></td>
+                                        </tr>
+                                        <tr role="row" class="old" ng-if="moreImages.length !== 0">
+                                            <td class="col-4">Danh sách hình ảnh</td>
+                                            <td class="col-8">
+                                                <div class="col-sm-12 form-control d-flex gap-3 flex-wrap" style="min-height: 100px">
+                                                    <div class="list-unstyled" ng-repeat="img in moreImages">
+                                                        <img ng-src="{{img}}" width="100" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="product.Description" role="row" class="old">
+                                            <td class="col-4">Mô tả ngắn</td>
+                                            <td class="col-8" style="word-break: break-all;">{{product.Description}}</td>
+                                        </tr>
+                                        <tr ng-if="product.Content" role="row" class="old">
+                                            <td class="col-4">Mô tả</td>
+                                            <td class="col-8">{{product.Content}}</td>
+                                        </tr>
+                                        <tr ng-if="product.MetaKeyword" role="row" class="old">
+                                            <td class="col-4">Meta keyword</td>
+                                            <td class="col-8">{{product.MetaKeyword}}</td>
+                                        </tr>
+                                        <tr ng-if="product.MetaDescription" role="row" class="old">
+                                            <td class="col-4">Meta description</td>
+                                            <td class="col-8">{{product.MetaDescription}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <tbody>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Số lượng</td>
+                                            <td class="col-9">{{product.Quantity}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Giá gốc</td>
+                                            <td class="col-9">{{product.OriginalPrice | currency : ""}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Giá bán</td>
+                                            <td class="col-9">{{product.Price | currency : ""}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Giảm giá</td>
+                                            <td class="col-9">{{product.PromotionPrice ? product.PromotionPrice : 0}} %</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Trạng thái</td>
+                                            <td class="col-9">{{product.Status | statusFilter}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Tags</td>
+                                            <td class="col-9">{{product.Tags}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Hiển thị trang chủ</td>
+                                            <td class="col-9">Có</td>
+                                        </tr>
+                                        <tr role="row" class="old">
+                                            <td class="col-3">Sản phẩm hot</td>
+                                            <td class="col-9">Có</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div><!--end row-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!--end row-->
