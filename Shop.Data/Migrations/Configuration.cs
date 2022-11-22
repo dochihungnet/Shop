@@ -1,5 +1,7 @@
 ﻿namespace Shop.Data.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Shop.Model.Models;
     using System;
     using System.Collections.Generic;
@@ -20,10 +22,41 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+            CreateUser(context);
             CreateProductCategorySimple(context);
             CreateBrandSimple(context);
 
+        }
 
+        private void CreateUser(ShopDbContext context)
+        {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ShopDbContext()));
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ShopDbContext()));
+
+            var user = new ApplicationUser()
+            {
+                UserName = "dochihung",
+                Email = "dochihung492002@gmail.com",
+                EmailConfirmed = true,
+                BirthDay = DateTime.Now,
+                FullName = "Đỗ Chí Hùng"
+
+            };
+            if (manager.Users.Count(x => x.UserName == "dochihung") == 0)
+            {
+                manager.Create(user, "hungiy1");
+
+                if (!roleManager.Roles.Any())
+                {
+                    roleManager.Create(new IdentityRole { Name = "Admin" });
+                    roleManager.Create(new IdentityRole { Name = "User" });
+                }
+
+                var adminUser = manager.FindByEmail("dochihung492002@gmail.com");
+
+                manager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
+            }
 
         }
         private void CreateBrandSimple(Shop.Data.ShopDbContext context)

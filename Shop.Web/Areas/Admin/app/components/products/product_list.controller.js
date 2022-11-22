@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.controller('productListController', productListController);
 
-    productListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter', '$timeout', '$q', '$log'];
+    productListController.$inject = ['$scope','$state' ,'apiService', 'notificationService', '$ngBootbox', '$filter', '$timeout', '$q', '$log', ];
 
-    function productListController($scope, apiService, notificationService, $ngBootbox, $filter, $timeout, $q, $log) {
+    function productListController($scope, $state , apiService, notificationService, $ngBootbox, $filter, $timeout, $q, $log) {
         $scope.products = [];
         $scope.productCategories = [];
         $scope.brands = [];
@@ -263,7 +263,7 @@
 
 
         // ==================================
-        handleSearchProduct($scope, $q, $log, apiService);
+        handleSearchProduct($state ,$scope, $q, $log, apiService);
         
 
     }
@@ -271,7 +271,7 @@
 
 
 
-function handleSearchProduct($scope, $q, $log, apiService) {
+function handleSearchProduct($state ,$scope, $q, $log, apiService) {
     $scope.simulateQuery = false;
     $scope.isDisabled = false;
 
@@ -295,6 +295,11 @@ function handleSearchProduct($scope, $q, $log, apiService) {
 
     function selectedItemChange(item) {
         $log.info('Item changed to ' + JSON.stringify(item));
+        console.log(item);
+        var idProductSelect = item.Id;
+        console.log(item.Id);
+        console.log($state);
+        $state.go(`product_details`, { id: idProductSelect });
     }
 
     function loadAll() {

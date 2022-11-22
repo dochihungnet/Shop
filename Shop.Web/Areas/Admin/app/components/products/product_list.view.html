@@ -32,44 +32,39 @@
     <div class="card-body">
         <div class="row align-items-center">
             <div class="col-lg-6 col-xl-6">
-                <md-content class="md-padding w-75" ng-cloak>
-                    <div layout="row" layout-xs="column">
-
-                        <div flex-gt-xs="100">
-                            <form ng-submit="$event.preventDefault()">
-                                <md-autocomplete id="virtual-autocomplete"
-                                                 ng-disabled="isDisabled"
-                                                 md-no-cache="noCache"
-                                                 md-selected-item="selectedItem"
-                                                 md-search-text-change="searchTextChange(searchText)"
-                                                 md-search-text="searchText"
-                                                 md-selected-item-change="selectedItemChange(item)"
-                                                 md-items="item in querySearch(searchText)"
-                                                 md-item-text="item.Name"
-                                                 md-min-length="0"
-                                                 md-escape-options="clear"
-                                                 input-aria-describedby="virtual-autocomplete-description"
-                                                 input-aria-label="Current Repository"
-                                                 placeholder="Tìm kiếm sản phẩm"
-                                                 md-menu-class="autocomplete-virtual-template"
-                                                 md-menu-container-class="virtual-container"
-                                                 md-mode="virtual">
-                                    <md-item-template>
-                                        <div class="d-flex align-items-center gap-3 w-100 h-100" style="padding: 15px 0px;">
-                                            <div class="product-box border">
-                                                <img src="{{item.Image}}" alt="">
-                                            </div>
-                                            <div class="product-info">
-                                                <h5 class="product-name mb-1">{{item.Name}}</h5>
-                                                <h6 class="product-info mb-1">{{ item.Price | currency : ""}}đ</h6>
-                                            </div>
+                <div ng-cloak>
+                    <md-content layout-padding layout="column">
+                        <form ng-submit="$event.preventDefault()">
+                            <md-autocomplete id="custom-template"
+                                             ng-disabled="isDisabled"
+                                             md-no-cache="noCache"
+                                             md-selected-item="selectedItem"
+                                             md-search-text-change="searchTextChange(searchText)"
+                                             md-search-text="searchText"
+                                             md-selected-item-change="selectedItemChange(item)"
+                                             md-items="item in querySearch(searchText)"
+                                             md-item-text="item.Name"
+                                             md-min-length="0"
+                                             md-escape-options="clear"
+                                             input-aria-label="Current Repository"
+                                             placeholder="Tìm kiếm sản phẩm"
+                                             md-menu-class="autocomplete-custom-template"
+                                             md-menu-container-class="custom-container">
+                                <md-item-template>
+                                    <div class="d-flex align-items-center gap-3 w-100 h-100" style="padding: 15px 0px;">
+                                        <div class="product-box border">
+                                            <img src="{{item.Image}}" alt="">
                                         </div>
-                                    </md-item-template>
-                                </md-autocomplete>
-                            </form>
-                        </div>
-                    </div>
-                </md-content>
+                                        <div class="product-info">
+                                            <h5 class="product-name mb-1">{{item.Name}}</h5>
+                                            <h6 class="product-info mb-1">{{ item.Price | currency : ""}}đ</h6>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </form>
+                    </md-content>
+                </div>
             </div>
             <div class="col-lg-6 col-xl-6">
                 <form class="float-lg-end">
@@ -152,69 +147,78 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th><label><input name="all" type="checkbox" ng-click="selectAll()" /> All </label></th>
-                                <th>#ID</th>
-                                <th>Sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Giá</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr role="row" class="old" ng-repeat="item in products">
-                                <td> <input type="checkbox" ng-model="item.checked" name="all" /> </td>
-                                <td>#{{item.Id}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="product-box border">
-                                            <img src="{{item.Image}}" alt="">
-                                        </div>
-                                        <div class="product-info">
-                                            <h6 class="product-name mb-1">{{item.Name}}</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{item.Quantity}}</td>
-                                <td>{{ item.Price | currency : ""}}</td>
-                                <td>
-                                    <div class="d-flex align-content-center gap-1">
-                                        <input type="checkbox" ng-model="item.Status" ng-change="handlerEventChangeInputStatusProduct(item.Id)" />
-                                        <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
-                                            {{item.Status | statusFilter}}
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button ui-sref="product_details({id:item.Id})" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </button>
-                                    <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button ng-click="deleteProduct(item.Id)" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xóa sản phẩm">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-12 col-lg-12 d-flex">
+                        <div class="card border shadow-none w-100">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th><label><input name="all" type="checkbox" ng-click="selectAll()" /> All </label></th>
+                                                <th>#ID</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Số lượng</th>
+                                                <th>Giá</th>
+                                                <th>Trạng thái</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row" class="old" ng-repeat="item in products">
+                                                <td> <input type="checkbox" ng-model="item.checked" name="all" /> </td>
+                                                <td>#{{item.Id}}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div class="product-box border">
+                                                            <img src="{{item.Image}}" alt="">
+                                                        </div>
+                                                        <div class="product-info">
+                                                            <h6 class="product-name mb-1">{{item.Name}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{item.Quantity}}</td>
+                                                <td>{{ item.Price | currency : ""}}</td>
+                                                <td>
+                                                    <div class="d-flex align-content-center gap-1">
+                                                        <input type="checkbox" ng-model="item.Status" ng-change="handlerEventChangeInputStatusProduct(item.Id)" />
+                                                        <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
+                                                            {{item.Status | statusFilter}}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button ui-sref="product_details({id:item.Id})" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
+                                                        <i class="bi bi-eye-fill"></i>
+                                                    </button>
+                                                    <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm">
+                                                        <i class="bi bi-pencil-fill"></i>
+                                                    </button>
+                                                    <button ng-click="deleteProduct(item.Id)" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xóa sản phẩm">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                                
 
                 <div class="row">
                     <div class="col-sm-12 col-md-5">
                         <div class="dataTables_info"
-                             id="example_info"
-                             role="status"
-                             aria-live="polite">
-                            <!--Hiển thị từ {{}} đến {{}} trong tổng số {{}}-->
+                                id="example_info"
+                                role="status"
+                                aria-live="polite">
+                            Hiển thị từ {{page * pageSize}} đến {{page * pageSize + products.length}} trong tổng số {{totalCount}}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-7">
+                    <div class="col-sm-12 col-md-7 d-flex justify-content-end ">
                         <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="getListProduct(page)"></pager-directive>
                     </div>
                 </div>

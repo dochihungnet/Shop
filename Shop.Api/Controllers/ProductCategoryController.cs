@@ -16,6 +16,7 @@ using System.Web.Script.Serialization;
 namespace Shop.Api.Controllers
 {
     [RoutePrefix("api/productcategory")]
+    //[Authorize]
     public class ProductCategoryController : ApiControllerBase
     {
         IProductCategoryService _productCategoryService;
@@ -108,7 +109,7 @@ namespace Shop.Api.Controllers
                 var newProductCategory = new ProductCategory();
                 newProductCategory = Mapper.Map<ProductCategory>(productCategoryViewModel);
                 newProductCategory.CreatedDate = DateTime.Now;
-                newProductCategory.CreatedBy = "admin";
+                newProductCategory.CreatedBy = User.Identity.Name;
 
                 newProductCategory = _productCategoryService.Add(newProductCategory);
                 _productCategoryService.SaveChanges();
@@ -139,7 +140,7 @@ namespace Shop.Api.Controllers
 
                 AutoMapper.Mapper.Map(productCategoryViewModel, dbProductCategory);
                 dbProductCategory.UpdatedDate = DateTime.Now;
-                dbProductCategory.UpdatedBy = "admin";
+                dbProductCategory.UpdatedBy = User.Identity.Name;
 
                 _productCategoryService.Update(dbProductCategory);
                 _productCategoryService.SaveChanges();

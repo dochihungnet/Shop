@@ -14,6 +14,7 @@ using System.Web.Script.Serialization;
 namespace Shop.Api.Controllers
 {
     [RoutePrefix("api/product")]
+    [Authorize]
     public class ProductController : ApiControllerBase
     {
         IProductService _productService;
@@ -70,10 +71,6 @@ namespace Shop.Api.Controllers
             {
                 int totalRow = 0;
 
-                categoryId = categoryId != null ?  categoryId : null;
-                brandId = brandId != null ? brandId : null;
-                status = status != null ? status : null;
-
                 var listProduct = status == null ? _productService.GetAll(categoryId, brandId)  : _productService.GetAll(categoryId, brandId, status) ;
 
                 totalRow = listProduct.Count();
@@ -112,7 +109,8 @@ namespace Shop.Api.Controllers
 
                 var newProduct = Mapper.Map<Product>(productViewModel);
                 newProduct.CreatedDate = DateTime.Now;
-                newProduct.CreatedBy = "admin";
+                newProduct.CreatedBy = User.Identity.Name;
+
 
                 newProduct = _productService.Add(newProduct);
                 _productService.SaveChanges();
@@ -144,7 +142,8 @@ namespace Shop.Api.Controllers
 
                 Mapper.Map(productViewModel, dbProduct);
                 dbProduct.UpdatedDate = DateTime.Now;
-                dbProduct.UpdatedBy = "admin";
+                dbProduct.UpdatedBy = User.Identity.Name;
+
 
                 _productService.Update(dbProduct);
                 _productService.SaveChanges();

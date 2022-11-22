@@ -7,16 +7,19 @@
         $stateProvider
             .state('product_categories', {
                 url: '/product_categories',
+                parent: 'base',
                 templateUrl: '/Areas/Admin/app/components/product_categories/product_category_list.view.html',
                 controller: 'productCategoryListController'
             })
             .state('product_category_add', {
                 url: '/product_category_add',
+                parent: 'base',
                 templateUrl: '/Areas/Admin/app/components/product_categories/product_category_add.view.html',
                 controller: 'productCategoryAddController'
             })
             .state('product_category_edit', {
                 url: '/product_category_edit/:id',
+                parent: 'base',
                 templateUrl: '/Areas/Admin/app/components/product_categories/product_category_edit.view.html',
                 controller: 'productCategoryEditController'
             });

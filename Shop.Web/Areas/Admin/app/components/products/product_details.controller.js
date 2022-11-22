@@ -1,14 +1,17 @@
 ﻿(function (app) {
     app.controller('productDetailsController', productEditController);
 
-    productEditController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', 'commonService'];
+    productEditController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', 'commonService', '$ngBootbox'];
 
-    function productEditController(apiService, $scope, $state, notificationService, $stateParams, commonService) {
+    function productEditController(apiService, $scope, $state, notificationService, $stateParams, commonService, $ngBootbox) {
         $scope.brands = [];
         $scope.productCategories = [];
         $scope.product = {
 
         };
+
+        $scope.deleteProduct = deleteProduct;
+
 
         function loadProductDetail() {
             apiService.get(
@@ -23,7 +26,6 @@
                 }
             )
         }
-
 
         function getListProductCategory() {
             apiService.get(
@@ -52,7 +54,31 @@
             )
         }
 
-        
+        function deleteProduct(id) {
+            $ngBootbox.confirm('Bạn có chắc muốn xóa sản phẩm này không?')
+                .then(function (result) {
+
+                    var config = {
+                        params: {
+                            id: id
+                        }
+                    };
+
+                    apiService.del(
+                        'https://localhost:44353/api/product/delete',
+                        config,
+                        function (result) {
+                            notificationService.displaySuccess('Xóa sản phẩm thành công!');
+                            $state.go('products');
+                        },
+                        function (error) {
+                            notificationService.displayError('Xóa sản phẩm thất bại!')
+                        }
+                    )
+
+
+                })
+        }
 
         loadProductDetail();
         getListProductCategory();
