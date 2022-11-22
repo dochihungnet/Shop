@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -49,9 +48,6 @@
     <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Areas\Admin\Libs\CKFinder.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -148,7 +144,7 @@
     <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="Areas\Admin\app\app.js" />
-    <Content Include="Areas\Admin\app\components\brands\brands.modue.js" />
+    <Content Include="Areas\Admin\app\components\brands\brands.module.js" />
     <Content Include="Areas\Admin\app\components\brands\brand_edit.controller.js" />
     <Content Include="Areas\Admin\app\components\brands\brand_add.view.html" />
     <Content Include="Areas\Admin\app\components\brands\brand_list.view.html" />
@@ -181,8 +177,16 @@
     <Content Include="Areas\Admin\app\components\product_categories\product_category_edit.view.html" />
     <Content Include="Areas\Admin\app\components\product_categories\product_category_list.view.html" />
     <Content Include="Areas\Admin\app\components\product_categories\product_category_list.controller.js" />
+    <Content Include="Areas\Admin\app\components\slides\slides.module.js" />
+    <Content Include="Areas\Admin\app\components\slides\slide_list.view.html" />
+    <Content Include="Areas\Admin\app\components\slides\slide_edit.view.html" />
+    <Content Include="Areas\Admin\app\components\slides\slide_add.view.html" />
+    <Content Include="Areas\Admin\app\components\slides\slide_list.controller.js" />
+    <Content Include="Areas\Admin\app\components\slides\slide_edit.controller.js" />
+    <Content Include="Areas\Admin\app\components\slides\slide_add.controller.js" />
     <Content Include="Areas\Admin\app\shared\directives\pagerDirective.html" />
     <Content Include="Areas\Admin\app\shared\directives\pagerDirective.js" />
+    <Content Include="Areas\Admin\app\shared\filters\statusBrandFilter.js" />
     <Content Include="Areas\Admin\app\shared\filters\statusFilter.js" />
     <Content Include="Areas\Admin\app\shared\modules\shop.common.js" />
     <Content Include="Areas\Admin\app\shared\services\apiService.js" />
@@ -1621,6 +1625,8 @@
     <Content Include="assets\libs\angular-material\angular-material.js" />
     <Content Include="assets\libs\angular-material\angular-material.min.css" />
     <Content Include="assets\libs\angular-material\angular-material.min.js" />
+    <Content Include="assets\libs\angular-sanitize\angular-sanitize.js" />
+    <Content Include="assets\libs\angular-sanitize\angular-sanitize.min.js" />
     <Content Include="assets\libs\angular-ui-router\angular-ui-router.js" />
     <Content Include="assets\libs\angular-ui-router\angular-ui-router.min.js" />
     <Content Include="assets\libs\angular-ui-router\resolveService.js" />
@@ -7944,7 +7950,6 @@
     <Folder Include="app\shared\filters\" />
     <Folder Include="app\shared\views\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\app\components\slide\" />
     <Folder Include="Areas\Admin\app\shared\navigation\" />
     <Folder Include="assets\admin\plugins\nicescroll\css\" />
     <Folder Include="assets\client\image\theme\home5\" />
@@ -8209,6 +8214,7 @@
     <Content Include="assets\client\css\font-awesome\scss\_stacked.scss" />
     <Content Include="assets\client\css\font-awesome\scss\_variables.scss" />
     <Content Include="assets\client\css\header\header2.css.map" />
+    <Content Include="assets\libs\angular-sanitize\angular-sanitize.min.js.map" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -8254,7 +8260,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.8.4\build\Microsoft.TypeScript.MSBuild.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

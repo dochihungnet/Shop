@@ -1,0 +1,112 @@
+﻿﻿<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Hệ thống</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Slide
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Settings</button>
+            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                <a class="dropdown-item" href="javascript:;">Action</a>
+                <a class="dropdown-item" href="javascript:;">Another action</a>
+                <a class="dropdown-item" href="javascript:;">Something else here</a>
+                <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+<div class="row">
+    <div class="col-xl-11 mx-auto mt-1">
+        <div class="card">
+            <div class="card-body">
+                <div class="border p-4 rounded">
+                    <div class="card-title d-flex align-items-center">
+                        <h5 class="mb-0">Thêm slide</h5>
+                    </div>
+                    <hr />
+                    <form novalidate name="frmAddSlide" role="form" ng-submit="AddSlide()">
+
+                        <div class="row mb-3">
+                            <label for="inputEnterName" class="col-sm-3 col-form-label">Tên danh mục</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterName" name="name" ng-maxlength="256" required ng-model="slide.Name">
+                                <div ng-show="frmAddSlide.name.$invalid" class="invalid-feedback d-block">Tên slide không được để trống.</div>
+                                <div ng-show="frmAddSlide.name.$error.maxlength" class="invalid-feedback d-block">Tên slide quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <label for="inputEnterDescription" class="col-sm-3 col-form-label">Mô tả</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterDescription" name="description" ng-maxlength="500" ng-model="slide.Description">
+                                <div ng-show="frmAddSlide.description.$error.maxlength" class="invalid-feedback d-block">Mô tả quá dài ( phải < 500 ký tự ).</div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <label for="inputEnterDisplayOrder" class="col-sm-3 col-form-label">Thứ tự</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="inputEnterDisplayOrder" name="displayOrder" required ng-model="slide.DisplayOrder">
+                                <div ng-show="frmAddSlide.displayOrder.$invalid" class="invalid-feedback d-block">Thứ tự không được để trống.</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Hình ảnh</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <button type="button" class="input-group-text" ng-click="ChooseImage()">Chọn ảnh</button>
+                                    <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="slide.Image">
+                                </div>
+                                <div ng-show="frmAddSlide.image.$error.maxlength" class="invalid-feedback d-block">Đường dẫn quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputEnterUrl" class="col-sm-3 col-form-label">Url</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterUrl" name="url" required ng-model="slide.Url">
+                                <div ng-show="frmAddSlide.url.$invalid" class="invalid-feedback d-block">Url không được để trống.</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputCheckStatus" class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="inputCheckStatus" name="status" ng-model="slide.Status" ng-checked="slide.Status">
+                                    <label class="form-check-label" for="inputCheckStatus">Hiển thị trang chủ</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9 d-flex justify-content-end">
+                                <button ui-sref="product_categories" class="btn btn-primary px-5 me-2">Quay lại</button>
+                                <button type="submit" class="btn btn-primary px-5" ng-disabled="frmAddSlide.$invalid">Tạo mới</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

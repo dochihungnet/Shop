@@ -1,32 +1,44 @@
 ﻿(function (app) {
-
     app.controller('brandAddController', brandAddController);
 
     brandAddController.$inject = ['$scope', 'apiService', '$state', 'notificationService', 'commonService'];
 
     function brandAddController($scope, apiService, $state, notificationService, commonService) {
         $scope.brand = {
-            CreatedDate: new Date(),
-            CreatedBy: "Admin",
             Status: true,
             HomeFlag: true
         };
 
-        $scope.GetSeoTitle = function () {
+        $scope.GetSeoTitle = GetSeoTitle;
+        $scope.AddBrand = AddBrand;
+        $scope.ChooseImage = ChooseImage;
+
+
+        function GetSeoTitle() {
             $scope.brand.Alias = commonService.getSeoTitle($scope.brand.Name);
         }
 
-        $scope.AddBrand = function () {
+        function AddBrand() {
             apiService.post(
                 'https://localhost:44353/api/brand/create',
                 $scope.brand,
                 function (result) {
                     notificationService.displaySuccess('Thêm thương hiệu thành công');
-                    $state.go('product_categories');
+                    $state.go('brands');
                 },
                 function (error) {
                     notificationService.displayError('Thêm mới không thành công.');
                 });
+        }
+
+        function ChooseImage() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $scope.$apply(function () {
+                    $scope.brand.Image = fileUrl;
+                });
+            }
+            finder.popup();
         }
 
     }

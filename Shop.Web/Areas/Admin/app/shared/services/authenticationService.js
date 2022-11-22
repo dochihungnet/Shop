@@ -38,7 +38,7 @@
             }
 
             this.validateRequest = function () {
-                var url = 'https://localhost:44353/api/home/TestMethod';
+                var url = 'https://localhost:44353/Home/Index';
                 var deferred = $q.defer();
                 $http.get(url).then(function () {
                     deferred.resolve(null);

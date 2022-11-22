@@ -14,13 +14,13 @@ using System.Web.Script.Serialization;
 
 namespace Shop.Api.Controllers
 {
-    [RoutePrefix("api/brand")]
-    public class BrandController : ApiControllerBase
+    [RoutePrefix("api/slide")]
+    public class SlideController : ApiControllerBase
     {
-        IBrandService _brandService;
-        public BrandController(IErrorService errorService, IBrandService brandService) : base(errorService)
+        ISlideService _slideService;
+        public SlideController(IErrorService errorService, ISlideService slideService) : base(errorService)
         {
-            this._brandService = brandService;
+            this._slideService = slideService;
         }
 
         [Route("getall")]
@@ -31,11 +31,11 @@ namespace Shop.Api.Controllers
             {
                 HttpResponseMessage response = null;
 
-                var listBrand = _brandService.GetAll();
+                var listSlide = _slideService.GetAll();
 
-                var listBrandViewModel = Mapper.Map<List<BrandViewModel>>(listBrand);
+                var listSlideViewModel = Mapper.Map<List<SlideViewModel>>(listSlide);
 
-                response = request.CreateResponse(HttpStatusCode.OK, listBrandViewModel);
+                response = request.CreateResponse(HttpStatusCode.OK, listSlideViewModel);
 
                 return response;
             });
@@ -50,17 +50,17 @@ namespace Shop.Api.Controllers
 
                 int totalRow = 0;
 
-                var listBrand = _brandService.GetAll(keyword);
+                var listSlide = _slideService.GetAll();
 
-                totalRow = listBrand.Count();
+                totalRow = listSlide.Count();
 
-                var query = listBrand.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
+                var query = listSlide.OrderByDescending(x => x.DisplayOrder).Skip(page * pageSize).Take(pageSize);
 
-                var listBrandViewModel = Mapper.Map<List<BrandViewModel>>(query);
+                var listSlideViewModel = Mapper.Map<List<SlideViewModel>>(query);
 
-                var paginationSet = new PaginationSet<BrandViewModel>()
+                var paginationSet = new PaginationSet<SlideViewModel>()
                 {
-                    Items = listBrandViewModel,
+                    Items = listSlideViewModel,
                     Page = page,
                     TotalCount = totalRow,
                     TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
@@ -81,11 +81,11 @@ namespace Shop.Api.Controllers
             {
                 HttpResponseMessage response = null;
 
-                var brand = _brandService.GetById(id);
+                var slide = _slideService.GetById(id);
 
-                var bradViewModel = Mapper.Map<BrandViewModel>(brand);
+                var slideViewModel = Mapper.Map<SlideViewModel>(slide);
 
-                response = request.CreateResponse(HttpStatusCode.OK, bradViewModel);
+                response = request.CreateResponse(HttpStatusCode.OK, slideViewModel);
 
                 return response;
             });
@@ -93,7 +93,7 @@ namespace Shop.Api.Controllers
 
         [Route("create")]
         [HttpPost]
-        public HttpResponseMessage Create(HttpRequestMessage request, BrandViewModel brandViewModel)
+        public HttpResponseMessage Create(HttpRequestMessage request, SlideViewModel slideViewModel)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -105,17 +105,15 @@ namespace Shop.Api.Controllers
                     return response;
                 }
 
-                var newBrand = new Brand();
-                newBrand = Mapper.Map<Brand>(brandViewModel);
-                newBrand.CreatedDate = DateTime.Now;
-                newBrand.CreatedBy = User.Identity.Name;
+                var newSlide = new Slide();
+                newSlide = Mapper.Map<Slide>(slideViewModel);
 
-                newBrand =  _brandService.Add(newBrand);
-                _brandService.SaveChanges();
+                newSlide = _slideService.Add(newSlide);
+                _slideService.SaveChanges();
 
-                var newBrandViewModel = Mapper.Map<BrandViewModel>(newBrand);
+                var newSlideViewModel = Mapper.Map<SlideViewModel>(newSlide);
 
-                response = request.CreateResponse(HttpStatusCode.Created, newBrandViewModel);
+                response = request.CreateResponse(HttpStatusCode.Created, newSlideViewModel);
 
                 return response;
             });
@@ -123,7 +121,7 @@ namespace Shop.Api.Controllers
 
         [Route("update")]
         [HttpPut]
-        public HttpResponseMessage Update(HttpRequestMessage request, BrandViewModel brandViewModel)
+        public HttpResponseMessage Update(HttpRequestMessage request, SlideViewModel slideViewModel)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -135,16 +133,14 @@ namespace Shop.Api.Controllers
                     return response;
                 }
 
-                var dbBrand = _brandService.GetById(brandViewModel.Id);
-                Mapper.Map(brandViewModel, dbBrand);
-                dbBrand.UpdatedDate = DateTime.Now;
-                dbBrand.UpdatedBy = User.Identity.Name;
+                var dbSlide = _slideService.GetById(slideViewModel.Id);
+                Mapper.Map(slideViewModel, dbSlide);
 
-                _brandService.Update(dbBrand);
-                _brandService.SaveChanges();
+                _slideService.Update(dbSlide);
+                _slideService.SaveChanges();
 
-                brandViewModel = Mapper.Map<BrandViewModel>(dbBrand);
-                response = request.CreateResponse(HttpStatusCode.Created, brandViewModel);
+                slideViewModel = Mapper.Map<SlideViewModel>(dbSlide);
+                response = request.CreateResponse(HttpStatusCode.Created, slideViewModel);
 
                 return response;
             });
@@ -159,12 +155,12 @@ namespace Shop.Api.Controllers
             {
                 HttpResponseMessage response = null;
 
-                var oldBrand = _brandService.Delete(id);
-                _brandService.SaveChanges();
+                var oldSlide = _slideService.Delete(id);
+                _slideService.SaveChanges();
 
-                var brandViewModel = Mapper.Map<BrandViewModel>(oldBrand);
+                var slideViewModel = Mapper.Map<SlideViewModel>(oldSlide);
 
-                response = request.CreateResponse(HttpStatusCode.OK, brandViewModel);
+                response = request.CreateResponse(HttpStatusCode.OK, slideViewModel);
 
                 return response;
             });
@@ -172,21 +168,21 @@ namespace Shop.Api.Controllers
 
         [Route("deletemultiple")]
         [HttpDelete]
-        public HttpResponseMessage DeleteMultiple(HttpRequestMessage request, string checkedBrands)
+        public HttpResponseMessage DeleteMultiple(HttpRequestMessage request, string checkedSlide)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
 
-                var listBrand = new JavaScriptSerializer().Deserialize<List<int>>(checkedBrands);
+                var listSlide = new JavaScriptSerializer().Deserialize<List<int>>(checkedSlide);
 
-                foreach (var item in listBrand)
+                foreach (var item in listSlide)
                 {
-                    _brandService.Delete(item);
+                    _slideService.Delete(item);
                 }
-                _brandService.SaveChanges();
+                _slideService.SaveChanges();
 
-                response = request.CreateResponse(HttpStatusCode.OK, listBrand.Count);
+                response = request.CreateResponse(HttpStatusCode.OK, listSlide.Count);
 
                 return response;
             });

@@ -159,7 +159,7 @@ input:-webkit-autofill {
   }
 }
 .md-padding {
-  padding: 8px 0;
+  padding: 8px;
 }
 
 .md-margin {
@@ -196,7 +196,7 @@ input:-webkit-autofill {
 
 @media (min-width: 960px) {
   .md-padding {
-    padding: 8px 0;
+    padding: 16px;
   }
 }
 html[dir=rtl], html[dir=ltr], body[dir=rtl], body[dir=ltr] {
@@ -504,14 +504,12 @@ md-autocomplete[md-floating-label] .md-show-clear-button input {
   padding-left: 30px;
 }
 md-autocomplete md-autocomplete-wrap {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    position: relative;
-    overflow: visible;
-    height: 40px;
-    border: 1px solid #e2e3e4;
-    box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  height: 40px;
 }
 md-autocomplete md-autocomplete-wrap.md-menu-showing {
   z-index: 51;
@@ -670,9 +668,9 @@ md-autocomplete .md-show-clear-button button.ng-leave.ng-leave-active {
 .md-autocomplete-suggestions .md-autocomplete-suggestion {
   font-size: 14px;
   overflow: hidden;
-  padding: 15px;
-  line-height: 72px;
-  height: 72px;
+  padding: 0 15px;
+  line-height: 48px;
+  height: 48px;
   transition: background 0.15s linear;
   margin: 0;
   white-space: nowrap;
@@ -1707,7 +1705,6 @@ md-content {
   position: relative;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  background: none;
 }
 md-content[md-scroll-y] {
   overflow-y: auto;

@@ -1,30 +1,24 @@
 ﻿(function (app) {
-    app.controller('brandEditController', brandEditController);
+    app.controller('slideEditController', slideEditController);
 
-    brandEditController.$inject = ['apiService', '$scope', 'notificationService', '$state', '$stateParams', 'commonService'];
+    slideEditController.$inject = ['apiService', '$scope', 'notificationService', '$state', '$stateParams', 'commonService'];
 
-    function brandEditController(apiService, $scope, notificationService, $state, $stateParams, commonService) {
-        $scope.brand = {
+    function slideEditController(apiService, $scope, notificationService, $state, $stateParams, commonService) {
+        $scope.slide = {
             Status: true,
             HomeFlag: true
         }
 
-        $scope.GetSeoTitle = GetSeoTitle;
-        $scope.UpdateBrand = UpdateBrand;
+        $scope.UpdateSlide = UpdateSlide;
         $scope.ChooseImage = ChooseImage;
 
 
-
-        function GetSeoTitle() {
-            $scope.brand.Alias = commonService.getSeoTitle($scope.brand.Name);
-        }
-
-        function loadBrandDetail() {
+        function loadSlideDetail() {
             apiService.get(
-                'https://localhost:44353/api/brand/getbyid/' + $stateParams.id,
+                'https://localhost:44353/api/slide/getbyid/' + $stateParams.id,
                 null,
                 function (result) {
-                    $scope.brand = result.data;
+                    $scope.slide = result.data;
                 },
                 function (error) {
                     notificationService.displayError(error.data);
@@ -32,13 +26,13 @@
             );
         }
 
-        function UpdateBrand() {
+        function UpdateSlide() {
             apiService.put(
-                'https://localhost:44353/api/brand/update',
-                $scope.brand,
+                'https://localhost:44353/api/slide/update',
+                $scope.slide,
                 function (result) {
                     notificationService.displaySuccess('Cập nhập thành công.');
-                    $state.go('brands');
+                    $state.go('slides');
                 },
                 function (error) {
                     notificationService.displayError('Cập nhật không thành công.');
@@ -50,13 +44,13 @@
             var finder = new CKFinder();
             finder.selectActionFunction = function (fileUrl) {
                 $scope.$apply(function () {
-                    $scope.brand.Image = fileUrl;
+                    $scope.slide.Image = fileUrl;
                 });
             }
             finder.popup();
         }
 
-        loadBrandDetail();
+        loadSlideDetail();
     }
 
-})(angular.module('shop.brands'));
+})(angular.module('shop.slides'));

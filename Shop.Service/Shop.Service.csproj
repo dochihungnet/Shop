@@ -53,6 +53,7 @@
     <Compile Include="ProductService.cs" />
     <Compile Include="ProductTagService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlideService.cs" />
     <Compile Include="TagService.cs" />
   </ItemGroup>
   <ItemGroup>

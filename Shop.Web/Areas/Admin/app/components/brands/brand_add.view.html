@@ -1,1 +1,124 @@
-﻿
+﻿﻿<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Đối tác</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Thương hiệu
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Settings</button>
+            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                <a class="dropdown-item" href="javascript:;">Action</a>
+                <a class="dropdown-item" href="javascript:;">Another action</a>
+                <a class="dropdown-item" href="javascript:;">Something else here</a>
+                <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+<div class="row">
+    <div class="col-xl-11 mx-auto mt-1">
+        <div class="card">
+            <div class="card-body">
+                <div class="border p-4 rounded">
+                    <div class="card-title d-flex align-items-center">
+                        <h5 class="mb-0">Thêm thương hiệu sản phẩm</h5>
+                    </div>
+                    <hr />
+                    <form novalidate name="frmAddBrand" role="form" ng-submit="AddBrand()">
+
+                        <div class="row mb-3">
+                            <label for="inputEnterName" class="col-sm-3 col-form-label">Tên thương hiệu</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterName" name="name" ng-maxlength="256" required ng-model="brand.Name" ng-change="GetSeoTitle()">
+                                <div ng-show="frmAddBrand.name.$invalid" class="invalid-feedback d-block">Tên danh mục không được để trống.</div>
+                                <div ng-show="frmAddBrand.name.$error.maxlength" class="invalid-feedback d-block">Tên danh mục quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputEnterAlias" class="col-sm-3 col-form-label">Alias</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterAlias" name="alias" ng-maxlength="256" required ng-model="brand.Alias">
+                                <div ng-show="frmAddBrand.alias.$invalid" class="invalid-feedback d-block">Alias không được để trống.</div>
+                                <div ng-show="frmAddBrand.alias.$error.maxlength" class="invalid-feedback d-block">Alias quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputEnterDescription" class="col-sm-3 col-form-label">Mô tả ngắn</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterDescription" name="description" ng-maxlength="500" ng-model="brand.Description">
+                                <div ng-show="frmAddBrand.description.$error.maxlength" class="invalid-feedback d-block">Mô tả quá dài ( phải < 500 ký tự ).</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Hình ảnh</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <button type="button" class="input-group-text" ng-click="ChooseImage()">Chọn ảnh</button>
+                                    <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="brand.Image">
+                                </div>
+                                <div ng-show="frmAddBrand.image.$error.maxlength" class="invalid-feedback d-block">Đường dẫn quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputEnterMetaKeyword" class="col-sm-3 col-form-label">Meta Keyword</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputEnterMetaKeyword" name="metaKeyword" ng-model="brand.MetaKeyword">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputEnterMetaDescription" class="col-sm-3 col-form-label">Meta Description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="inputEnterMetaDescription" name="metaDescription" ng-model="brand.MetaDescription"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputCheckStatus" class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="inputCheckStatus" name="status" ng-model="brand.Status" ng-checked="brand.Status">
+                                    <label class="form-check-label" for="inputCheckStatus">Kích hoạt</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputCheckHomeFlag" class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="inputCheckHomeFlag" name="homeFlag" ng-model="brand.HomeFlag" ng-checked="brand.HomeFlag">
+                                    <label class="form-check-label" for="inputCheckHomeFlag">Hiển thị trang chủ</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9 d-flex justify-content-end">
+                                <button ui-sref="brands" class="btn btn-primary px-5 me-2">Quay lại</button>
+                                <button type="submit" class="btn btn-primary px-5" ng-disabled="frmAddBrand.$invalid">Tạo mới</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

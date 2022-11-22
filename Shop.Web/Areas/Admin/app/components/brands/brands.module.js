@@ -11,14 +11,14 @@
                 templateUrl: '/Areas/Admin/app/components/brands/brand_list.view.html',
                 controller: 'brandListController'
             })
-            .state('product_category_add', {
-                url: '/product_category_add',
+            .state('brand_add', {
+                url: '/brand_add',
                 parent: 'base',
                 templateUrl: '/Areas/Admin/app/components/brands/brand_add.view.html',
                 controller: 'brandAddController'
             })
-            .state('product_category_edit', {
-                url: '/product_category_edit/:id',
+            .state('brand_edit', {
+                url: '/brand_edit/:id',
                 parent: 'base',
                 templateUrl: '/Areas/Admin/app/components/brands/brand_edit.view.html',
                 controller: 'brandEditController'

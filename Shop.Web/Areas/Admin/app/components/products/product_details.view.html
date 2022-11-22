@@ -64,7 +64,7 @@
                                             <td class="col-4">Thương hiệu</td>
                                             <td class="col-8">{{product.BrandId}}</td>
                                         </tr>
-                                        <tr role="row" class="old">
+                                        <tr role="row" class="old" ng-if="product.Warranty">
                                             <td class="col-4">Bảo hành</td>
                                             <td class="col-8">{{product.Warranty}} tháng</td>
                                         </tr>
@@ -95,11 +95,11 @@
                                         </tr>
                                         <tr ng-if="product.Description" role="row" class="old">
                                             <td class="col-4">Mô tả ngắn</td>
-                                            <td class="col-8" style="word-break: break-all;">{{product.Description}}</td>
+                                            <td class="col-8">{{product.Description}}</td>
                                         </tr>
                                         <tr ng-if="product.Content" role="row" class="old">
                                             <td class="col-4">Mô tả</td>
-                                            <td class="col-8">{{product.Content}}</td>
+                                            <td class="col-8" ng-bind-html="product.Content"></td>
                                         </tr>
                                         <tr ng-if="product.MetaKeyword" role="row" class="old">
                                             <td class="col-4">Meta keyword</td>
