@@ -423,6 +423,8 @@
     border-top-left-radius: 3px;
     width: 22%; }
   .typeheader-2 #sosearchpro .search .select_category select {
+    outline:none;
+    border: none;
     height: 40px;
     line-height: 40px;
     color: #666;
