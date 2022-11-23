@@ -17,6 +17,7 @@ namespace Shop.Service
         Slide Delete(int id);
         Slide GetById(int id);
         IEnumerable<Slide> GetAll();
+        IEnumerable<Slide> GetAll(bool? status);
         void SaveChanges();
     }
     public class SlideService : ISlideService
@@ -47,7 +48,12 @@ namespace Shop.Service
 
         public IEnumerable<Slide> GetAll()
         {
-            return _slideRepository.GetAll().Where(s => s.Status);
+            return _slideRepository.GetAll();
+        }
+
+        public IEnumerable<Slide> GetAll(bool? status)
+        {
+            return _slideRepository.GetAll().Where(s => s.Status == status);
         }
 
         public Slide GetById(int id)

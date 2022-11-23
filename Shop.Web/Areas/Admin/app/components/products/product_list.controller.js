@@ -26,6 +26,7 @@
         $scope.handlerCheckedInputBrand = handlerCheckedInputBrand;
         $scope.handlerEventChangeInputStatusProduct = handlerEventChangeInputStatusProduct;
         $scope.handlerEventChangeStatus = handlerEventChangeStatus;
+        $scope.handlerEventClickInputStatusProduct = handlerEventClickInputStatusProduct;
 
 
         function deleteMultiple() {
@@ -177,32 +178,32 @@
 
         function handlerEventChangeInputStatusProduct(id) {
 
-            var product = $scope.products.find(x => x.Id == id);
+            //var product = $scope.products.find(x => x.Id == id);
 
-            $ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
-                .then(function (result) {
-                    apiService.put(
-                        'https://localhost:44353/api/product/update',
-                        product,
-                        function (result) {
-                            notificationService.displaySuccess('Cập nhập trạng thái thành công!');
-                            search();
-                        },
-                        function (error) {
-                            notificationService.displayError('Cập nhập trạng thái thất bại!')
-                        }
-                    )
-                }, function () {
-                    $scope.products = $scope.products.map(x => {
-                        if (x.Id == product.Id) {
-                            x.Status = !product.Status;
-                        }
-                        return x;
-                    })
-                }
+            //$ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
+            //    .then(function (result) {
+            //        apiService.put(
+            //            'https://localhost:44353/api/product/update',
+            //            product,
+            //            function (result) {
+            //                notificationService.displaySuccess('Cập nhập trạng thái thành công!');
+            //                search();
+            //            },
+            //            function (error) {
+            //                notificationService.displayError('Cập nhập trạng thái thất bại!')
+            //            }
+            //        )
+            //    }, function () {
+            //        $scope.products = $scope.products.map(x => {
+            //            if (x.Id == product.Id) {
+            //                x.Status = !product.Status;
+            //            }
+            //            return x;
+            //        })
+            //    }
                     
 
-            )
+            //)
         }
 
         function handlerCheckedInputProductCategory(id) {
@@ -251,6 +252,35 @@
 
             // call data
             getListProduct();
+        }
+
+        function handlerEventClickInputStatusProduct($event, id) {
+            $event.preventDefault();
+            var product = { ...$scope.products.find(x => x.Id == id) };
+            product.Status = !product.Status;
+
+            $ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
+                .then(function (result) {
+                    apiService.put(
+                        'https://localhost:44353/api/product/update',
+                        product,
+                        function (result) {
+                            notificationService.displaySuccess('Cập nhập trạng thái thành công!');
+                            getListProduct();
+                        },
+                        function (error) {
+                            notificationService.displayError('Cập nhập trạng thái thất bại!')
+                        }
+                    )
+                }, function () {
+                    $scope.products = $scope.products.map(x => {
+                        if (x.Id == product.Id) {
+                            x.Status = !product.Status;
+                        }
+                        return x;
+                    })
+                }
+                )
         }
 
         function handlerEventChangeStatus() {

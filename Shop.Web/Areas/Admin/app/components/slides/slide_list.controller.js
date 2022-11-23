@@ -11,7 +11,7 @@
         $scope.page = 0;
         $scope.pageSize = 10;
         $scope.pageCount = 0;
-        $scope.keyword = '';
+        $scope.status = null;
 
         $scope.isAll = false;
 
@@ -19,6 +19,8 @@
         $scope.selectAll = selectAll;
         $scope.deleteMultiple = deleteMultiple;
         $scope.getListSlide = getListSlide;
+        $scope.handlerEventChangeInputStatusSlide = handlerEventChangeInputStatusSlide;
+        $scope.handlerEventClickInputStatusSlide = handlerEventClickInputStatusSlide;
 
         function deleteSlide(id) {
             $ngBootbox.confirm('Bạn có chắc chắn muốn xóa không?')
@@ -94,7 +96,6 @@
             }
         }, true);
 
-
         function getListSlide(page) {
             // params: thông số
 
@@ -102,9 +103,9 @@
 
             var config = {
                 params: {
-                    keyword: $scope.keyword,
                     page: page,
                     pageSize: $scope.pageSize,
+                    status: $scope.status,
                 }
             }
 
@@ -124,6 +125,63 @@
                     console.log('Lấy danh sách slide không thành công');
                 }
             );
+        }
+
+        function handlerEventChangeInputStatusSlide($event) {
+            console.log("Do chi hung 2")
+            //var slide = $scope.slides.find(x => x.Id == id);
+
+            //$ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
+            //    .then(function (result) {
+            //        apiService.put(
+            //            'https://localhost:44353/api/product/update',
+            //            slide,
+            //            function (result) {
+            //                notificationService.displaySuccess('Cập nhập trạng thái thành công!');
+            //                search();
+            //            },
+            //            function (error) {
+            //                notificationService.displayError('Cập nhập trạng thái thất bại!')
+            //            }
+            //        )
+            //    }, function () {
+            //        $scope.products = $scope.products.map(x => {
+            //            if (x.Id == product.Id) {
+            //                x.Status = !product.Status;
+            //            }
+            //            return x;
+            //        })
+            //    }
+            //    )
+        }
+
+        function handlerEventClickInputStatusSlide($event, id) {
+            $event.preventDefault();
+            var slide = { ...$scope.slides.find(x => x.Id == id) };
+            slide.Status = !slide.Status;
+
+            $ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
+                .then(function (result) {
+                    apiService.put(
+                        'https://localhost:44353/api/slide/update',
+                        slide,
+                        function (result) {
+                            notificationService.displaySuccess('Cập nhập trạng thái thành công!');
+                            getListSlide();
+                        },
+                        function (error) {
+                            notificationService.displayError('Cập nhập trạng thái thất bại!')
+                        }
+                    )
+                }, function () {
+                    $scope.slides = $scope.slides.map(x => {
+                        if (x.Id == slide.Id) {
+                            x.Status = !slide.Status;
+                        }
+                        return x;
+                    })
+                }
+                )
         }
 
         // Lấy danh sách thương hiệu

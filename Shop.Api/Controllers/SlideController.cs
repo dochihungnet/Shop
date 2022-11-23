@@ -42,7 +42,7 @@ namespace Shop.Api.Controllers
         }
 
         [Route("getall")]
-        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, int page, int pageSize, bool? status = null)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -50,7 +50,7 @@ namespace Shop.Api.Controllers
 
                 int totalRow = 0;
 
-                var listSlide = _slideService.GetAll();
+                var listSlide = status == null ?  _slideService.GetAll() : _slideService.GetAll(status);
 
                 totalRow = listSlide.Count();
 
@@ -168,13 +168,13 @@ namespace Shop.Api.Controllers
 
         [Route("deletemultiple")]
         [HttpDelete]
-        public HttpResponseMessage DeleteMultiple(HttpRequestMessage request, string checkedSlide)
+        public HttpResponseMessage DeleteMultiple(HttpRequestMessage request, string checkedSlides)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
 
-                var listSlide = new JavaScriptSerializer().Deserialize<List<int>>(checkedSlide);
+                var listSlide = new JavaScriptSerializer().Deserialize<List<int>>(checkedSlides);
 
                 foreach (var item in listSlide)
                 {

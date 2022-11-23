@@ -51,7 +51,7 @@
                                              md-menu-class="autocomplete-custom-template"
                                              md-menu-container-class="custom-container">
                                 <md-item-template>
-                                    <div class="d-flex align-items-center gap-3 w-100 h-100" style="padding: 15px 0px;">
+                                    <div class="d-flex align-items-center gap-3 w-100 h-100">
                                         <div class="product-box border">
                                             <img src="{{item.Image}}" alt="">
                                         </div>
@@ -182,7 +182,7 @@
                                                 <td>{{ item.Price | currency : ""}}</td>
                                                 <td>
                                                     <div class="d-flex align-content-center gap-1">
-                                                        <input type="checkbox" ng-model="item.Status" ng-change="handlerEventChangeInputStatusProduct(item.Id)" />
+                                                        <input type="checkbox" ng-model="item.Status" ng-click="handlerEventClickInputStatusProduct($event, item.Id)" ng-change="handlerEventChangeInputStatusProduct(item.Id)" />
                                                         <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
                                                             {{item.Status | statusFilter}}
                                                         </div>

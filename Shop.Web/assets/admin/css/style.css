@@ -2217,3 +2217,9 @@ md-autocomplete#custom-template {
 .custom-container {
 	min-width: 400px !important;
 }
+
+.md-autocomplete-suggestions .md-autocomplete-suggestion{
+	height: 68px!important;
+	line-height: 68px !important;
+	padding: 15px !important;
+}

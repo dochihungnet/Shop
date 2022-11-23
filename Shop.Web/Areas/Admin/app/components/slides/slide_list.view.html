@@ -70,8 +70,11 @@
                                         </td>
                                         <td>{{item.DisplayOrder}}</td>
                                         <td>
-                                            <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
-                                                {{item.Status | statusBrandFilter}}
+                                            <div class="d-flex align-content-center gap-1">
+                                                <input ng-click="handlerEventClickInputStatusSlide($event, item.Id)" type="checkbox" ng-model="item.Status" ng-change="handlerEventChangeInputStatusSlide(item.Id)" />
+                                                <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
+                                                    {{item.Status | statusBrandFilter}}
+                                                </div>
                                             </div>
                                         </td>
                                         <td>
