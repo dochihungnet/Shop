@@ -4,9 +4,11 @@
     slideAddController.$inject = ['$scope', 'apiService', '$state', 'notificationService', 'commonService'];
 
     function slideAddController($scope, apiService, $state, notificationService, commonService) {
+
         $scope.slide = {
             Status: true
         };
+        $scope.slideGroups = [];
 
         $scope.AddSlide = AddSlide;
         $scope.ChooseImage = ChooseImage;
@@ -34,6 +36,22 @@
             finder.popup();
         }
 
+        function GetListSlideGroup() {
+            apiService.get(
+                'https://localhost:44353/api/slidegroup/getall',
+                null,
+                function (success) {
+                    $scope.slidegroups = success.data;
+                    console.log('Lấy danh sách slide group thành công.');
+                },
+                function (error) {
+                    console.log('Lấy danh sách slide group thất bại.');
+
+                }
+            )
+        }
+
+        GetListSlideGroup();
     }
 
 

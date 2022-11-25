@@ -140,9 +140,10 @@
     <Content Include="app\shared\services\apiService.js" />
     <Content Include="app\shared\services\authData.js" />
     <Content Include="app\shared\services\authenticationService.js" />
-    <Content Include="app\shared\services\common.js" />
+    <Content Include="app\shared\services\commonService.js" />
     <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
+    <Content Include="app\shared\views\base.view.html" />
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\brands\brands.module.js" />
     <Content Include="Areas\Admin\app\components\brands\brand_edit.controller.js" />
@@ -7948,7 +7949,6 @@
     <Folder Include="app\components\signup\" />
     <Folder Include="app\shared\directives\" />
     <Folder Include="app\shared\filters\" />
-    <Folder Include="app\shared\views\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\app\shared\navigation\" />
     <Folder Include="assets\admin\plugins\nicescroll\css\" />

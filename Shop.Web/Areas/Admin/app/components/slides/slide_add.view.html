@@ -58,6 +58,13 @@
                             </div>
                         </div>
 
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label">Group</label>
+                            <select class="form-select" name="GroupID" required ng-model="slide.GroupID" ng-options="option.ID as option.Name for option in slideGroups">
+                                <option value="">-- Chọn nhóm slide --</option>
+                            </select>
+                            <input type="hidden" name="GroupID" ng-model="slide.GroupID" />
+                        </div>
 
                         <div class="row mb-3">
                             <label for="inputEnterDisplayOrder" class="col-sm-3 col-form-label">Thứ tự</label>

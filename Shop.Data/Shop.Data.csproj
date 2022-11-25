@@ -88,21 +88,38 @@
     <Compile Include="Migrations\202211210537205_Intergrate-AspnetIdentity.designer.cs">
       <DependentUpon>202211210537205_Intergrate-AspnetIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211231657266_Update-Database.cs" />
+    <Compile Include="Migrations\202211231657266_Update-Database.designer.cs">
+      <DependentUpon>202211231657266_Update-Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211241730387_Create_Table_SlideGroub.cs" />
+    <Compile Include="Migrations\202211241730387_Create_Table_SlideGroub.designer.cs">
+      <DependentUpon>202211241730387_Create_Table_SlideGroub.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BrandRepository.cs" />
+    <Compile Include="Repositories\ContactDetailRepository.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
+    <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\FooterRepository.cs" />
+    <Compile Include="Repositories\MenuGroupRepository.cs" />
+    <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\OrderDetailRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\PageRepository.cs" />
     <Compile Include="Repositories\PostCategoryRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\PostTagRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductTagRepository.cs" />
+    <Compile Include="Repositories\SlideGroupRepository.cs" />
     <Compile Include="Repositories\SlideRepository.cs" />
+    <Compile Include="Repositories\SupportOnlineRepository.cs" />
+    <Compile Include="Repositories\SystemConfigRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
+    <Compile Include="Repositories\VisitorStatisticRepository.cs" />
     <Compile Include="ShopDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +154,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211210537205_Intergrate-AspnetIdentity.resx">
       <DependentUpon>202211210537205_Intergrate-AspnetIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211231657266_Update-Database.resx">
+      <DependentUpon>202211231657266_Update-Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211241730387_Create_Table_SlideGroub.resx">
+      <DependentUpon>202211241730387_Create_Table_SlideGroub.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

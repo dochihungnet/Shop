@@ -26,7 +26,7 @@ angular.
                 );
             }
 
-            getListProductCategory();
+            /*getListProductCategory();*/
 
 
         }]

@@ -1,11 +1,5 @@
-﻿using Shop.Model.Abstract;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Model.Models
 {
@@ -30,6 +24,12 @@ namespace Shop.Model.Models
         public string Url { set; get; }
 
         public int? DisplayOrder { set; get; }
+
+        [Required]
+        public int GroupID { set; get; }
+
+        [ForeignKey("GroupID")]
+        public virtual SlideGroup SlideGroup { set; get; }
 
         public bool Status { set; get; }
 
