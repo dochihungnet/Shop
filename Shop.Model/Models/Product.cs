@@ -33,8 +33,10 @@ namespace Shop.Model.Models
 
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
-        public decimal Price { get; set; }
-        public decimal? PromotionPrice { get; set; } // giá khuyến mãi
+        public decimal Price { get; set; } // giá bán
+        public decimal? PromotionPrice { get; set; } // giá khuyến mãi == % giảm giá
+        public decimal OriginalPrice { set; get; }// giá gốc
+        public DateTime? EndDiscountcDate { get; set; } // thời gian kết thúc giảm giá
         public int? Warranty { get; set; }
 
         [MaxLength(500)]
@@ -45,7 +47,7 @@ namespace Shop.Model.Models
         public int? ViewCount { get; set; }
         public string Tags { set; get; }
         public int Quantity { set; get; }
-        public decimal OriginalPrice { set; get; }// giá gốc
+        public int? QuantityHasSell { set; get; }
 
         [ForeignKey("CategoryId")]
         public virtual ProductCategory ProductCategory { set; get; }

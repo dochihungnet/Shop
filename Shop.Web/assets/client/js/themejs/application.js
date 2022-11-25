@@ -459,9 +459,6 @@ function display(view) {
 	$('.products-list').removeClass('list grid').addClass(view);
 	$('.list-view .btn').removeClass('active');
 	if(view == 'list') {
-		//$('.products-list .product-layout').addClass('col-lg-12');
-		// $('.products-list .product-layout .left-block').addClass('col-md-4');
-		// $('.products-list .product-layout .right-block').addClass('col-md-8');
 		$('.products-list .product-layout .item-desc').removeClass('hidden');
 		$('.products-list .product-layout .list-block').removeClass('hidden');
 		$('.products-list .product-layout .button-group').addClass('hidden');

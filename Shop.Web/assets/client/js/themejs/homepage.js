@@ -209,75 +209,7 @@
 		}
 		$tab.removeClass('tab-sel');
 		$this.addClass('tab-sel');
-		var items_active = $this.attr('data-active-content');
-		var _items_active = $(items_active,$element);
-		$items_content.removeClass('ltabs-items-selected');
-		_items_active.addClass('ltabs-items-selected');
-		$tab_label_select.html($tab.filter('.tab-sel').children('.ltabs-tab-label').html());
-		var $loading = $('.ltabs-loading', _items_active);
-		var loaded = _items_active.hasClass('ltabs-items-loaded');
 		
-		
-		type_show =$tabs.parents('.ltabs-tabs-container').attr('data-type_show');
-		if (!loaded && !_items_active.hasClass('ltabs-process')) {
-			_items_active.addClass('ltabs-process');
-			var category_id 		= $this.attr('data-category-id'),
-			path_url 	= 'ajax/listingtab_',
-			ajax_url = $tabs.parents('.ltabs-tabs-container').attr('data-ajaxurl')+path_url+category_id+ '.html';
-			
-			$loading.show();
-			$.ajax({
-				type: 'POST',
-				url: ajax_url,
-				//dataType: 'json',// when on gave connection errors
-				data: {
-					is_ajax_listing_tabs: 1,
-					ajax_reslisting_start: 1,
-					categoryid: category_id,
-					setting: setting,
-					lbmoduleid: 1,
-				},
-				success: function (data) {
-					
-					if (data != '') {
-						
-						$('.ltabs-loading', _items_active).replaceWith(data);
-						_items_active.addClass('ltabs-items-loaded').removeClass('ltabs-process');
-						$loading.remove();
-						if (type_show != 'slider') {
-							showAnimateItems(_items_active);
-						}
-						updateStatus(_items_active);
-						listing_tab_ajax(_items_active);
-					}
-					if(typeof(_SoQuickView) != 'undefined'){
-						_SoQuickView();
-					}
-						
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-				
-			});
-
-		} else {
-			if (type_show == 'loadmore') {
-				$('.ltabs-item', $items_content).removeAttr('style').addClass('new-ltabs-item');
-				showAnimateItems(_items_active);
-			}else{
-				var $tag_id = $element;
-				var owl = $('.owl2-carousel' , _items_active);
-				var $navpage = $(".wap-listing-tabs", $tag_id);
-				$navpage.siblings(".owl2-controls").addClass('hidden');
-				
-				owl = owl.data('owlCarousel2');
-				
-				if (typeof owl !== 'undefined') {
-					owl.onResize();
-				}
-			}
-		}
 	});
 
 })('#so_listing_tabs_1');
@@ -469,75 +401,6 @@
 		}
 		$tab.removeClass('tab-sel');
 		$this.addClass('tab-sel');
-		var items_active = $this.attr('data-active-content');
-		var _items_active = $(items_active,$element);
-		$items_content.removeClass('ltabs-items-selected');
-		_items_active.addClass('ltabs-items-selected');
-		$tab_label_select.html($tab.filter('.tab-sel').children('.ltabs-tab-label').html());
-		var $loading = $('.ltabs-loading', _items_active);
-		var loaded = _items_active.hasClass('ltabs-items-loaded');
-		
-		
-		type_show =$tabs.parents('.ltabs-tabs-container').attr('data-type_show');
-		if (!loaded && !_items_active.hasClass('ltabs-process')) {
-			_items_active.addClass('ltabs-process');
-			var category_id 		= $this.attr('data-category-id'),
-			path_url 	= 'ajax/listingtab_',
-			ajax_url = $tabs.parents('.ltabs-tabs-container').attr('data-ajaxurl')+path_url+category_id+ '.html';
-			
-			$loading.show();
-			$.ajax({
-				type: 'POST',
-				url: ajax_url,
-				//dataType: 'json',// when on gave connection errors
-				data: {
-					is_ajax_listing_tabs: 1,
-					ajax_reslisting_start: 1,
-					categoryid: category_id,
-					setting: setting,
-					lbmoduleid: 1,
-				},
-				success: function (data) {
-					
-					if (data != '') {
-						
-						$('.ltabs-loading', _items_active).replaceWith(data);
-						_items_active.addClass('ltabs-items-loaded').removeClass('ltabs-process');
-						$loading.remove();
-						if (type_show != 'slider') {
-							showAnimateItems(_items_active);
-						}
-						updateStatus(_items_active);
-						listing_tab_ajax(_items_active);
-					}
-					if(typeof(_SoQuickView) != 'undefined'){
-						_SoQuickView();
-					}
-						
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-				
-			});
-
-		} else {
-			if (type_show == 'loadmore') {
-				$('.ltabs-item', $items_content).removeAttr('style').addClass('new-ltabs-item');
-				showAnimateItems(_items_active);
-			}else{
-				var $tag_id = $element;
-				var owl = $('.owl2-carousel' , _items_active);
-				var $navpage = $(".wap-listing-tabs", $tag_id);
-				$navpage.siblings(".owl2-controls").addClass('hidden');
-				
-				owl = owl.data('owlCarousel2');
-				
-				if (typeof owl !== 'undefined') {
-					owl.onResize();
-				}
-			}
-		}
 	});
 
 })('#so_listing_tabs_2');
@@ -596,31 +459,6 @@ $(document).ready(function ($) {
 		
 	});
 	
-	/*function buttonpage(element){
-		var $element = $(element),
-			$slider = $(".yt-content-slider", $element),
-			data = $slider.data();
-		if (data.buttonpage == "top") {
-			$(".owl2-controls",$element).insertBefore($slider);
-			$(".owl2-dots",$element).insertAfter($(".owl2-prev", $slider));
-		} else {
-			$(".owl2-nav",$element).insertBefore($slider);
-			$(".owl2-controls",$element).insertAfter($slider);
-		}	
-	}
-	
-	// Home 1 - Latest Blogs
-	(function (element) {
-		buttonpage(element);
-	})(".blog-sidebar");
-	
-	(function (element) {
-		buttonpage(element);
-	})("#so_extra_slider_1");
-	
-	(function (element) {
-		buttonpage(element);
-	})("#so_extra_slider_2");*/
 
 }); 
 

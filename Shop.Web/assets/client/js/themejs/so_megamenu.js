@@ -7,7 +7,7 @@ $(document).ready(function() {
 		if($(this).hasClass('open')){
 			$('ul.megamenu li.item-vertical').each(function(i){
 					if(i>show_itemver){
-							$(this).slideUp(200);
+							$(this).slideUp(200);quickview
 							$(this).css('display', 'none');
 					}
 			});

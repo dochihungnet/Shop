@@ -21,6 +21,7 @@
             $scope.groupBanners = result[2];
             $scope.rootProductCategories = result[3];
             $scope.brands = result[4]
+            console.log($scope.brands);
             $timeout(init, 0);
 
         });
@@ -78,6 +79,8 @@
                     deferred.reject('Lấy thương hiệu không thành công');
                 }
             );
+
+            return deferred.promise;
         }
 
 		// Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
