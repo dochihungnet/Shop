@@ -44,6 +44,16 @@
             )
         };
 
+        $scope.ChooseImage = function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $scope.$apply(function () {
+                    $scope.productCategory.Image = fileUrl;
+                });
+            }
+            finder.popup();
+        }
+
         loadParentCategory();
 
     }

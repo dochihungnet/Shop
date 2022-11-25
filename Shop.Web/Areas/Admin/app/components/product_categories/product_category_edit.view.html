@@ -49,6 +49,17 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label class="col-sm-3 col-form-labell">Hình ảnh</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <button type="button" class="input-group-text" ng-click="ChooseImage()">Chọn ảnh</button>
+                                    <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="productCategory.Image">
+                                </div>
+                                <div ng-show="frmAddProductCategory.image.$error.maxlength" class="invalid-feedback d-block">Đường dẫn quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="inputEnterAlias" class="col-sm-3 col-form-label">Alias</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputEnterAlias" ng-maxlength="256" required name="alias" ng-model="productCategory.Alias">

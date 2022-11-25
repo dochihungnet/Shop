@@ -18,6 +18,9 @@ namespace Shop.Service
         Slide GetById(int id);
         IEnumerable<Slide> GetAll();
         IEnumerable<Slide> GetAll(bool? status);
+        IEnumerable<Slide> GetAll(bool? status, int? groupId);
+        IEnumerable<Slide> GetByGroupId(int groupId);
+
         void SaveChanges();
     }
     public class SlideService : ISlideService
@@ -53,7 +56,30 @@ namespace Shop.Service
 
         public IEnumerable<Slide> GetAll(bool? status)
         {
-            return _slideRepository.GetAll().Where(s => s.Status == status);
+            if (status.HasValue)
+            {
+                return _slideRepository.GetMulti(x => x.Status == status);
+            }
+            return _slideRepository.GetAll();
+        }
+
+        public IEnumerable<Slide> GetAll(bool? status, int? groupId)
+        {
+            if(status.HasValue && groupId.HasValue)
+            {
+                return _slideRepository.GetMulti(x => x.Status == status.Value && x.GroupID == groupId);
+            }
+            else if(!status.HasValue && groupId.HasValue)
+            {
+                return _slideRepository.GetMulti(x => x.GroupID == groupId);
+            }
+
+            return _slideRepository.GetAll();
+        }
+
+        public IEnumerable<Slide> GetByGroupId(int groupId)
+        {
+            return _slideRepository.GetMulti(x => x.Status && x.GroupID == groupId);
         }
 
         public Slide GetById(int id)

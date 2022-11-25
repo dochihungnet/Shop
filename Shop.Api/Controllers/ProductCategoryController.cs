@@ -42,7 +42,7 @@ namespace Shop.Api.Controllers
                 return response;
             });
         }
-
+        
         [Route("getall")]
         [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize = 10)
@@ -72,6 +72,25 @@ namespace Shop.Api.Controllers
                 return response;
             });
         }
+
+        [Route("getallroot")]
+        [HttpGet]
+        public HttpResponseMessage GetAllRoot(HttpRequestMessage request)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductCategory = _productCategoryService.GetAllRoot();
+
+                var listProductCategoryViewModel = Mapper.Map<List<ProductCategoryViewModel>>(listProductCategory);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryViewModel);
+
+                return response;
+            });
+        }
+
 
         [Route("getbyid/{id:int}")]
         [HttpGet]

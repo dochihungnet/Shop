@@ -41,7 +41,7 @@
                     <form novalidate name="frmAddSlide" role="form" ng-submit="AddSlide()">
 
                         <div class="row mb-3">
-                            <label for="inputEnterName" class="col-sm-3 col-form-label">Tên danh mục</label>
+                            <label for="inputEnterName" class="col-sm-3 col-form-label">Tên slide</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputEnterName" name="name" ng-maxlength="256" required ng-model="slide.Name">
                                 <div ng-show="frmAddSlide.name.$invalid" class="invalid-feedback d-block">Tên slide không được để trống.</div>
@@ -58,12 +58,14 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-6">
-                            <label class="form-label">Group</label>
-                            <select class="form-select" name="GroupID" required ng-model="slide.GroupID" ng-options="option.ID as option.Name for option in slideGroups">
-                                <option value="">-- Chọn nhóm slide --</option>
-                            </select>
-                            <input type="hidden" name="GroupID" ng-model="slide.GroupID" />
+                        <div class="row mb-3">
+                            <label  class="col-sm-3 col-form-label">Group</label>
+                            <div class="col-sm-9">
+                                <select class="form-select" name="GroupID" required ng-model="slide.GroupID" ng-options="option.ID as option.Name for option in slideGroups">
+                                    <option value="">-- Chọn nhóm slide --</option>
+                                </select>
+                                <input type="hidden" name="GroupID" ng-model="slide.GroupID" />
+                            </div>
                         </div>
 
                         <div class="row mb-3">

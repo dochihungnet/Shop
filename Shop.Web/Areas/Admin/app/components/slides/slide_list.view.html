@@ -31,9 +31,14 @@
 <div class="card">
     <div class="card-header py-3 mb-2">
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-md-9 col-6">
                 <a class="btn btn-primary col-3" ui-sref="slide_add">Thêm slide</a>
                 <button ng-click="deleteMultiple()" id="btnDelete" class="btn btn-danger col-3">Xóa slide</button>
+            </div>
+            <div class="col-md-3 col-6">
+                <select class="form-select" name="GroupID" required ng-model="groupId" ng-options="option.ID as option.Name for option in slideGroups" ng-change="handlerEventChangeGroup()">
+                    <option value="">Tất cả</option>
+                </select>
             </div>
         </div>
     </div>

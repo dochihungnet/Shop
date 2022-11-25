@@ -41,7 +41,7 @@
                 'https://localhost:44353/api/slidegroup/getall',
                 null,
                 function (success) {
-                    $scope.slidegroups = success.data;
+                    $scope.slideGroups = success.data;
                     console.log('Lấy danh sách slide group thành công.');
                 },
                 function (error) {

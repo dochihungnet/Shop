@@ -12,6 +12,7 @@ namespace Shop.Service
         ProductCategory Delete(ProductCategory productCategory);
         ProductCategory Delete(int id);
         IEnumerable<ProductCategory> GetAll();
+        IEnumerable<ProductCategory> GetAllRoot();
         IEnumerable<ProductCategory> GetAll(string keyword);
         IEnumerable<ProductCategory> GetAllByParentId(int parrentId);
         ProductCategory GetById(int id);
@@ -48,6 +49,10 @@ namespace Shop.Service
             return _productCategoryRepository.GetAll();
         }
 
+        public IEnumerable<ProductCategory> GetAllRoot()
+        {
+            return _productCategoryRepository.GetMulti(x => x.ParentId == null && x.Status);
+        }
         public IEnumerable<ProductCategory> GetAll(string keyword)
         {
             if (!string.IsNullOrEmpty(keyword))

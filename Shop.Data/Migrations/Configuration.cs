@@ -25,6 +25,7 @@
             CreateUser(context);
             CreateProductCategorySimple(context);
             CreateBrandSimple(context);
+            CreateSlideGroup(context);
 
         }
 
@@ -59,7 +60,20 @@
             }
 
         }
-        private void CreateBrandSimple(Shop.Data.ShopDbContext context)
+        private void CreateSlideGroup(ShopDbContext context)
+        {
+            if(context.SlideGroups.Count() == 0)
+            {
+                List<SlideGroup> listSlideGroup = new List<SlideGroup>()
+                {
+                    new SlideGroup(){Name = "Group Slide"},
+                    new SlideGroup(){Name = "Group Banner"},
+                    new SlideGroup(){Name = "Group Slide Banner"}
+                };
+                context.SlideGroups.AddRange(listSlideGroup);
+            }
+        }
+        private void CreateBrandSimple(ShopDbContext context)
         {
             if (context.Brands.Count() == 0)
             {
@@ -76,7 +90,7 @@
                 context.Brands.AddRange(listBrand);
             }
         }
-        private void CreateProductCategorySimple(Shop.Data.ShopDbContext context)
+        private void CreateProductCategorySimple(ShopDbContext context)
         {
             if (context.ProductCategories.Count() == 0)
             {

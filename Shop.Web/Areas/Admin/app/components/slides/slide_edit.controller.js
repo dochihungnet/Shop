@@ -50,7 +50,23 @@
             finder.popup();
         }
 
+        function GetListSlideGroup() {
+            apiService.get(
+                'https://localhost:44353/api/slidegroup/getall',
+                null,
+                function (success) {
+                    $scope.slideGroups = success.data;
+                    console.log('Lấy danh sách slide group thành công.');
+                },
+                function (error) {
+                    console.log('Lấy danh sách slide group thất bại.');
+
+                }
+            )
+        }
+
         loadSlideDetail();
+        GetListSlideGroup();
     }
 
 })(angular.module('shop.slides'));

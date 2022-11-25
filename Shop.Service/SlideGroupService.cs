@@ -16,6 +16,7 @@ namespace Shop.Service
         SlideGroup Delete(SlideGroup slideGroup);
         SlideGroup Delete(int id);
         IEnumerable<SlideGroup> GetAll();
+        SlideGroup GetByName(string groupName);
         SlideGroup GetById(int id);
         void SaveChanges();
     }
@@ -53,6 +54,11 @@ namespace Shop.Service
         public SlideGroup GetById(int id)
         {
             return _slideGroupRepository.GetSingleById(id);
+        }
+
+        public SlideGroup GetByName(string groupName)
+        {
+            return _slideGroupRepository.GetSingleByCondition(x => String.Compare(x.Name, groupName, true) == 0);
         }
 
         public void SaveChanges()

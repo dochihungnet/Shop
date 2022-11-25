@@ -10,6 +10,8 @@
             HomeFlag: true
         }
 
+        $scope.UpdateProductCategory = UpdateProductCategory;
+
         $scope.GetSeoTitle = function () {
             $scope.productCategory.Alias = commonService.getSeoTitle($scope.productCategory.Name);
         }
@@ -27,7 +29,7 @@
             );
         }
 
-        $scope.UpdateProductCategory = function () {
+        function UpdateProductCategory() {
             apiService.put(
                 'https://localhost:44353/api/productcategory/update',
                 $scope.productCategory,
@@ -40,6 +42,7 @@
                 }
             );
         }
+
         function loadParentCategory() {
             apiService.get(
                 'https://localhost:44353/api/productcategory/getallparents',
@@ -51,6 +54,16 @@
                     console.log('Cannot get list parent');
                 }
             );
+        }
+
+        $scope.ChooseImage = function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $scope.$apply(function () {
+                    $scope.productCategory.Image = fileUrl;
+                });
+            }
+            finder.popup();
         }
 
         loadParentCategory();

@@ -38,17 +38,26 @@
                         <h5 class="mb-0">Thêm danh mục sản phẩm</h5>
                     </div>
                     <hr />
-                    <form  novalidate name="frmAddProductCategory" role="form" ng-submit="AddProductCategory()">
+                    <form novalidate name="frmAddProductCategory" role="form" ng-submit="AddProductCategory()">
 
                         <div class="row mb-3">
                             <label for="inputEnterName" class="col-sm-3 col-form-label">Tên danh mục</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputEnterName" name="name"  ng-maxlength="256" required ng-model="productCategory.Name" ng-change="GetSeoTitle()">
+                                <input type="text" class="form-control" id="inputEnterName" name="name" ng-maxlength="256" required ng-model="productCategory.Name" ng-change="GetSeoTitle()">
                                 <div ng-show="frmAddProductCategory.name.$invalid" class="invalid-feedback d-block">Tên danh mục không được để trống.</div>
                                 <div ng-show="frmAddProductCategory.name.$error.maxlength" class="invalid-feedback d-block">Tên danh mục quá dài ( phải < 256 ký tự ).</div>
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-labell">Hình ảnh</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <button type="button" class="input-group-text" ng-click="ChooseImage()">Chọn ảnh</button>
+                                    <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="productCategory.Image">
+                                </div>
+                                <div ng-show="frmAddProductCategory.image.$error.maxlength" class="invalid-feedback d-block">Đường dẫn quá dài ( phải < 256 ký tự ).</div>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label for="inputEnterAlias" class="col-sm-3 col-form-label">Alias</label>
                             <div class="col-sm-9">
@@ -72,7 +81,7 @@
                                 <select class="form-select" name="parentId" ng-model="productCategory.ParentId" ng-options="option.Id as option.Name for option in parentCategories">
                                     <option value="">Danh mục gốc</option>
                                 </select>
-                                <input type="hidden" name="parentId" ng-model="productCategory.ParentId"/>
+                                <input type="hidden" name="parentId" ng-model="productCategory.ParentId" />
                             </div>
                         </div>
 
@@ -102,7 +111,7 @@
                         <div class="row mb-3">
                             <label for="inputEnterMetaDescription" class="col-sm-3 col-form-label">Meta Description</label>
                             <div class="col-sm-9">
-                                <textarea  class="form-control" id="inputEnterMetaDescription" name="metaDescription" ng-model="productCategory.MetaDescription"></textarea>
+                                <textarea class="form-control" id="inputEnterMetaDescription" name="metaDescription" ng-model="productCategory.MetaDescription"></textarea>
                             </div>
                         </div>
 

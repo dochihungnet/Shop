@@ -18,10 +18,13 @@ namespace Shop.Api.Controllers
     public class SlideController : ApiControllerBase
     {
         ISlideService _slideService;
-        public SlideController(IErrorService errorService, ISlideService slideService) : base(errorService)
+        ISlideGroupService _slideGroupService;
+        public SlideController(IErrorService errorService, ISlideService slideService, ISlideGroupService slideGroupService) : base(errorService)
         {
             this._slideService = slideService;
+            this._slideGroupService = slideGroupService;
         }
+
 
         [Route("getall")]
         [HttpGet]
@@ -31,7 +34,32 @@ namespace Shop.Api.Controllers
             {
                 HttpResponseMessage response = null;
 
-                var listSlide = _slideService.GetAll();
+                var listSlide = _slideService.GetAll(true);
+
+                var listSlideViewModel = Mapper.Map<List<SlideViewModel>>(listSlide);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listSlideViewModel);
+
+                return response;
+            });
+        }
+
+        [Route("getbygroupname")]
+        [HttpGet]
+        public HttpResponseMessage GetAll(HttpRequestMessage request, string groupName)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var groupId = _slideGroupService.GetByName(groupName);
+                if(groupId == null)
+                {
+                    response = request.CreateResponse(HttpStatusCode.NotFound, false);
+                    return response;
+                }
+
+                var listSlide = _slideService.GetByGroupId(groupId.ID);
 
                 var listSlideViewModel = Mapper.Map<List<SlideViewModel>>(listSlide);
 
@@ -42,7 +70,7 @@ namespace Shop.Api.Controllers
         }
 
         [Route("getall")]
-        public HttpResponseMessage GetAll(HttpRequestMessage request, int page, int pageSize, bool? status = null)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, int page, int pageSize, bool? status = null, int? groupId = null)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -50,7 +78,7 @@ namespace Shop.Api.Controllers
 
                 int totalRow = 0;
 
-                var listSlide = status == null ?  _slideService.GetAll() : _slideService.GetAll(status);
+                var listSlide = _slideService.GetAll(status, groupId);
 
                 totalRow = listSlide.Count();
 
