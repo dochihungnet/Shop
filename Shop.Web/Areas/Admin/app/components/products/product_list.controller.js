@@ -25,6 +25,9 @@
         // xử lý sự kiện checked Input Brand: search product theo brand
         $scope.handlerCheckedInputBrand = handlerCheckedInputBrand;
 
+        // xử lý sự kiện
+        $scope.handlerEventChangeStatus = handlerEventChangeStatus;
+
         // xử lý sự kiện click input Status của Product
         $scope.handlerEventClickInputStatusProduct = handlerEventClickInputStatusProduct;
 
@@ -220,6 +223,10 @@
             });
 
             // call data
+            getListProduct();
+        }
+
+        function handlerEventChangeStatus() {
             getListProduct();
         }
 
