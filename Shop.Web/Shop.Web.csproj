@@ -136,6 +136,14 @@
     <Content Include="app\components\header\header.view.html" />
     <Content Include="app\components\home\home.controller.js" />
     <Content Include="app\components\home\home.view.html" />
+    <Content Include="app\components\home\list_product_one_home\list_product_one_home.module.js" />
+    <Content Include="app\components\home\list_product_two_home\list_product_two_home.module.js" />
+    <Content Include="app\components\home\list_product_two_home\list_product_two_home.controller.js" />
+    <Content Include="app\components\home\list_product_two_home\list_product_two_home.view.html" />
+    <Content Include="app\components\home\posts_home\post_home.controller.js" />
+    <Content Include="app\components\home\posts_home\post_home.view.html" />
+    <Content Include="app\components\home\list_product_one_home\list_product_one_home.controller.js" />
+    <Content Include="app\components\home\list_product_one_home\list_product_one_home.view.html" />
     <Content Include="app\shared\modules\shop.common.js" />
     <Content Include="app\shared\services\apiService.js" />
     <Content Include="app\shared\services\authData.js" />
@@ -153,6 +161,8 @@
     <Content Include="Areas\Admin\app\components\brands\brand_list.controller.js" />
     <Content Include="Areas\Admin\app\components\brands\brand_add.controller.js" />
     <Content Include="Areas\Admin\app\components\home\home.controller.js" />
+    <Content Include="app\components\products_home\products_home.controller.js" />
+    <Content Include="app\components\products_home\products_home.view.html" />
     <Content Include="Areas\Admin\app\components\login\login.controller.js" />
     <Content Include="Areas\Admin\app\components\login\login.view.html" />
     <Content Include="Areas\Admin\app\components\menus\menus.module.js" />

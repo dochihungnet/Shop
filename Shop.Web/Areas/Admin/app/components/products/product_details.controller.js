@@ -15,7 +15,7 @@
 
         function loadProductDetail() {
             apiService.get(
-                'https://localhost:44353/api/product/getbyid/' + $stateParams.id,
+                'https://localhost:44353/api/product/getbyidinclude/' + $stateParams.id,
                 null,
                 function (result) {
                     $scope.product = result.data;

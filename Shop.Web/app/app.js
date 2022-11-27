@@ -2,6 +2,8 @@
     angular.module('shop', [
         'shop.header',
         'shop.footer',
+        'shop.list_product_one_home',
+        'shop.list_product_two_home',
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];

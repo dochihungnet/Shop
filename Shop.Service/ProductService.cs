@@ -20,7 +20,7 @@ namespace Shop.Service
         IEnumerable<Product> GetAll(string keyword);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
-
+        IEnumerable<Product> GetaAllProductDealsOfTheWeek();
         IEnumerable<Product> GetFeatured(int top);
         IEnumerable<Product> GetHotProduct(int top);
         IEnumerable<Product> GetOnSaleProduct(int top);
@@ -28,6 +28,7 @@ namespace Shop.Service
         IEnumerable<Product> GetReatedProducts(int id, int top);
         IEnumerable<Product> GetListProductByName(string name);
         Product GetById(int id);
+        Product GetByIdInclude(int id);
         IEnumerable<Tag> GetListTagByProductId(int id);
         void IncreaseView(int id);
         IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
@@ -60,7 +61,7 @@ namespace Shop.Service
                 for(int i = 0; i < tags.Length; i++)
                 {
                     var tagId = StringHelper.ToUnsignString(tags[i]);
-                    if (_tagRepository.CheckContains(t => t.Id == tagId))
+                    if (_tagRepository.Count(t => t.Id == tagId) == 0)
                     {
                         Tag tag = new Tag()
                         {
@@ -94,6 +95,11 @@ namespace Shop.Service
         public Product Delete(int id)
         {
             return _productRepository.Delete(id);
+        }
+
+        public IEnumerable<Product> GetaAllProductDealsOfTheWeek()
+        {
+            return _productRepository.GetMulti(x => x.StatusDiscount == true && x.Quantity > 0).OrderByDescending(x => x.PromotionPrice);
         }
 
         public IEnumerable<Product> GetAll()
@@ -140,6 +146,11 @@ namespace Shop.Service
         public Product GetById(int id)
         {
             return _productRepository.GetSingleById(id);
+        }
+
+        public Product GetByIdInclude(int id)
+        {
+            return _productRepository.GetSingleByCondition(x => x.Id == id, new string[] { "ProductCategory", "Brand" });
         }
 
         public IEnumerable<Product> GetFeatured(int top)
@@ -206,24 +217,30 @@ namespace Shop.Service
                 string[] tags = product.Tags.Split(',');
                 for(int i = 0; i < tags.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(product.Tags))
+                    var tagId  = StringHelper.ToUnsignString(tags[i]);
+                    if(_tagRepository.Count(x => x.Id == tagId) == 0)
                     {
-                        var tagId  = StringHelper.ToUnsignString(product.Tags);
-                        if(!_tagRepository.CheckContains(x => x.Id == tagId))
+                        Tag tag = new Tag()
                         {
-                            Tag tag = new Tag()
-                            {
-                                Id = tagId,
-                                Name = tags[i],
-                                Type = CommonConstants.ProductTag
-                            };
+                            Id = tagId,
+                            Name = tags[i],
+                            Type = CommonConstants.ProductTag
+                        };
 
-                            _tagRepository.Add(tag);
-                        }
+                        _tagRepository.Add(tag);
                     }
+                    _productTagRepository.DeleteMulti(x => x.ProductId == product.Id);
+                    ProductTag productTag = new ProductTag()
+                    {
+                        ProductId = product.Id,
+                        TagId = tagId,
+                    };
 
+                    _productTagRepository.Add(productTag);
+                    
                 }
                 _unitOfWork.Commit();
+
             }
 
         }

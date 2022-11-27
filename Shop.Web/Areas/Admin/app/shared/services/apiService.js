@@ -18,7 +18,7 @@
             }, function (error) {
                 // lỗi 401: không có quyền authencation
                 if (error.status == '401') {
-                    /*notificationService.displayError('Authenticate is required.');*/
+                    notificationService.displayError('Authenticate is required.');
                 }
                 failure(error);
             })
@@ -31,7 +31,7 @@
             }, function (error) {
                 // lỗi 401: không có quyền authencation
                 if (error.status == '401') {
-                   /* notificationService.displayError('Authenticate is required.');*/
+                    notificationService.displayError('Authenticate is required.');
                 }
                 failure(error);
             })
@@ -44,7 +44,7 @@
             }, function (error) {
                 // lỗi 401: không có quyền authencation
                 if (error.status == '401') {
-                    /*notificationService.displayError('Authenticate is required.');*/
+                    notificationService.displayError('Authenticate is required.');
                 }
                 failure(error);
             })
@@ -55,6 +55,9 @@
             $http.get(url, params).then(function (result) {
                 success(result);
             }, function (error) {
+                if (error.status == '401') {
+                    notificationService.displayError('Authenticate is required.');
+                }
                 failure(error);
             })
         };

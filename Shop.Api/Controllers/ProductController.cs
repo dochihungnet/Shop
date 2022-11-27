@@ -42,6 +42,25 @@ namespace Shop.Api.Controllers
             });
         }
 
+        // getbyid/{id:int}
+        [Route("getbyidinclude/{id:int}")]
+        [HttpGet]
+        public HttpResponseMessage GetByIdInclude(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var product = _productService.GetByIdInclude(id);
+
+                var productViewModel = Mapper.Map<ProductViewModel>(product);
+
+                response = request.CreateResponse(HttpStatusCode.OK, productViewModel);
+
+                return response;
+            });
+        }
+
         [Route("getall")]
         [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request) 
@@ -92,6 +111,26 @@ namespace Shop.Api.Controllers
             });
         }
 
+        // getall
+        [Route("getalldealsoftheweek")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetaAllProductDealsOfTheWeek(HttpRequestMessage request)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductDealsOfTheWeek = _productService.GetaAllProductDealsOfTheWeek();
+
+                var listProductViewModelDealsOfTheWeek = Mapper.Map<List<ProductViewModel>>(listProductDealsOfTheWeek);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelDealsOfTheWeek);
+
+                return response;
+            });
+        }
+
         // create
         [Route("create")]
         [HttpPost]
@@ -108,6 +147,7 @@ namespace Shop.Api.Controllers
                 }
 
                 var newProduct = Mapper.Map<Product>(productViewModel);
+                newProduct.QuantityHasSell = 0;
                 newProduct.CreatedDate = DateTime.Now;
                 newProduct.CreatedBy = User.Identity.Name;
 

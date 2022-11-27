@@ -21,7 +21,6 @@
             $scope.groupBanners = result[2];
             $scope.rootProductCategories = result[3];
             $scope.brands = result[4]
-            console.log($scope.brands);
             $timeout(init, 0);
 
         });

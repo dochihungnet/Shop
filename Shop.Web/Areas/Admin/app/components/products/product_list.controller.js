@@ -52,7 +52,7 @@
                 config,
                 function (result) {
                     notificationService.displaySuccess('Xóa thàn công ' + result.data + ' sản phẩm');
-                    search();
+                    getListProduct();
                 },
                 function (error) {
                     notificationService.displayError('Xóa thất bại ..., bùn ghê!')
@@ -233,6 +233,7 @@
         function handlerEventClickInputStatusProduct($event, id) {
             $event.preventDefault();
             var product = { ...$scope.products.find(x => x.Id == id) };
+
             product.Status = !product.Status;
 
             $ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
@@ -249,12 +250,7 @@
                         }
                     )
                 }, function () {
-                    $scope.products = $scope.products.map(x => {
-                        if (x.Id == product.Id) {
-                            x.Status = !product.Status;
-                        }
-                        return x;
-                    })
+                    
                 }
                 )
         }
@@ -340,7 +336,7 @@
         $ctrl.update = function () {
 
             $ctrl.product.StatusDiscount = true;
-            $ctrl.product.PriceAfterDiscount = $ctrl.product.Price - $ctrl.product.Price * $ctrl.product.PromotionPrice;
+            $ctrl.product.PriceAfterDiscount = $ctrl.product.Price - $ctrl.product.Price * $ctrl.product.PromotionPrice / 100;
 
             apiService.put(
                 'https://localhost:44353/api/product/update',
