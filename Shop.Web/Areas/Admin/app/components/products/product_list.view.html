@@ -159,8 +159,9 @@
                                                 <th>#ID</th>
                                                 <th>Sản phẩm</th>
                                                 <th>Số lượng</th>
-                                                <th>Giá</th>
+                                                <th>Giá bán</th>
                                                 <th>Trạng thái</th>
+                                                <th>Sale</th>
                                                 <th>Thao tác</th>
                                             </tr>
                                         </thead>
@@ -182,20 +183,28 @@
                                                 <td>{{ item.Price | currency : ""}}</td>
                                                 <td>
                                                     <div class="d-flex align-content-center gap-1">
-                                                        <input type="checkbox" ng-model="item.Status" ng-click="handlerEventClickInputStatusProduct($event, item.Id)" ng-change="handlerEventChangeInputStatusProduct(item.Id)" />
+                                                        <input type="checkbox" ng-model="item.Status" ng-click="handlerEventClickInputStatusProduct($event, item.Id)"/>
                                                         <div ng-class="{'badge bg-success':item.Status === true, 'badge bg-danger':item.Status === false }">
                                                             {{item.Status | statusFilter}}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button ui-sref="product_details({id:item.Id})" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin">
+                                                    <div class="d-flex align-content-center gap-1">
+                                                        <input type="checkbox" ng-model="item.StatusDiscount" ng-click="handlerEventClickInputStatusDiscountProduct($event, item.Id)"  />
+                                                        <div ng-class="{'badge bg-success':item.StatusDiscount === true, 'badge bg-danger':item.StatusDiscount === false || item.StatusDiscount == null }">
+                                                            {{item.StatusDiscount | statusDiscountFilter}}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button ui-sref="product_details({id:item.Id})" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem thông tin" style="border:none; background:none;">
                                                         <i class="bi bi-eye-fill"></i>
                                                     </button>
-                                                    <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm">
+                                                    <button ui-sref="product_edit({id:item.Id})" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sửa sản phẩm" style="border:none; background:none;">
                                                         <i class="bi bi-pencil-fill"></i>
                                                     </button>
-                                                    <button ng-click="deleteProduct(item.Id)" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xóa sản phẩm">
+                                                    <button ng-click="deleteProduct(item.Id)" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xóa sản phẩm" style="border:none; background:none;">
                                                         <i class="bi bi-trash-fill"></i>
                                                     </button>
                                                 </td>

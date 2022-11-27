@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.controller('productListController', productListController);
 
-    productListController.$inject = ['$scope','$state' ,'apiService', 'notificationService', '$ngBootbox', '$filter', '$timeout', '$q', '$log', ];
+    productListController.$inject = ['$scope', '$state', 'apiService', 'notificationService', '$ngBootbox', '$filter', '$timeout', '$q', '$log', '$uibModal'];
 
-    function productListController($scope, $state , apiService, notificationService, $ngBootbox, $filter, $timeout, $q, $log) {
+    function productListController($scope, $state, apiService, notificationService, $ngBootbox, $filter, $timeout, $q, $log, $uibModal) {
         $scope.products = [];
         $scope.productCategories = [];
         $scope.brands = [];
@@ -15,18 +15,21 @@
         $scope.brandId;
         $scope.status = null;
 
-
-        $scope.getListProduct = getListProduct;
-        $scope.search = search;
         $scope.deleteProduct = deleteProduct;
         $scope.selectAll = selectAll;
         $scope.deleteMultiple = deleteMultiple;
 
+        // xử lý sự kiện checked Input ProductCategory: search product theo ProductCategory
         $scope.handlerCheckedInputProductCategory = handlerCheckedInputProductCategory;
+
+        // xử lý sự kiện checked Input Brand: search product theo brand
         $scope.handlerCheckedInputBrand = handlerCheckedInputBrand;
-        $scope.handlerEventChangeInputStatusProduct = handlerEventChangeInputStatusProduct;
-        $scope.handlerEventChangeStatus = handlerEventChangeStatus;
+
+        // xử lý sự kiện click input Status của Product
         $scope.handlerEventClickInputStatusProduct = handlerEventClickInputStatusProduct;
+
+        // xử lý sự kiện click input StatusDiscount của product
+        $scope.handlerEventClickInputStatusDiscountProduct = handlerEventClickInputStatusDiscountProduct;
 
 
         function deleteMultiple() {
@@ -101,7 +104,7 @@
                         config,
                         function (result) {
                             notificationService.displaySuccess('Xóa sản phẩm thành công!');
-                            search();
+                            getListProduct();
                         },
                         function (error) {
                             notificationService.displayError('Xóa sản phẩm thất bại!')
@@ -110,10 +113,6 @@
 
 
                 })
-        }
-
-        function search() {
-            getListProduct();
         }
 
         // lấy danh sách sản phẩm theo page
@@ -174,36 +173,6 @@
                     console.log('Lấy danh sách thương hiệu thất bại.');
                 }
             )
-        }
-
-        function handlerEventChangeInputStatusProduct(id) {
-
-            //var product = $scope.products.find(x => x.Id == id);
-
-            //$ngBootbox.confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?')
-            //    .then(function (result) {
-            //        apiService.put(
-            //            'https://localhost:44353/api/product/update',
-            //            product,
-            //            function (result) {
-            //                notificationService.displaySuccess('Cập nhập trạng thái thành công!');
-            //                search();
-            //            },
-            //            function (error) {
-            //                notificationService.displayError('Cập nhập trạng thái thất bại!')
-            //            }
-            //        )
-            //    }, function () {
-            //        $scope.products = $scope.products.map(x => {
-            //            if (x.Id == product.Id) {
-            //                x.Status = !product.Status;
-            //            }
-            //            return x;
-            //        })
-            //    }
-                    
-
-            //)
         }
 
         function handlerCheckedInputProductCategory(id) {
@@ -283,10 +252,29 @@
                 )
         }
 
-        function handlerEventChangeStatus() {
-            $scope.getListProduct();
-        }
+        function handlerEventClickInputStatusDiscountProduct($event, id) {
+            $event.preventDefault();
+            var product = { ...$scope.products.find(x => x.Id == id) };
 
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: '/Areas/Admin/app/shared/views/modal_add_discount.html',
+                controller: 'ModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: 'lg',
+                resolve: {
+                    product: function () {
+                        return product;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                getListProduct();
+            });
+        }
         getListProduct();
         getListProductCategory();
         getListBrand();
@@ -297,6 +285,93 @@
         
 
     }
+
+    app.controller('ModalInstanceCtrl', function ($uibModalInstance, product, apiService, notificationService) {
+        var $ctrl = this;
+
+        $ctrl.product = product;
+        $ctrl.minEndDate = new Date();
+
+        if ($ctrl.product.StatusDiscount == false || $ctrl.product.StatusDiscount == null) {
+
+            $ctrl.Title = "Thêm mã giảm giá";
+
+            $ctrl.showBtnDelete = false;
+            $ctrl.showBtnUpdate = false;
+            $ctrl.showBtnAdd = true;
+            $ctrl.showBtnCancel = true;
+        }
+        else {
+
+            $ctrl.Title = "Cập nhập mã giảm giá";
+
+            $ctrl.showBtnDelete = true;
+            $ctrl.showBtnUpdate = true;
+            $ctrl.showBtnAdd = false;
+            $ctrl.showBtnCancel = true;
+        }
+
+        $ctrl.delete = function () {
+            $ctrl.product.PromotionPrice = null;
+            $ctrl.product.PriceAfterDiscount = null;
+            $ctrl.product.EndDiscountcDate = null;
+            $ctrl.product.StatusDiscount = false;
+
+            apiService.put(
+                'https://localhost:44353/api/product/update',
+                $ctrl.product,
+                function (result) {
+                    $uibModalInstance.close();
+                    notificationService.displaySuccess('Xóa mã giảm giá thành công');
+                },
+                function result(error) {
+                    notificationService.displayError('Xóa mã giảm giá thất bại.');
+                }
+            )
+        };
+
+        $ctrl.update = function () {
+
+            $ctrl.product.StatusDiscount = true;
+            $ctrl.product.PriceAfterDiscount = $ctrl.product.Price - $ctrl.product.Price * $ctrl.product.PromotionPrice;
+
+            apiService.put(
+                'https://localhost:44353/api/product/update',
+                $ctrl.product,
+                function (result) {
+                    $uibModalInstance.close();
+                    notificationService.displaySuccess('Cập nhập mã giảm giá thành công');
+                },
+                function result(error) {
+                    notificationService.displayError('Cập nhập mã giảm giá thất bại.');
+                }
+            )
+        };
+
+        $ctrl.add = function () {
+
+            $ctrl.product.StatusDiscount = true;
+            $ctrl.product.PriceAfterDiscount = $ctrl.product.Price - $ctrl.product.Price * $ctrl.product.PromotionPrice;
+
+            apiService.put(
+                'https://localhost:44353/api/product/update',
+                $ctrl.product,
+                function (result) {
+                    $uibModalInstance.close();
+                    notificationService.displaySuccess('Thêm mã giảm giá thành công');
+                },
+                function result(error) {
+                    notificationService.displayError('Thêm sản phẩm thất bại.');
+                }
+            )
+
+        };
+
+        $ctrl.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    });
+
 })(angular.module('shop.products'));
 
 

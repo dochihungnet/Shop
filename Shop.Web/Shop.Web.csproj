@@ -187,6 +187,7 @@
     <Content Include="Areas\Admin\app\components\slides\slide_add.controller.js" />
     <Content Include="Areas\Admin\app\shared\directives\pagerDirective.html" />
     <Content Include="Areas\Admin\app\shared\directives\pagerDirective.js" />
+    <Content Include="Areas\Admin\app\shared\filters\statusDiscountFilter.js" />
     <Content Include="Areas\Admin\app\shared\filters\statusBrandFilter.js" />
     <Content Include="Areas\Admin\app\shared\filters\statusFilter.js" />
     <Content Include="Areas\Admin\app\shared\modules\shop.common.js" />
@@ -196,6 +197,7 @@
     <Content Include="Areas\Admin\app\shared\services\commonService.js" />
     <Content Include="Areas\Admin\app\shared\services\loginService.js" />
     <Content Include="Areas\Admin\app\shared\services\notificationService.js" />
+    <Content Include="Areas\Admin\app\shared\views\modal_add_discount.html" />
     <Content Include="Areas\Admin\Libs\CKFinder.dll" />
     <Content Include="assets\admin\css\bootstrap-extended.css" />
     <Content Include="assets\admin\css\bootstrap.css" />
@@ -1628,6 +1630,12 @@
     <Content Include="assets\libs\angular-material\angular-material.min.js" />
     <Content Include="assets\libs\angular-sanitize\angular-sanitize.js" />
     <Content Include="assets\libs\angular-sanitize\angular-sanitize.min.js" />
+    <Content Include="assets\libs\angular-ui-bootstrap\ui-bootstrap-csp.css" />
+    <Content Include="assets\libs\angular-ui-bootstrap\ui-bootstrap-csp.min.css" />
+    <Content Include="assets\libs\angular-ui-bootstrap\ui-bootstrap-tpls.js" />
+    <Content Include="assets\libs\angular-ui-bootstrap\ui-bootstrap-tpls.min.js" />
+    <Content Include="assets\libs\angular-ui-bootstrap\ui-bootstrap.js" />
+    <Content Include="assets\libs\angular-ui-bootstrap\ui-bootstrap.min.js" />
     <Content Include="assets\libs\angular-ui-router\angular-ui-router.js" />
     <Content Include="assets\libs\angular-ui-router\angular-ui-router.min.js" />
     <Content Include="assets\libs\angular-ui-router\resolveService.js" />

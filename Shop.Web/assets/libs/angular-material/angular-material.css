@@ -1705,7 +1705,6 @@ md-content {
   position: relative;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  background: none!important;
 }
 md-content[md-scroll-y] {
   overflow-y: auto;

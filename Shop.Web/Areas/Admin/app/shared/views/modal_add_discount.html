@@ -1,0 +1,48 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">{{$ctrl.Title}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <form form novalidate name="modalCRUDDiscount" role="form">
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Giá gốc</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" placeholder="Giá gốc" name="originalPrice" required min="0" ng-model="$ctrl.product.OriginalPrice">
+                <div ng-show="modalCRUDDiscount.originalPrice.$invalid" class="invalid-feedback d-block">Phải nhập giá sản phẩm.</div>
+                <div ng-show="modalCRUDDiscount.originalPrice.$error.min" class="invalid-feedback d-block">Giá sản phẩm không hợp lệ.</div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Giá bán</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" placeholder="Giá bán" name="price" required min="0" ng-model="$ctrl.product.Price">
+                <div ng-show="modalCRUDDiscount.price.$invalid" class="invalid-feedback d-block">Phải nhập giá bán sản phẩm.</div>
+                <div ng-show="modalCRUDDiscount.price.$error.min" class="invalid-feedback d-block">Giá bán không hợp lệ.</div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Giảm giá (%)</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" placeholder="Phần trăm giảm giá" name="promotionPrice" min="0" max="100" required ng-model="$ctrl.product.PromotionPrice">
+                <div ng-show="modalCRUDDiscount.promotionPrice.$invalid" class="invalid-feedback d-block">Phải nhập % giảm giá.</div>
+                <div ng-show="modalCRUDDiscount.promotionPrice.$error.min" class="invalid-feedback d-block">Giá trị không hợp lệ, phải lớn hơn 0.</div>
+                <div ng-show="modalCRUDDiscount.promotionPrice.$error.max" class="invalid-feedback d-block">Giá trị không hợp lệ, phải nhỏ hơn 100.</div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Thời hạn</label>
+            <div class="col-sm-9">
+                <input type="date" class="form-control" name="trandate" required min="{{$ctrl.minEndDate}}" ng-model="$ctrl.product.EndDiscountcDate">
+                <div ng-if="modalCRUDDiscount.trandate.$error.required" class="invalid-feedback d-block">Thời gian bắt buộc phải nhập.</div>
+                <div ng-if="modalCRUDDiscount.trandate.$error.date" class="invalid-feedback d-block">Thời gian không hợp lệ.</div>
+                <div ng-if="modalCRUDDiscount.trandate.$error.min" class="invalid-feedback d-block">Thời gian phải lớn hơn hiện tại.</div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-if="$ctrl.showBtnDelete" ng-click="$ctrl.delete()">Xóa</button>
+            <button class="btn btn-primary" type="button" ng-disabled="modalCRUDDiscount.$invalid" ng-if="$ctrl.showBtnUpdate" ng-click="$ctrl.update()">Cập nhập</button>
+            <button class="btn btn-success" type="button" ng-disabled="modalCRUDDiscount.$invalid" ng-if="$ctrl.showBtnAdd" ng-click="$ctrl.add()">Thêm</button>
+            <button class="btn btn-warning" type="button" ng-if="$ctrl.showBtnCancel" ng-click="$ctrl.cancel()">Quay lại</button>
+        </div>
+    </form>
+</div>

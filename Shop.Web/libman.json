@@ -97,6 +97,10 @@
     {
       "library": "angular-sanitize@1.8.3",
       "destination": "assets/libs/angular-sanitize"
+    },
+    {
+      "library": "angular-ui-bootstrap@2.5.6",
+      "destination": "assets/libs/angular-ui-bootstrap"
     }
   ]
 }

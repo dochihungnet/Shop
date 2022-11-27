@@ -144,11 +144,6 @@
                                             <div ng-show="frmUpdateProduct.price.$error.min" class="invalid-feedback d-block">Giá bán không hợp lệ.</div>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label">Giảm giá (%)</label>
-                                            <input type="number" class="form-control" placeholder="Phần trăm giảm giá" name="promotionPrice" min="0" max="100" ng-model="product.PromotionPrice">
-                                            <div ng-show="frmUpdateProduct.promotionPrice.$invalid" class="invalid-feedback d-block">Giá trị không hợp lệ, phải lớn hơn 0 nhỏ hơn 100.</div>
-                                        </div>
-                                        <div class="col-12">
                                             <label class="form-label">Trạng thái</label>
                                             <select class="form-select" placeholder="Trạng thái" ng-model="product.Status">
                                                 <option value="1">Mở bán</option>

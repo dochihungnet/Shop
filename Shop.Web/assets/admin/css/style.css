@@ -66,7 +66,8 @@ a:hover{
     z-index: 10;
     padding: 0 1.5rem;
     transition: all .2s;
-	z-index: 9999999;
+	z-index: 9;
+	width: 100vw;
 }
 
 
@@ -407,16 +408,15 @@ a:hover{
 	top: 60px;
 	right: 0;
 	left: 0;
-	z-index: 999999;
+	z-index: 9;
 	background-color: #f7f8fa;
     border-bottom: 1px solid #e2e3e4;
+	width: 100vw;
 	
 	/* -webkit-box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 0px 6px 0 rgb(206 206 238 / 54%);
     box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 0px 6px 0 rgb(206 206 238 / 54%);*/
 
 	background-clip: border-box;
-
-	width: 100%;
 
 	height: 60px;
 
@@ -647,6 +647,7 @@ a:hover{
     margin-top: 120px;
     padding: 1.5rem 1.5rem;
     transition: all .2s;
+	width:100vw;
 }
 
 @media screen and (min-width: 1400px){
@@ -1949,7 +1950,7 @@ a:hover{
 	background-clip: padding-box;
 	border-right: 1px solid #e2e3e4;
 	transition: all .2s;
-	z-index: 16;
+	z-index: 8;
 }
 
 
@@ -2180,12 +2181,26 @@ a:hover{
 
 
 .modal{
-	z-index: 999999999999999999;
+	z-index: 1050;
+	opacity:1 !important;
 }
 .modal-backdrop.show {
-	z-index: 999999990;
+	z-index: 1040!important;
+	opacity:0.3 !important;
 }
-
+.modal-backdrop.fade{
+	opacity: 0.3 !important;
+}
+.modal-dialog {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+}
+#toast-container {
+	z-index: 999;
+}
 
 md-autocomplete#custom-template {
 	width: 400px;

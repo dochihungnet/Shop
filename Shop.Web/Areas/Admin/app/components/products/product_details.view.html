@@ -131,9 +131,13 @@
                                             <td class="col-3">Giá bán</td>
                                             <td class="col-9">{{product.Price | currency : ""}}</td>
                                         </tr>
-                                        <tr role="row" class="old">
+                                        <tr ng-if="product.StatusDiscount" role="row" class="old">
                                             <td class="col-3">Giảm giá</td>
                                             <td class="col-9">{{product.PromotionPrice ? product.PromotionPrice : 0}} %</td>
+                                        </tr>
+                                        <tr ng-if="product.StatusDiscount" role="row" class="old">
+                                            <td class="col-3">Ngày hết hạn</td>
+                                            <td class="col-9">{{product.EndDiscountcDate | date : "dd/MM/yyyy"}}</td>
                                         </tr>
                                         <tr role="row" class="old">
                                             <td class="col-3">Trạng thái</td>
