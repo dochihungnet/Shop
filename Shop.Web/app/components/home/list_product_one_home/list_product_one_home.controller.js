@@ -17,7 +17,7 @@
                 $scope.threeProductCategoryBestSelling = result[1];
 
                 getAllProductBestSellingByCategory($scope.threeProductCategoryBestSelling[0].Id, 10).then(result => {
-                    $scope.listProductBestSelling = handlerListProduct(result);
+                    $scope.listProductBestSelling = result;
                     $timeout(init, 10);
                 })
             });
@@ -89,24 +89,15 @@
 
             function handlerEventClickChooseProductCategory(categoryId, size) {
                 getAllProductBestSellingByCategory(categoryId, size).then(result => {
-                    $scope.listProductBestSelling = handlerListProduct(result);
+                    $scope.listProductBestSelling = result;
                     $timeout(init, 10);
                 })
             }
 
-            // xử lý mảng nè
-            function handlerListProduct(list) {
-                var result = [];
-                for (let i = 0; i < list.length; i += 2) {
-                    if (i + 2 > list.length) result.push(list.slice(i, list.length));
-                    else result.push(list.slice(i, i + 2));
-                }
-                return result;
-            }
 
             // Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
             function init() {
-                $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/so_megamenu.js"></script>');
+                $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/homepage.js"></script>');
             }
         }]
     });

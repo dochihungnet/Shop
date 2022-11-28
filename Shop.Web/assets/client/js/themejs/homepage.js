@@ -1,4 +1,4 @@
-/* -------------------------------------------------------------------------------- /
+﻿/* -------------------------------------------------------------------------------- /
 	
 	Magentech jQuery
 	Created by Magentech
@@ -22,7 +22,7 @@
 	Listing Tabs - Slider
 -------------------------------------------------- */
 
-(function(element) {
+(function (element) {
 	var $element = $(element),
 		$tab = $('.ltabs-tab', $element),
 		$tab_label = $('.ltabs-tab-label', $tab),

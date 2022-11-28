@@ -21,7 +21,7 @@
             $scope.groupBanners = result[2];
             $scope.rootProductCategories = result[3];
             $scope.brands = result[4]
-            $timeout(init, 0);
+            /*$timeout(init, 0);*/
 
         });
 
@@ -82,10 +82,10 @@
             return deferred.promise;
         }
 
-		// Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
-        function init() {
-            $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/homepage.js"></script>');
-        }
+		//// Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
+  //      function init() {
+  //          $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/homepage.js"></script>');
+  //      }
 	}
 
 
