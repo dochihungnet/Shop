@@ -8,7 +8,6 @@
 
             $q.all([getAllProductDealsOfTheWeek()]).then(function (result) {
                 $scope.listProductDealsOfTheWeek = result[0];
-                console.log($scope.listProductDealsOfTheWeek);
                 $timeout(init, 0);
             });
 

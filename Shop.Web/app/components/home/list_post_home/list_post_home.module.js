@@ -1,0 +1,1 @@
+﻿angular.module('shop.list_post_home', []);

@@ -317,7 +317,7 @@
         $ctrl.delete = function () {
             $ctrl.product.PromotionPrice = null;
             $ctrl.product.PriceAfterDiscount = null;
-            $ctrl.product.EndDiscountcDate = null;
+            $ctrl.product.EndDiscountDate = null;
             $ctrl.product.StatusDiscount = false;
 
             apiService.put(

@@ -37,7 +37,7 @@ namespace Shop.Model.Models
         public decimal Price { get; set; } // giá bán
         public decimal? PromotionPrice { get; set; } // giá khuyến mãi == % giảm giá
         public decimal? PriceAfterDiscount { set; get; }
-        public DateTime? EndDiscountcDate { get; set; } // thời gian kết thúc giảm giá
+        public DateTime? EndDiscountDate { get; set; } // thời gian kết thúc giảm giá
         public bool? StatusDiscount { get; set; } // trang thái, đang giảm giá hay không
         public int? Warranty { get; set; }
 

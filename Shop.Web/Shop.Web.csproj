@@ -136,6 +136,9 @@
     <Content Include="app\components\header\header.view.html" />
     <Content Include="app\components\home\home.controller.js" />
     <Content Include="app\components\home\home.view.html" />
+    <Content Include="app\components\home\list_post_home\list_post_home.module.js" />
+    <Content Include="app\components\home\list_post_home\list_post_home.controller.js" />
+    <Content Include="app\components\home\list_post_home\list_post_home.view.html" />
     <Content Include="app\components\home\list_product_one_home\list_product_one_home.module.js" />
     <Content Include="app\components\home\list_product_two_home\list_product_two_home.module.js" />
     <Content Include="app\components\home\list_product_two_home\list_product_two_home.controller.js" />

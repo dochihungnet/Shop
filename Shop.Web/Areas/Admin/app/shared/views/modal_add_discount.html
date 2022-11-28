@@ -31,7 +31,7 @@
         <div class="row mb-3">
             <label class="col-sm-3 col-form-label">Thời hạn</label>
             <div class="col-sm-9">
-                <input type="date" class="form-control" name="trandate" required min="{{$ctrl.minEndDate}}" ng-model="$ctrl.product.EndDiscountcDate">
+                <input type="date" class="form-control" name="trandate" required min="{{$ctrl.minEndDate}}" ng-model="$ctrl.product.EndDiscountDate">
                 <div ng-if="modalCRUDDiscount.trandate.$error.required" class="invalid-feedback d-block">Thời gian bắt buộc phải nhập.</div>
                 <div ng-if="modalCRUDDiscount.trandate.$error.date" class="invalid-feedback d-block">Thời gian không hợp lệ.</div>
                 <div ng-if="modalCRUDDiscount.trandate.$error.min" class="invalid-feedback d-block">Thời gian phải lớn hơn hiện tại.</div>

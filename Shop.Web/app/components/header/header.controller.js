@@ -52,14 +52,10 @@ angular.
             }
 
             function getAllProductCategoryChild(id) {
-                console.log(id);
                 return self.productCategories.filter(x => x.ParentId == id);
             }
             // kiểm tra product Category id có tồn tại con hay không?
             function checkExistChild(id) {
-                console.log(id);
-                console.log(self.productCategories.some(x => x.ParentId == id));
-                console.log(getAllProductCategoryChild(id));
                 return self.productCategories.some(x => x.ParentId == id);
             }
 
