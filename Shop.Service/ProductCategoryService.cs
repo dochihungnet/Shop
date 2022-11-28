@@ -2,6 +2,7 @@
 using Shop.Data.Repositories;
 using Shop.Model.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shop.Service
 {
@@ -14,6 +15,7 @@ namespace Shop.Service
         IEnumerable<ProductCategory> GetAll();
         IEnumerable<ProductCategory> GetAllRoot();
         IEnumerable<ProductCategory> GetAll(string keyword);
+        List<ProductCategory> GetProductCategoryBestSelling(int amount);
         IEnumerable<ProductCategory> GetAllByParentId(int parrentId);
         ProductCategory GetById(int id);
         void SaveChanges();
@@ -21,11 +23,13 @@ namespace Shop.Service
     public class ProductCategoryService : IProductCategoryService
     {
         private IProductCategoryRepository _productCategoryRepository;
+        private IProductRepository _productRepository;
         private IUnitOfWork _unitOfWork;
 
-        public ProductCategoryService(IProductCategoryRepository productCategoryRepository, IUnitOfWork unitOfWork)
+        public ProductCategoryService(IProductCategoryRepository productCategoryRepository, IProductRepository productRepository, IUnitOfWork unitOfWork)
         {
             this._productCategoryRepository = productCategoryRepository;
+            this._productRepository = productRepository;
             this._unitOfWork = unitOfWork;
         }
 
@@ -80,6 +84,26 @@ namespace Shop.Service
         public void Update(ProductCategory productCategory)
         {
             _productCategoryRepository.Update(productCategory);
+        }
+
+        public List<ProductCategory> GetProductCategoryBestSelling(int amount)
+        {
+            var listProductCategory = _productCategoryRepository.GetAll().ToList();
+
+            listProductCategory.Sort((x, y) =>
+            {
+                var listProductByCate_x = _productRepository.GetMulti(p => p.CategoryId == x.Id);
+                var listProductByCate_y = _productRepository.GetMulti(p => p.CategoryId == y.Id);
+                var sum_x = listProductByCate_x.Sum(p => (int)p.QuantityHasSell);
+                var sum_y = listProductByCate_y.Sum(p => (int)p.QuantityHasSell);
+
+                return sum_y - sum_x;
+            });
+            if(listProductCategory.Count < amount)
+            {
+                listProductCategory.GetRange(0, listProductCategory.Count);
+            }
+            return listProductCategory.GetRange(0, amount);
         }
     }
 }

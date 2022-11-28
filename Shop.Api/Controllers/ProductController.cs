@@ -14,7 +14,7 @@ using System.Web.Script.Serialization;
 namespace Shop.Api.Controllers
 {
     [RoutePrefix("api/product")]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ApiControllerBase
     {
         IProductService _productService;
@@ -111,7 +111,7 @@ namespace Shop.Api.Controllers
             });
         }
 
-        // getall
+        // getalldealsoftheweek
         [Route("getalldealsoftheweek")]
         [HttpGet]
         [AllowAnonymous]
@@ -121,11 +121,30 @@ namespace Shop.Api.Controllers
             {
                 HttpResponseMessage response = null;
 
-                var listProductDealsOfTheWeek = _productService.GetaAllProductDealsOfTheWeek();
+                var listProductDealsOfTheWeek = _productService.GetAllProductDealsOfTheWeek();
 
                 var listProductViewModelDealsOfTheWeek = Mapper.Map<List<ProductViewModel>>(listProductDealsOfTheWeek);
 
                 response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelDealsOfTheWeek);
+
+                return response;
+            });
+        }
+
+        [Route("getbestsellingbycategory")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetAllBestSellingByCategory(HttpRequestMessage request, int categoryId,int size = 10)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductBestSelling = _productService.GetAllProductBestSellingByCategoryId(categoryId, size);
+
+                var listProductViewModelBestSelling = Mapper.Map<List<ProductViewModel>>(listProductBestSelling);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelBestSelling);
 
                 return response;
             });
@@ -147,7 +166,7 @@ namespace Shop.Api.Controllers
                 }
 
                 var newProduct = Mapper.Map<Product>(productViewModel);
-                newProduct.QuantityHasSell = 0;
+                newProduct.QuantityHasSell = 10;
                 newProduct.CreatedDate = DateTime.Now;
                 newProduct.CreatedBy = User.Identity.Name;
 

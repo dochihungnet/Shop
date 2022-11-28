@@ -111,6 +111,24 @@ namespace Shop.Api.Controllers
             });
         }
 
+        [Route("getbestselling")]
+        [HttpGet]
+        public HttpResponseMessage GetProductCategoryBestSelling(HttpRequestMessage request, int amount)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductCategoryBestSelling = _productCategoryService.GetProductCategoryBestSelling(amount);
+
+                var listProductCategoryViewModelBestSelling = Mapper.Map<List<ProductCategoryViewModel>>(listProductCategoryBestSelling);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryViewModelBestSelling);
+
+                return response;
+            });
+        }
+
         [Route("create")]
         [HttpPost]
         public HttpResponseMessage Create(HttpRequestMessage request, ProductCategoryViewModel productCategoryViewModel)

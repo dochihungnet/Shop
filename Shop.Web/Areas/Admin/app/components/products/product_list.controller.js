@@ -258,6 +258,7 @@
         function handlerEventClickInputStatusDiscountProduct($event, id) {
             $event.preventDefault();
             var product = { ...$scope.products.find(x => x.Id == id) };
+            product.EndDiscountDate = product.StatusDiscount ? new Date(product.EndDiscountDate) : product.EndDiscountDate;
 
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -354,7 +355,7 @@
         $ctrl.add = function () {
 
             $ctrl.product.StatusDiscount = true;
-            $ctrl.product.PriceAfterDiscount = $ctrl.product.Price - $ctrl.product.Price * $ctrl.product.PromotionPrice;
+            $ctrl.product.PriceAfterDiscount = $ctrl.product.Price - $ctrl.product.Price * $ctrl.product.PromotionPrice / 100;
 
             apiService.put(
                 'https://localhost:44353/api/product/update',

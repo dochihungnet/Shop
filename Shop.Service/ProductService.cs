@@ -20,7 +20,8 @@ namespace Shop.Service
         IEnumerable<Product> GetAll(string keyword);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
-        IEnumerable<Product> GetaAllProductDealsOfTheWeek();
+        IEnumerable<Product> GetAllProductDealsOfTheWeek();
+        IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size);
         IEnumerable<Product> GetFeatured(int top);
         IEnumerable<Product> GetHotProduct(int top);
         IEnumerable<Product> GetOnSaleProduct(int top);
@@ -97,7 +98,7 @@ namespace Shop.Service
             return _productRepository.Delete(id);
         }
 
-        public IEnumerable<Product> GetaAllProductDealsOfTheWeek()
+        public IEnumerable<Product> GetAllProductDealsOfTheWeek()
         {
             return _productRepository.GetMulti(x => x.StatusDiscount == true && x.Quantity > 0).OrderByDescending(x => x.PromotionPrice);
         }
@@ -142,6 +143,13 @@ namespace Shop.Service
         {
             return GetAll(categoryId, brandId).Where(x => x.Status == status);
         }
+
+        public IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size)
+        {
+            return _productRepository.GetMulti(x => x.Status && x.Quantity > 0 && x.CategoryId == CategoryId)
+                .OrderByDescending(x => x.QuantityHasSell).Take(size);
+        }
+
 
         public Product GetById(int id)
         {

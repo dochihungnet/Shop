@@ -37,8 +37,8 @@
                                             <div class="caption">
                                                 <h4><a href="#" target="_self" title="{{item.Name}}">{{item.Name}}</a></h4>
                                                 <p class="price">
-                                                    <span class="price-new">{{item.PriceAfterDiscount}}</span>
-                                                    <span class="price-old">{{item.Price}}</span>
+                                                    <span class="price-new">{{item.PriceAfterDiscount | currency : "" : 0}}</span>
+                                                    <span class="price-old">{{item.Price | currency : "" : 0}}</span>
                                                 </p>
 
                                                 <div class="item-available">
@@ -89,9 +89,9 @@
                             <span class="ltabs-tab-selected">Bathroom</span> <span class="ltabs-tab-arrow">▼</span>
                             <div class="item-sub-cat">
                                 <ul class="ltabs-tabs cf">
-                                    <li class="ltabs-tab tab-sel" data-category-id="20" data-active-content=".items-category-20"> <span class="ltabs-tab-label">Điện thoại</span> </li>
-                                    <li class="ltabs-tab " data-category-id="18" data-active-content=".items-category-18"> <span class="ltabs-tab-label">Máy tính</span> </li>
-                                    <li class="ltabs-tab " data-category-id="25" data-active-content=".items-category-25"> <span class="ltabs-tab-label">Đồng hồ</span> </li>
+                                    <li class="ltabs-tab tab-sel" data-active-content=".items-category-20" ng-click="$ctrl.handlerEventClickChooseProductCategory($ctrl.threeProductCategoryBestSelling[0].Id, 10)"> <span class="ltabs-tab-label">{{$ctrl.threeProductCategoryBestSelling[0].Name}}</span> </li>
+                                    <li class="ltabs-tab "  data-active-content=".items-category-20" ng-click="$ctrl.handlerEventClickChooseProductCategory($ctrl.threeProductCategoryBestSelling[1].Id, 10)"> <span class="ltabs-tab-label">{{$ctrl.threeProductCategoryBestSelling[1].Name}}</span> </li>
+                                    <li class="ltabs-tab " data-active-content=".items-category-20" ng-click="$ctrl.handlerEventClickChooseProductCategory($ctrl.threeProductCategoryBestSelling[2].Id, 10)"> <span class="ltabs-tab-label">{{$ctrl.threeProductCategoryBestSelling[2].Name}}</span> </li>
                                 </ul>
                             </div>
                         </div>
@@ -102,18 +102,17 @@
                         <!--Begin Items-->
                         <div class="ltabs-items ltabs-items-selected items-category-20" data-total="16">
                             <div class="ltabs-items-inner ltabs-slider">
-                                <!-- item listing tab -->
-                                <div class="ltabs-item">
+                                <div class="ltabs-item" ng-repeat="twoProduct in $ctrl.listProductBestSelling">
                                     <div class="item-inner product-layout transition product-grid">
                                         <div class="product-item-container">
                                             <div class="left-block">
                                                 <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Pastrami bacon">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/1.jpg" class="img-1 img-responsive" alt="Pastrami bacon">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/10.jpg" class="img-2 img-responsive" alt="Pastrami bacon">
+                                                    <a href="product.html" target="_self" title="{{twoProduct[0].Name}}">
+                                                        <img src="{{twoProduct[0].Image}}" class="img-1 img-responsive" alt="Pastrami bacon">
+                                                        <img src="{{twoProduct[0].Image}}" class="img-2 img-responsive" alt="Pastrami bacon">
                                                     </a>
                                                 </div>
-
+                                                <div ng-if="twoProduct[0].StatusDiscount" class="box-label"> <span class="label-product label-sale"> -{{twoProduct[0].PromotionPrice}}% </span></div>
                                                 <div class="button-group so-quickview cartinfo--left">
                                                     <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
                                                         <i class="fa fa-shopping-basket"></i>
@@ -139,23 +138,29 @@
                                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
                                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
                                                     </div>
-                                                    <h4><a href="product.html" title="Pastrami bacon" target="_self">Pastrami bacon</a></h4>
-                                                    <div class="price">$42.00</div>
+                                                    <h4><a href="product.html" title="Pastrami bacon" target="_self">{{twoProduct[0].Name}}</a></h4>
+                                                    <div ng-if="twoProduct[0].StatusDiscount" class="price">
+                                                        <span class="price-new">{{twoProduct[0].PriceAfterDiscount | currency : "" : 0}}</span>
+                                                        <span class="price-old">{{twoProduct[0].Price | currency : "" : 0}}</span>
+                                                    </div>
+                                                    <div ng-if="twoProduct[0].StatusDiscount == false || twoProduct[0].StatusDiscount == null" class="price">
+                                                        {{twoProduct[0].Price | currency : "" : 0}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="item-inner product-layout transition product-grid">
+                                    <div ng-if="twoProduct[1]" class="item-inner product-layout transition product-grid">
                                         <div class="product-item-container">
                                             <div class="left-block">
                                                 <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Chicken swinesha">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/2.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/9.jpg" class="img-2 img-responsive" alt="image">
+                                                    <a href="product.html" target="_self" title="{{twoProduct[1].Name}}">
+                                                        <img src="{{twoProduct[1].Image}}" class="img-1 img-responsive" alt="image">
+                                                        <img src="{{twoProduct[1].Image}}" class="img-2 img-responsive" alt="Pastrami bacon">
                                                     </a>
                                                 </div>
-                                                <div class="box-label"> <span class="label-product label-sale"> -16% </span></div>
+                                                <div ng-if="twoProduct[1].StatusDiscount" class="box-label"> <span class="label-product label-sale"> -{{twoProduct[1].PromotionPrice}}% </span></div>
                                                 <div class="button-group so-quickview cartinfo--left">
                                                     <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
                                                         <i class="fa fa-shopping-basket"></i>
@@ -181,358 +186,13 @@
                                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
                                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
                                                     </div>
-                                                    <h4><a href="product.html" title="Chicken swinesha" target="_self">Chicken swinesha</a></h4>
-                                                    <div class="price">
-                                                        <span class="price-new">$46.00</span>
-                                                        <span class="price-old">$55.00</span>
+                                                    <h4><a href="product.html" title="{{twoProduct[1].Name}}" target="_self">{{twoProduct[1].Name}}</a></h4>
+                                                    <div ng-if="twoProduct[1].StatusDiscount" class="price">
+                                                        <span class="price-new">{{twoProduct[1].PriceAfterDiscount | currency : "" : 0}}</span>
+                                                        <span class="price-old">{{twoProduct[1].Price | currency : "" : 0}}</span>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end item listing tab -->
-                                <div class="ltabs-item">
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Kielbasa hamburg">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/3.jpg" class="img-1 img-responsive" alt="Pastrami bacon">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/8.jpg" class="img-2 img-responsive" alt="Pastrami bacon">
-                                                    </a>
-                                                </div>
-                                                <div class="box-label"> <span class="label-product label-new"> New </span></div>
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Kielbasa hamburg" target="_self">Kielbasa hamburg</a></h4>
-                                                    <div class="price">$55.00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Sausage cowbee">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/4.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/7.jpg" class="img-2 img-responsive" alt="image">
-                                                    </a>
-                                                </div>
-
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Sausage cowbeea" target="_self">Sausage cowbee</a></h4>
-                                                    <div class="price">$60.00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ltabs-item">
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Kielbasa hamburg">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/5.jpg" class="img-1 img-responsive" alt="Pastrami bacon">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/6.jpg" class="img-2 img-responsive" alt="Pastrami bacon">
-                                                    </a>
-                                                </div>
-
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Drumstick tempor" target="_self">Drumstick tempor</a></h4>
-                                                    <div class="price">$75.00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Balltip nullaelit">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/6.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/5.jpg" class="img-2 img-responsive" alt="image">
-                                                    </a>
-                                                </div>
-                                                <div class="box-label"> <span class="label-product label-new"> New </span></div>
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Balltip nullaelit" target="_self">Balltip nullaelit</a></h4>
-                                                    <div class="price">$80.00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ltabs-item">
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Ribeye hamhock">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/7.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/4.jpg" class="img-2 img-responsive" alt="image">
-                                                    </a>
-                                                </div>
-                                                <div class="box-label"> <span class="label-product label-sale"> -7% </span></div>
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Ribeye hamhock" target="_self">Ribeye hamhock</a></h4>
-                                                    <div class="price">
-                                                        <span class="price-new">$65.00</span>
-                                                        <span class="price-old">$70.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Wamboudin ribeye">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/8.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/3.jpg" class="img-2 img-responsive" alt="image">
-                                                    </a>
-                                                </div>
-
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Wamboudin ribeye" target="_self">Wamboudin ribeye</a></h4>
-                                                    <div class="price">$63.00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ltabs-item">
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Lamboudin ribeye">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/9.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/2.jpg" class="img-2 img-responsive" alt="image">
-                                                    </a>
-                                                </div>
-
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Lamboudin ribeye" target="_self">Lamboudin ribeye</a></h4>
-                                                    <div class="price">$63.00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item-inner product-layout transition product-grid">
-                                        <div class="product-item-container">
-                                            <div class="left-block">
-                                                <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="Ribeye hamhock">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/10.jpg" class="img-1 img-responsive" alt="image">
-                                                        <img src="/assets/client/image/catalog/demo/product/index2/270/1.jpg" class="img-2 img-responsive" alt="image">
-                                                    </a>
-                                                </div>
-                                                <div class="box-label"> <span class="label-product label-sale"> -7% </span></div>
-                                                <div class="button-group so-quickview cartinfo--left">
-                                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <span>Thêm giỏ hàng </span>
-                                                    </button>
-                                                    <button type="button" class="wishlist btn-button" title="Yêu thích" onclick="wishlist.add('60');">
-                                                        <i class="fa fa-heart"></i><span>Yêu thích</span>
-                                                    </button>
-                                                    <button type="button" class="compare btn-button" title="So sánh " onclick="compare.add('60');">
-                                                        <i class="fa fa-refresh"></i><span>So sánh</span>
-                                                    </button>
-                                                    <!--quickview-->
-                                                    <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Xem lướt qua" data-fancybox-type="iframe"><i class="fa fa-eye"></i><span>Xem lướt qua</span></a>
-                                                    <!--end quickview-->
-                                                </div>
-                                            </div>
-                                            <div class="right-block">
-                                                <div class="caption">
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    </div>
-                                                    <h4><a href="product.html" title="Ribeye hamhock" target="_self">Ribeye hamhock</a></h4>
-                                                    <div class="price">
-                                                        <span class="price-new">$65.00</span>
-                                                        <span class="price-old">$70.00</span>
+                                                    <div ng-if="twoProduct[1].StatusDiscount == false || twoProduct[1].StatusDiscount == null" class="price">
+                                                        {{twoProduct[1].Price | currency : "" : 0}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -542,14 +202,6 @@
                             </div>
 
                         </div>
-                        <div class="ltabs-items items-category-18 grid" data-total="16">
-                            <div class="ltabs-loading"></div>
-
-                        </div>
-                        <div class="ltabs-items  items-category-25 grid" data-total="16">
-                            <div class="ltabs-loading"></div>
-                        </div>
-                        <!--End Items-->
                     </div>
 
                 </div>
