@@ -124,6 +124,10 @@
                                             <td class="col-9">{{product.Quantity}}</td>
                                         </tr>
                                         <tr role="row" class="old">
+                                            <td class="col-3">Số lượng đã bán</td>
+                                            <td class="col-9">{{product.QuantityHasSell == null ? 0 : product.QuantityHasSell}}</td>
+                                        </tr>
+                                        <tr role="row" class="old">
                                             <td class="col-3">Giá gốc</td>
                                             <td class="col-9">{{product.OriginalPrice | currency : ""}}</td>
                                         </tr>

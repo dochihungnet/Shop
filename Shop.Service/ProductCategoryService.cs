@@ -94,8 +94,8 @@ namespace Shop.Service
             {
                 var listProductByCate_x = _productRepository.GetMulti(p => p.CategoryId == x.Id);
                 var listProductByCate_y = _productRepository.GetMulti(p => p.CategoryId == y.Id);
-                var sum_x = listProductByCate_x.Sum(p => (int)p.QuantityHasSell);
-                var sum_y = listProductByCate_y.Sum(p => (int)p.QuantityHasSell);
+                var sum_x = listProductByCate_x.Sum(p => (int)(p.QuantityHasSell.HasValue ? p.QuantityHasSell.Value : 0));
+                var sum_y = listProductByCate_y.Sum(p => (int)(p.QuantityHasSell.HasValue ? p.QuantityHasSell.Value : 0));
 
                 return sum_y - sum_x;
             });

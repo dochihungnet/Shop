@@ -16,8 +16,9 @@
                 $scope.listProductDealsOfTheWeek = result[0];
                 $scope.threeProductCategoryBestSelling = result[1];
 
-                getAllProductBestSellingByCategory($scope.threeProductCategoryBestSelling[0].Id, 10).then(result => {
-                    $scope.listProductBestSelling = result;
+                getAllProductBestSellingByCategory($scope.threeProductCategoryBestSelling[0].Id, 8).then(result => {
+                    $scope.listProductBestSelling = handlerResponseData(result, 1);
+                    console.log($scope.listProductBestSelling);
                     $timeout(init, 10);
                 })
             });
@@ -89,11 +90,26 @@
 
             function handlerEventClickChooseProductCategory(categoryId, size) {
                 getAllProductBestSellingByCategory(categoryId, size).then(result => {
-                    $scope.listProductBestSelling = result;
+                    $scope.listProductBestSelling = handlerResponseData(result, 1);
                     $timeout(init, 10);
                 })
             }
 
+            // xử lý xem sản phẩm nào là sản phẩm new
+            function handlerResponseData(product, days) {
+                return product.map(x => {
+                    var result = new Date(x.CreatedDate);
+                    result.setDate(result.getDate() + days);
+
+                    if (result > new Date()) {
+                        x.IsANewProduct = true;
+                    }
+                    else {
+                        x.IsANewProduct = false;
+                    }
+                    return x;
+                })
+            }
 
             // Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
             function init() {

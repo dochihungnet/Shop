@@ -22,18 +22,16 @@ namespace Shop.Service
         IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
         IEnumerable<Product> GetAllProductDealsOfTheWeek();
         IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size);
-        IEnumerable<Product> GetFeatured(int top);
-        IEnumerable<Product> GetHotProduct(int top);
-        IEnumerable<Product> GetOnSaleProduct(int top);
         IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow);
-        IEnumerable<Product> GetReatedProducts(int id, int top);
         IEnumerable<Product> GetListProductByName(string name);
+        IEnumerable<Product> GetListBestSeller(int size);
+        IEnumerable<Product> GetListNew(int size);
+        IEnumerable<Product> GetListBestRating(int size);
         Product GetById(int id);
         Product GetByIdInclude(int id);
         IEnumerable<Tag> GetListTagByProductId(int id);
         void IncreaseView(int id);
         IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
-
         Tag GetTag(string tagId);
         void SaveChanges();
     }
@@ -161,15 +159,6 @@ namespace Shop.Service
             return _productRepository.GetSingleByCondition(x => x.Id == id, new string[] { "ProductCategory", "Brand" });
         }
 
-        public IEnumerable<Product> GetFeatured(int top)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetHotProduct(int top)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow)
         {
@@ -187,16 +176,6 @@ namespace Shop.Service
         }
 
         public IEnumerable<Tag> GetListTagByProductId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetOnSaleProduct(int top)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetReatedProducts(int id, int top)
         {
             throw new NotImplementedException();
         }
@@ -251,6 +230,21 @@ namespace Shop.Service
 
             }
 
+        }
+
+        public IEnumerable<Product> GetListBestSeller(int size)
+        {
+            return _productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.QuantityHasSell).Take(size);
+        }
+
+        public IEnumerable<Product> GetListNew(int size)
+        {
+            return _productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.CreatedDate).Take(size);
+        }
+
+        public IEnumerable<Product> GetListBestRating(int size)
+        {
+            return _productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.Quantity).Take(size);
         }
     }
 }

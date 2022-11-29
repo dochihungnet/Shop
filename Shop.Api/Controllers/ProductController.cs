@@ -150,6 +150,62 @@ namespace Shop.Api.Controllers
             });
         }
 
+        [Route("getbestseller")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetAllBestSeller(HttpRequestMessage request, int size = 10)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductBestSeller = _productService.GetListBestSeller(size);
+
+                var listProductViewModelBestSeller = Mapper.Map<List<ProductViewModel>>(listProductBestSeller);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelBestSeller);
+
+                return response;
+            });
+        }
+
+        [Route("getnew")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetAllNew(HttpRequestMessage request, int size = 10)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductNew = _productService.GetListNew(size);
+
+                var listProductViewModelNew = Mapper.Map<List<ProductViewModel>>(listProductNew);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelNew);
+
+                return response;
+            });
+        }
+
+        [Route("getbestrating")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetAllBestRating(HttpRequestMessage request, int size = 10)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductBestRating= _productService.GetListBestRating(size);
+
+                var listProductViewModelBestRating = Mapper.Map<List<ProductViewModel>>(listProductBestRating);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelBestRating);
+
+                return response;
+            });
+        }
         // create
         [Route("create")]
         [HttpPost]
@@ -166,7 +222,7 @@ namespace Shop.Api.Controllers
                 }
 
                 var newProduct = Mapper.Map<Product>(productViewModel);
-                newProduct.QuantityHasSell = 10;
+                newProduct.QuantityHasSell = 100;
                 newProduct.CreatedDate = DateTime.Now;
                 newProduct.CreatedBy = User.Identity.Name;
 
