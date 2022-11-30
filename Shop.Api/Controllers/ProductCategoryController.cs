@@ -25,6 +25,7 @@ namespace Shop.Api.Controllers
             this._productCategoryService = productCategoryService;
         }
 
+
         [Route("getallparents")]
         [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
@@ -229,5 +230,8 @@ namespace Shop.Api.Controllers
                 return response;
             });
         }
+        
+ 
+    
     }
 }

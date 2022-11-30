@@ -27,6 +27,7 @@ namespace Shop.Service
         IEnumerable<Product> GetListBestSeller(int size);
         IEnumerable<Product> GetListNew(int size);
         IEnumerable<Product> GetListBestRating(int size);
+        IEnumerable<Product> GetListRelated(int productId, int categoryId, int size);
         Product GetById(int id);
         Product GetByIdInclude(int id);
         IEnumerable<Tag> GetListTagByProductId(int id);
@@ -245,6 +246,11 @@ namespace Shop.Service
         public IEnumerable<Product> GetListBestRating(int size)
         {
             return _productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.Quantity).Take(size);
+        }
+
+        public IEnumerable<Product> GetListRelated(int productId, int categoryId, int size)
+        {
+            return _productRepository.GetMulti(x => x.Status && x.Id != productId && x.CategoryId == categoryId).OrderByDescending(x => x.Quantity).Take(size);
         }
     }
 }

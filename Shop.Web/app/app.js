@@ -5,6 +5,8 @@
         'shop.list_product_one_home',
         'shop.list_product_two_home',
         'shop.list_post_home', 
+        'shop.product_details',
+        'shop.product_categories',
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];

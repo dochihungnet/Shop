@@ -14,7 +14,7 @@
                                                 <span class="label-product label-product-sale">
                                                     -{{item.PromotionPrice}}%
                                                 </span>
-                                                <a href="#" target="_self" title="product">
+                                                <a ui-sref="product_details({id:item.Id})" title="product">
                                                     <img src="{{item.Image}}" alt="Yutculpa ullamco" class="img-responsive">
                                                 </a>
                                                 <div class="button-group so-quickview">
@@ -35,7 +35,7 @@
                                         </div>
                                         <div class="item-right col-lg-6 col-md-7 col-sm-7 col-xs-12">
                                             <div class="caption">
-                                                <h4><a href="#" target="_self" title="{{item.Name}}">{{item.Name}}</a></h4>
+                                                <h4><a ui-sref="product_details({id:item.Id})" title="{{item.Name}}">{{item.Name}}</a></h4>
                                                 <p class="price">
                                                     <span class="price-new">{{item.PriceAfterDiscount | currency : "" : 0}}</span>
                                                     <span class="price-old">{{item.Price | currency : "" : 0}}</span>
@@ -108,7 +108,7 @@
                                         <div class="product-item-container">
                                             <div class="left-block">
                                                 <div class="product-image-container second_img">
-                                                    <a href="product.html" target="_self" title="{{product.Name}}">
+                                                    <a ui-sref="product_details({id:product.Id})" title="{{product.Name}}">
                                                         <img src="{{product.Image}}" class="img-1 img-responsive" alt="Pastrami bacon">
                                                         <img src="{{product.Image}}" class="img-2 img-responsive" alt="Pastrami bacon">
                                                     </a>
@@ -140,7 +140,7 @@
                                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
                                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
                                                     </div>
-                                                    <h4><a href="product.html" title="Pastrami bacon" target="_self">{{product.Name}}</a></h4>
+                                                    <h4><a ui-sref="product_details({id:product.Id})" title="{{product.Name}}">{{product.Name}}</a></h4>
                                                     <div ng-if="product.StatusDiscount" class="price">
                                                         <span class="price-new">{{product.PriceAfterDiscount | currency : "" : 0}}</span>
                                                         <span class="price-old">{{product.Price | currency : "" : 0}}</span>

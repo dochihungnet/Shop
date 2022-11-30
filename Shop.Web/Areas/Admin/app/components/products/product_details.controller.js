@@ -1,9 +1,9 @@
 ﻿(function (app) {
-    app.controller('productDetailsController', productEditController);
+    app.controller('productDetailsController', productDetailsController);
 
-    productEditController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', 'commonService', '$ngBootbox'];
+    productDetailsController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', 'commonService', '$ngBootbox'];
 
-    function productEditController(apiService, $scope, $state, notificationService, $stateParams, commonService, $ngBootbox) {
+    function productDetailsController(apiService, $scope, $state, notificationService, $stateParams, commonService, $ngBootbox) {
         $scope.brands = [];
         $scope.productCategories = [];
         $scope.product = {

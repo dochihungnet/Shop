@@ -13,6 +13,7 @@
 
         function del(url, data, success, failure) {
             authenticationService.setHeader();
+
             $http.delete(url, data).then(function (result) {
                 success(result);
             }, function (error) {

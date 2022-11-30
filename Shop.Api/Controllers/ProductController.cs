@@ -206,6 +206,27 @@ namespace Shop.Api.Controllers
                 return response;
             });
         }
+        
+        [Route("getrelated")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetAllRelated(HttpRequestMessage request, int productId, int categoryId, int size = 10)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductBestRating = _productService.GetListRelated(productId, categoryId, size);
+
+                var listProductViewModelBestRating = Mapper.Map<List<ProductViewModel>>(listProductBestRating);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelBestRating);
+
+                return response;
+            });
+        }
+
+
         // create
         [Route("create")]
         [HttpPost]

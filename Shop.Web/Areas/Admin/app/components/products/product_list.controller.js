@@ -130,7 +130,7 @@
 
             var config = {
                 params: {
-                    page: page,
+                    PAGE: page,
                     pageSize: $scope.pageSize,
                     status: $scope.status,
                     categoryId: $scope.categoryId,

@@ -17,6 +17,7 @@ namespace Shop.Data
             this.Configuration.LazyLoadingEnabled = false;
         }
         // Setup DbSet, 1 DbSet ~ 1 Table trong Database
+
         public DbSet<Brand> Brands { get; set; }
         public DbSet<ContactDetail> ContactDetails { get; set; }
         public DbSet<Error> Errors { get; set; }
