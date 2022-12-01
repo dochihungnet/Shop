@@ -69,12 +69,12 @@
                         <div class="yt-content-slider" data-rtl="yes" data-autoplay="no" data-autoheight="no" data-delay="4" data-speed="0.6" data-margin="30" data-items_column0="7" data-items_column1="4" data-items_column2="4" data-items_column3="2" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
                             <div class="content-box" ng-repeat="productCategory in rootProductCategories">
                                 <div class="image-cat">
-                                    <a href="#" title="Towels Cloud" target="_self">
+                                    <a ui-sref="product_categories({id:productCategory.Id})">
                                         <img src="{{productCategory.Image}}" title="{{productCategory.Name}}" alt="{{productCategory.Name}}" />
                                     </a>
                                 </div>
                                 <div class="cat-title">
-                                    <a href="#" title="{{productCategory.Name}} " target="_self">{{productCategory.Name}}</a>
+                                    <a ui-sref="product_categories({id:productCategory.Id})" title="{{productCategory.Name}} ">{{productCategory.Name}}</a>
                                 </div>
                             </div>
                         </div>

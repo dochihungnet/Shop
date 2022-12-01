@@ -68,7 +68,7 @@ namespace Shop.Service
 
         public IEnumerable<ProductCategory> GetAllByParentId(int parrentId)
         {
-            return _productCategoryRepository.GetMulti(x => x.Status && x.ParentId == parrentId);
+            return _productCategoryRepository.GetMulti(x => x.Status && x.ParentId == parrentId).OrderByDescending(x => x.CreatedDate);
         }
 
         public ProductCategory GetById(int id)

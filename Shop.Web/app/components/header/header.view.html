@@ -242,7 +242,7 @@
                                                 <ul class="megamenu">
                                                     <li ng-init="existChild = $ctrl.checkExistChild(item.Id)" ng-class="{'item-vertical': true, hover: true, 'with-sub-menu' : existChild}" ng-repeat="item in $ctrl.rootProductCategories">
                                                         <p class="close-menu"></p>
-                                                        <a href="#" class="clearfix">
+                                                        <a ui-sref="product_categories({id:item.Id})" class="clearfix">
                                                             <img src="/assets/client/image/catalog/menu/icons/ico10.png" alt="icon">
                                                             <span>{{item.Name}}</span>
                                                             <b class="caret"></b>
@@ -302,7 +302,7 @@
                                                     <a ui-sref="home">Trang chủ</a>
                                                 </li>
                                                 <li class="">
-                                                    <a href="#" class="clearfix">
+                                                    <a ui-sref="product_categories({id: 0})" class="clearfix">
                                                         <strong>Sản phẩm</strong>
                                                     </a>
                                                 </li>

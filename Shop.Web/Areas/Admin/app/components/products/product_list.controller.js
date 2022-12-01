@@ -184,7 +184,6 @@
             var input = $scope.productCategories.find(x => x.Id == id);
 
             if (!input.checked) {
-                console.log($scope.productCategories);
                 getListProduct();
                 return;
             }

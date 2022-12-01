@@ -112,6 +112,24 @@ namespace Shop.Api.Controllers
             });
         }
 
+        [Route("getallchild")]
+        [HttpGet]
+        public HttpResponseMessage GetAllByParentId(HttpRequestMessage request, int parentId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductCategoryChild = _productCategoryService.GetAllByParentId(parentId);
+
+                var listProductCategoryViewModelChild = Mapper.Map<List<ProductCategoryViewModel>>(listProductCategoryChild);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryViewModelChild);
+
+                return response;
+            });
+        }
+
         [Route("getbestselling")]
         [HttpGet]
         public HttpResponseMessage GetProductCategoryBestSelling(HttpRequestMessage request, int amount)

@@ -242,14 +242,14 @@ $('.back-to-top').click(function () {
 	Range slider && Filter  Reset
 -------------------------------------------------- */
 if($('#slider').length){
-	window.startRangeValues = [28.00, 562.00];
+	window.startRangeValues = [0, 50000000];
 	$('#slider').slider({
 
 		range : true,
-		min : 10.00,
-		max : 580.00,
+		min : 0,
+		max : 50000000,
 		values : window.startRangeValues,
-		step : 0.01,
+		step : 1,
 
 		slide : function(event, ui){
 
@@ -260,7 +260,7 @@ if($('#slider').length){
 
 			range.children('.min_value').val(min).next().val(max);
 
-			range.children('.min_val').text('$' + min).next().text('$' + max);
+			range.children('.min_val').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(min)).next().text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(max));
 
 		},
 

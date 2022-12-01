@@ -20,6 +20,7 @@ namespace Shop.Service
         IEnumerable<Product> GetAll(string keyword);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
+        IEnumerable<Product> GetAll(string keyword, int? categoryId, int? brandId, int sortBy);
         IEnumerable<Product> GetAllProductDealsOfTheWeek();
         IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size);
         IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow);
@@ -28,6 +29,7 @@ namespace Shop.Service
         IEnumerable<Product> GetListNew(int size);
         IEnumerable<Product> GetListBestRating(int size);
         IEnumerable<Product> GetListRelated(int productId, int categoryId, int size);
+        IEnumerable<Product> GetListByCategory(int categoryId, int size);
         Product GetById(int id);
         Product GetByIdInclude(int id);
         IEnumerable<Tag> GetListTagByProductId(int id);
@@ -40,12 +42,14 @@ namespace Shop.Service
     {
         IProductRepository _productRepository;
         IProductTagRepository _productTagRepository;
+        IProductCategoryRepository _productCategoryRepository;
         ITagRepository _tagRepository;
         IUnitOfWork _unitOfWork;
-        public ProductService(IProductRepository productRepository, IProductTagRepository productTagRepository, ITagRepository tagRepository, IUnitOfWork unitOfWork)
+        public ProductService(IProductRepository productRepository, IProductTagRepository productTagRepository, IProductCategoryRepository productCategoryRepository, ITagRepository tagRepository, IUnitOfWork unitOfWork)
         {
             _productRepository = productRepository;
             _productTagRepository = productTagRepository;
+            _productCategoryRepository = productCategoryRepository;
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
         }
@@ -121,11 +125,13 @@ namespace Shop.Service
            
             if(categoryId.HasValue && brandId.HasValue)
             {
-                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && x.CategoryId == categoryId.Value);
+                var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && (x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(y => y.Id == x.CategoryId) != null));
             }
             else if(categoryId.HasValue && !brandId.HasValue)
             {
-                return _productRepository.GetMulti(x => x.CategoryId == categoryId.Value);
+                var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+                return _productRepository.GetMulti(x => x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(y => y.Id == x.CategoryId) != null);
             }
             else if(brandId.HasValue && !categoryId.HasValue)
             {
@@ -251,6 +257,40 @@ namespace Shop.Service
         public IEnumerable<Product> GetListRelated(int productId, int categoryId, int size)
         {
             return _productRepository.GetMulti(x => x.Status && x.Id != productId && x.CategoryId == categoryId).OrderByDescending(x => x.Quantity).Take(size);
+        }
+
+        public IEnumerable<Product> GetListByCategory(int categoryId, int size)
+        {
+            var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+            var listProductByCategory = _productRepository.GetMulti(x => x.CategoryId == categoryId || listProductCategoryChild.FirstOrDefault(y => y.Id == x.CategoryId) != null ).Take(size);
+            return listProductByCategory;
+        }
+
+        public IEnumerable<Product> GetAll(string keyword, int? categoryId, int? brandId, int sortBy)
+        {
+
+            var list = GetAll(categoryId, brandId);
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                list =  list.Where(x => x.Name.Contains(keyword));
+            }
+
+            switch (sortBy)
+            {
+                case 0:
+                    break;
+                case 1: list = list.OrderBy(x => x.Name);
+                    break;
+                case 2: list = list.OrderByDescending(x => x.Name);
+                    break;
+                case 3: list = list.OrderBy(x => x.Price);
+                    break;
+                case 4: list = list.OrderByDescending(x => x.Price);
+                    break;
+            
+            }   
+
+            return list;
         }
     }
 }

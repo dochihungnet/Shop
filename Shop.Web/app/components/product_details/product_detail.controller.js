@@ -20,7 +20,7 @@
         $q.all([
             loadProductDetail(),
             getAllRootProductCategory(),
-            getAllProductCateory(),
+            getAllProductCategory(),
 
         ]).then(function (result) {
             $scope.product = result[0];
@@ -121,7 +121,7 @@
             return deferred.promise;
         }
 
-        function getAllProductCateory() {
+        function getAllProductCategory() {
             var deferred = $q.defer();
             apiService.get(
                 'https://localhost:44353/api/productcategory/getallparents',

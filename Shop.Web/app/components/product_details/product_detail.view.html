@@ -17,9 +17,9 @@
                     <div class="box-category">
                         <ul id="cat_accordion" class="list-group">
                             <li ng-init="existChild = checkExistChild(pc.Id)" ng-class="{'hadchild' : existChild}" ng-repeat="pc in listRootProductCategory">
-                                <a href="category.html" class="cutom-parent">{{pc.Name}}</a>   <span ng-if="existChild" class="button-view  fa fa-plus-square-o"></span>
+                                <a ui-sref="product_categories({id:pc.Id})" class="cutom-parent">{{pc.Name}}</a>   <span ng-if="existChild" class="button-view  fa fa-plus-square-o"></span>
                                 <ul ng-if="existChild" style="display: block;">
-                                    <li ng-repeat="child in getAllProductCategoryChild(pc.Id)"><a href="category.html">{{child.Name}}</a></li>
+                                    <li ng-repeat="child in getAllProductCategoryChild(pc.Id)"><a ui-sref="product_categories({id:child.Id})">{{child.Name}}</a></li>
                                 </ul>
                             </li>
                         </ul>

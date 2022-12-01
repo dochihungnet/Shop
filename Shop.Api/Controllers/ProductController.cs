@@ -111,6 +111,43 @@ namespace Shop.Api.Controllers
             });
         }
 
+        // getall
+        [Route("getall")]
+        [HttpGet]
+        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize, int? categoryId = null, int? brandId = null, int sortBy = 0)
+        {
+            // 0: mặc định
+            // 1: Tên A => Z
+            // 2: Tên Z => A
+            // 3: Giá Thấp > Cao
+            // 3: Giá Cao > Thấp
+            HttpResponseMessage response = null;
+
+            return CreateHttpResponse(request, () =>
+            {
+                int totalRow = 0;
+
+                var listProduct = _productService.GetAll(keyword, categoryId, brandId, sortBy);
+
+                totalRow = listProduct.Count();
+
+                var query = listProduct.Skip(page * pageSize).Take(pageSize);
+
+                var listProductViewModel = Mapper.Map<List<ProductViewModel>>(query);
+
+                var paginationSet = new PaginationSet<ProductViewModel>()
+                {
+                    Items = listProductViewModel,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
+                };
+
+                response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
+                return response;
+            });
+        }
+
         // getalldealsoftheweek
         [Route("getalldealsoftheweek")]
         [HttpGet]
@@ -216,16 +253,34 @@ namespace Shop.Api.Controllers
             {
                 HttpResponseMessage response = null;
 
-                var listProductBestRating = _productService.GetListRelated(productId, categoryId, size);
+                var listProductBestRelated = _productService.GetListRelated(productId, categoryId, size);
 
-                var listProductViewModelBestRating = Mapper.Map<List<ProductViewModel>>(listProductBestRating);
+                var listProductViewModeltBestRelated = Mapper.Map<List<ProductViewModel>>(listProductBestRelated);
 
-                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelBestRating);
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModeltBestRelated);
 
                 return response;
             });
         }
 
+        [Route("getallbycategory")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetAllByCategory(HttpRequestMessage request, int categoryId, int size = 10)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductByCategory = _productService.GetListByCategory(categoryId, size);
+
+                var listProductViewModelByCategory = Mapper.Map<List<ProductViewModel>>(listProductByCategory);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listProductViewModelByCategory);
+
+                return response;
+            });
+        }
 
         // create
         [Route("create")]
