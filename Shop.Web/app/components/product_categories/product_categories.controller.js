@@ -5,14 +5,23 @@
 
     function productCategoriesController(apiService, $scope, $state, notificationService, $stateParams, $timeout, $q) {
 
-        $q.all([
-            
-
-        ]).then(function (result) {
-            
-        });
+        $scope.products = [];
+        $scope.brands = [];
+        $scope.productCategoriesChild = [];
 
 
+        $scope.page = 0;
+        $scope.pageSize = 10;
+        $scope.pageCount = 0;
+        $scope.categoryId;
+        $scope.brandId;
+        $scope.status = null;
+
+
+
+        function getListProduct() {
+
+        }
 
 
         // get danh sách sản phẩm mới nhất
@@ -39,46 +48,7 @@
             return deferred.promise;
         }
 
-        function getAllRootProductCategory() {
-            var deferred = $q.defer();
-            apiService.get(
-                'https://localhost:44353/api/productcategory/getallroot',
-                null,
-                function (result) {
-                    deferred.resolve(result.data);
-                },
-                function (error) {
-                    deferred.reject('Lấy root product category không thành công');
-                }
-
-            );
-            return deferred.promise;
-        }
-
-        function getAllProductCateory() {
-            var deferred = $q.defer();
-            apiService.get(
-                'https://localhost:44353/api/productcategory/getallparents',
-                null,
-                function (result) {
-                    deferred.resolve(result.data);
-                },
-                function (error) {
-                    deferred.reject('Lấy product category không thành công');
-                }
-
-            );
-            return deferred.promise;
-        }
-
-        function getAllProductCategoryChild(id) {
-            return $scope.listProductCategory.filter(x => x.ParentId == id);
-        }
-
-        // kiểm tra product Category id có tồn tại con hay không?
-        function checkExistChild(id) {
-            return $scope.listProductCategory.some(x => x.ParentId == id);
-        }
+        
 
         init();
         // Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
