@@ -12,6 +12,7 @@
         $scope.listProductRelated = [];
         $scope.listRootProductCategory = [];
         $scope.listProductCategory = [];
+        $scope.listTagByProductId = [];
 
         $scope.getAllProductCategoryChild = getAllProductCategoryChild;
         $scope.checkExistChild = checkExistChild;
@@ -38,7 +39,16 @@
         getAllProductLatest(4).then(result => {
             $scope.listProductLatest = result;
         })
-        
+
+
+        getAllTagByProductId().then(result => {
+            $scope.listTagByProductId = result;
+        });
+
+        ////////////////////////////////////////////////////////////////////////
+        //////////////////// FUNC HANDELER
+        ///////////////////////////////////////////////////////////////////////
+
 
         function loadProductDetail() {
             var deferred = $q.defer();
@@ -52,6 +62,30 @@
                 function (error) {
                     deferred.reject('lấy product details thất bại.')
                 }
+            );
+
+            return deferred.promise;
+        }
+
+        function getAllTagByProductId() {
+            var deferred = $q.defer();
+
+            var config = {
+                params: {
+                    productId: $stateParams.id
+                }
+            }
+
+            apiService.get(
+                `https://localhost:44353/api/product/getalltagbyproductid`,
+                config,
+                function (result) {
+                    deferred.resolve(result.data);
+                },
+                function (error) {
+                    deferred.reject(`Lấy all tag by product ID không thành công`);
+                }
+
             );
 
             return deferred.promise;
@@ -137,6 +171,7 @@
             return deferred.promise;
         }
 
+        // lấy ra danh sách product category con từ category Id
         function getAllProductCategoryChild(id) {
             return $scope.listProductCategory.filter(x => x.ParentId == id);
         }

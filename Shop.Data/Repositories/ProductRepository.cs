@@ -10,12 +10,22 @@ namespace Shop.Data.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {
+        IEnumerable<Product> GetListProductByTag(string tagId);
     }
 
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
         public ProductRepository(IDbFactory dbFactory) : base(dbFactory)
         {
+        }
+
+        public IEnumerable<Product> GetListProductByTag(string tagId)
+        {
+            return from p in DbContext.Products
+                   join pt in DbContext.ProductTags
+                   on p.Id equals pt.ProductId
+                   where pt.TagId == tagId
+                   select p;
         }
     }
 }

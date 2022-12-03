@@ -114,7 +114,7 @@ namespace Shop.Api.Controllers
         // getall
         [Route("getall")]
         [HttpGet]
-        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize, int? categoryId = null, int? brandId = null, int sortBy = 0)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize, decimal minPrice = 0, decimal maxPrice = decimal.MaxValue, int? categoryId = null, int? brandId = null, int sortBy = 0)
         {
             // 0: mặc định
             // 1: Tên A => Z
@@ -127,7 +127,7 @@ namespace Shop.Api.Controllers
             {
                 int totalRow = 0;
 
-                var listProduct = _productService.GetAll(keyword, categoryId, brandId, sortBy);
+                var listProduct = _productService.GetAll(keyword, minPrice, maxPrice, categoryId, brandId, sortBy);
 
                 totalRow = listProduct.Count();
 
@@ -148,6 +148,57 @@ namespace Shop.Api.Controllers
             });
         }
 
+        // getalltagbyproductid
+        [Route("getalltagbyproductid")]
+        [HttpGet]
+        public HttpResponseMessage GetAllTagByProductId(HttpRequestMessage request, int productId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listTagByProductId = _productService.GetListTagByProductId(productId);
+
+                var listTagViewModelByProductId = Mapper.Map<List<TagViewModel>>(listTagByProductId);
+
+                response = request.CreateResponse(HttpStatusCode.OK, listTagByProductId);
+
+                return response;
+            });
+        }
+
+        [Route("getallproductbytagid")]
+        [HttpGet]               
+        
+        public HttpResponseMessage GetAllProductByTagId(HttpRequestMessage request, string tagId, int page = 0, int pageSize = 15, int sortBy = 0)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var listProductByTagId = _productService.GetListProductByTag(tagId, sortBy);
+
+                var totalRow = listProductByTagId.Count();
+
+                var query = listProductByTagId.Skip(page * pageSize).Take(pageSize);
+
+                var listProductByTagIdViewModel = Mapper.Map<List<ProductViewModel>>(query);
+
+                var paginationSet = new PaginationSet<ProductViewModel>()
+                {
+                    Items = listProductByTagIdViewModel,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
+                };
+
+                response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
+
+                return response;
+            });
+        }
+        
+        
         // getalldealsoftheweek
         [Route("getalldealsoftheweek")]
         [HttpGet]

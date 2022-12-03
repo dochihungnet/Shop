@@ -20,10 +20,9 @@ namespace Shop.Service
         IEnumerable<Product> GetAll(string keyword);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId);
         IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
-        IEnumerable<Product> GetAll(string keyword, int? categoryId, int? brandId, int sortBy);
+        IEnumerable<Product> GetAll(string keyword, decimal minPrice, decimal maxPrice, int? categoryId, int? brandId, int sortBy);
         IEnumerable<Product> GetAllProductDealsOfTheWeek();
         IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size);
-        IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow);
         IEnumerable<Product> GetListProductByName(string name);
         IEnumerable<Product> GetListBestSeller(int size);
         IEnumerable<Product> GetListNew(int size);
@@ -34,8 +33,7 @@ namespace Shop.Service
         Product GetByIdInclude(int id);
         IEnumerable<Tag> GetListTagByProductId(int id);
         void IncreaseView(int id);
-        IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
-        Tag GetTag(string tagId);
+        IEnumerable<Product> GetListProductByTag(string tagId, int sortBy);
         void SaveChanges();
     }
     public class ProductService : IProductService
@@ -126,12 +124,12 @@ namespace Shop.Service
             if(categoryId.HasValue && brandId.HasValue)
             {
                 var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
-                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && (x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(y => y.Id == x.CategoryId) != null));
+                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && (x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(c => x.CategoryId == c.Id) != null));
             }
             else if(categoryId.HasValue && !brandId.HasValue)
             {
                 var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
-                return _productRepository.GetMulti(x => x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(y => y.Id == x.CategoryId) != null);
+                return _productRepository.GetMulti(x => x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(y => x.CategoryId == y.Id) != null);
             }
             else if(brandId.HasValue && !categoryId.HasValue)
             {
@@ -149,9 +147,10 @@ namespace Shop.Service
             return GetAll(categoryId, brandId).Where(x => x.Status == status);
         }
 
-        public IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size)
+        public IEnumerable<Product> GetAllProductBestSellingByCategoryId(int categoryId, int size)
         {
-            return _productRepository.GetMulti(x => x.Status && x.Quantity > 0 && x.CategoryId == CategoryId)
+            var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+            return _productRepository.GetMulti(x => x.Status && x.Quantity > 0 && (x.CategoryId == categoryId || listProductCategoryChild.FirstOrDefault(pc => pc.Id == x.CategoryId) != null))
                 .OrderByDescending(x => x.QuantityHasSell).Take(size);
         }
 
@@ -167,24 +166,33 @@ namespace Shop.Service
         }
 
 
-        public IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Product> GetListProductByName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow)
+        public IEnumerable<Product> GetListProductByTag(string tagId, int sortBy)
         {
-            throw new NotImplementedException();
+
+            var list = _productRepository.GetListProductByTag(tagId);
+
+            switch (sortBy)
+            {
+                case 0: return list;
+                case 1: return list.OrderBy(x => x.Name);
+                case 2: return list.OrderByDescending(x => x.Name);
+                case 3: return list.OrderBy(x => x.Price);
+                case 4: return list.OrderByDescending(x => x.Price);
+
+            }
+            return list;
         }
 
         public IEnumerable<Tag> GetListTagByProductId(int id)
         {
-            throw new NotImplementedException();
+            return _productTagRepository.
+                GetMulti(x => x.ProductId == id, new string[] { "Tag" })
+                .Select(y => y.Tag);
         }
 
         public Tag GetTag(string tagId)
@@ -194,7 +202,16 @@ namespace Shop.Service
 
         public void IncreaseView(int id)
         {
-            throw new NotImplementedException();
+            var product = _productRepository.GetSingleById(id);
+            if (product.ViewCount.HasValue)
+            {
+                product.ViewCount++;
+            }
+            else
+            {
+                product.ViewCount = 1;
+            }
+               
         }
 
         public void SaveChanges()
@@ -256,7 +273,9 @@ namespace Shop.Service
 
         public IEnumerable<Product> GetListRelated(int productId, int categoryId, int size)
         {
-            return _productRepository.GetMulti(x => x.Status && x.Id != productId && x.CategoryId == categoryId).OrderByDescending(x => x.Quantity).Take(size);
+            var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+            return _productRepository.GetMulti(x => x.Status && x.Id != productId && ( x.CategoryId == categoryId || listProductCategoryChild.FirstOrDefault(y => y.Id == x.CategoryId) != null))
+                .OrderByDescending(x => x.Quantity).Take(size);
         }
 
         public IEnumerable<Product> GetListByCategory(int categoryId, int size)
@@ -266,10 +285,15 @@ namespace Shop.Service
             return listProductByCategory;
         }
 
-        public IEnumerable<Product> GetAll(string keyword, int? categoryId, int? brandId, int sortBy)
+        public IEnumerable<Product> GetAll(string keyword, decimal minPrice, decimal maxPrice, int? categoryId, int? brandId, int sortBy)
         {
 
-            var list = GetAll(categoryId, brandId);
+            var list = GetAll(categoryId, brandId).Where(x =>
+            {
+                if (x.PriceAfterDiscount.HasValue) return x.PriceAfterDiscount >= minPrice && x.PriceAfterDiscount <= maxPrice;
+                return x.Price >= minPrice && x.Price <= maxPrice;
+            });
+
             if (!string.IsNullOrEmpty(keyword))
             {
                 list =  list.Where(x => x.Name.Contains(keyword));

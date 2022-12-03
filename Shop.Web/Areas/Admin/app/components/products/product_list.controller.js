@@ -15,6 +15,7 @@
         $scope.brandId;
         $scope.status = null;
 
+        $scope.getListProduct = getListProduct;
         $scope.deleteProduct = deleteProduct;
         $scope.selectAll = selectAll;
         $scope.deleteMultiple = deleteMultiple;

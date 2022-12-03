@@ -88,17 +88,23 @@ namespace Shop.Service
 
         public List<ProductCategory> GetProductCategoryBestSelling(int amount)
         {
-            var listProductCategory = _productCategoryRepository.GetAll().ToList();
+            var listProductCategory = GetAllRoot().ToList();
 
             listProductCategory.Sort((x, y) =>
             {
-                var listProductByCate_x = _productRepository.GetMulti(p => p.CategoryId == x.Id);
-                var listProductByCate_y = _productRepository.GetMulti(p => p.CategoryId == y.Id);
+                var listProductCategoryChild_x = _productCategoryRepository.GetMulti(pc => pc.ParentId == x.Id);
+                var listProductByCate_x = _productRepository.GetMulti(p => p.CategoryId == x.Id || listProductCategoryChild_x.FirstOrDefault(c => p.CategoryId == c.Id) != null);
+
+                var listProductCategoryChild_y = _productCategoryRepository.GetMulti(pc => pc.ParentId == y.Id);
+                var listProductByCate_y = _productRepository.GetMulti(p => p.CategoryId == y.Id || listProductCategoryChild_y.FirstOrDefault(c => p.CategoryId == c.Id) != null);
+
+
                 var sum_x = listProductByCate_x.Sum(p => (int)(p.QuantityHasSell.HasValue ? p.QuantityHasSell.Value : 0));
                 var sum_y = listProductByCate_y.Sum(p => (int)(p.QuantityHasSell.HasValue ? p.QuantityHasSell.Value : 0));
 
                 return sum_y - sum_x;
             });
+
             if(listProductCategory.Count < amount)
             {
                 listProductCategory.GetRange(0, listProductCategory.Count);

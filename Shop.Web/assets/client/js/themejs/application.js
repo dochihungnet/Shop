@@ -242,12 +242,12 @@ $('.back-to-top').click(function () {
 	Range slider && Filter  Reset
 -------------------------------------------------- */
 if($('#slider').length){
-	window.startRangeValues = [0, 50000000];
+	window.startRangeValues = [0, 200000000];
 	$('#slider').slider({
 
 		range : true,
 		min : 0,
-		max : 50000000,
+		max: 200000000,
 		values : window.startRangeValues,
 		step : 1,
 
@@ -570,38 +570,19 @@ $(document).ready(function() {
 
 
 
-
+$(document).ready(function () {
+	$(".item_nonactive").each(function (idx, el) {
+		$(this).click(function () {
+			$('.tab-content > .tab-pane.fade').each(function () {
+				$(this).removeClass("active in")
+			})
+			$(`.tab-content > ${$(this).data('id')}`).addClass('active in');
+		});
+    })
+});
 
 $(document).ready(function() {
-	/*var zoomCollection = '.large-image img';
-	$( zoomCollection ).elevateZoom({
-		zoomType    : "inner",
-		lensSize    :"200",
-		easing:true,
-		gallery:'thumb-slider-vertical',
-		cursor: 'pointer',
-		galleryActiveClass: "active"
-	});
-	$('.large-image').magnificPopup({
-		items: [
-			{src: 'image/catalog/demo/product/funiture/1.jpg' },
-			{src: 'image/catalog/demo/product/funiture/2.jpg' },
-			{src: 'image/catalog/demo/product/funiture/3.jpg' },
-			{src: 'image/catalog/demo/product/funiture/4.jpg' },
-			{src: 'image/catalog/demo/product/funiture/5.jpg' },
-		],
-		gallery: { enabled: true, preload: [0,2] },
-		type: 'image',
-		mainClass: 'mfp-fade',
-		callbacks: {
-			open: function() {
-				
-				var activeIndex = parseInt($('#thumb-slider-vertical .img.active').attr('data-index'));
-				var magnificPopup = $.magnificPopup.instance;
-				magnificPopup.goTo(activeIndex);
-			}
-		}
-	});*/
+	
 	$("#thumb-slider-vertical .owl2-item").each(function() {
 		$(this).find("[data-index='0']").addClass('active');
 	});

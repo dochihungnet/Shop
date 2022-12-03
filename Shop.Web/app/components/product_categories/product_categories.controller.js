@@ -12,6 +12,8 @@
         $scope.productCategoriesChild = [];
 
         $scope.keyword = '';
+        $scope.minPrice = null;
+        $scope.maxPrice = null;
         $scope.sortBy = 0;
         $scope.page = 0;
         $scope.pageSize = 15;
@@ -46,11 +48,19 @@
         $scope.reset = reset;
         $scope.changeSortBy = changeSortBy;
         $scope.changePageSize = changePageSize;
+        $scope.search = search;
+
+        $scope.changeRangePrice = changeRangePrice;
 
 
         /////////////////////////////////////////////////////////////////////////////////
         //////////////////// FUNCTION HANDLER
         /////////////////////////////////////////////////////////////////////////////////
+        function changeRangePrice() {
+            $scope.minPrice = $('.min_value').val();
+            $scope.maxPrice = $('.max_value').val();
+        }
+
         function reset() {
             $scope.brands = $scope.brands.map(x => {
                 x.checked = false;
@@ -72,8 +82,8 @@
 
         }
 
-        function search() {
-            getListProduct().then(result => {
+        function search(page) {
+            getListProduct(page).then(result => {
                 $scope.products = [];
                 $scope.products = handlerResponseData(result.Items);
                 $scope.page = result.Page;
@@ -117,6 +127,8 @@
                     keyword: $scope.keyword,
                     page: page,
                     pageSize: $scope.pageSize,
+                    minPrice: $scope.minPrice,
+                    maxPrice: $scope.maxPrice,
                     categoryId: $scope.categoryId,
                     brandId: $scope.brandId,
                     sortBy: $scope.sortBy

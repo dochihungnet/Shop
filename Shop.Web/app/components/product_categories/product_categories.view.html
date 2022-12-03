@@ -11,10 +11,19 @@
         <div id="content" class="col-md-12 col-sm-12">
 
             <div class="products-category">
+                <div class="category-derc form-group">
+                    <h3 class="title-category">{{productCategory.Name}}</h3>
+                    <div class="category-desc">
+                        <p>Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet. Nulla venenatis. In pede mi, aliquet sit amet, euismod in, auctor ut, ligula. Aliquam dapibus tincidunt metus. Praesent justo dolor, lobortis quis, lobortis dignissim, pulvinar ac, lorem. Vestibulum sed ante. Donec sagittis euismod purus. Sed ut perspiciatis sit voluptatem accusantium doloremque laudantium. Vestibulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod consequat ante. </p>
 
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipisMauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet. Nulla venenatis. In pede mi, aliquet sit amet, euismod in,auctor ut, ligula. Aliquam dapibus tincidunt metus. Praesent justo dolor, lobortis quis, lobortis dignissim, pulvinar ac, lorem. </p>
+
+                    </div>
+
+                </div>
                 <!--Content Top -->
                 <div class="module filter-v3">
-                    <h3 class="modtitle">Lọc sản phẩm</h3>
+                    <h3 class="modtitle" style="border: none; font-size: 16px; color: #000; font-weight: 700; text-transform: uppercase;">Lọc sản phẩm</h3>
                     <div class="modcontent ">
                         <form class="type_2">
 
@@ -59,20 +68,20 @@
                                     </div><!--/ .table_cell -->
                                     <!-- - - - - - - - - - - - - - End manufacturer - - - - - - - - - - - - - - - - -->
                                     <!-- - - - - - - - - - - - - - Price - - - - - - - - - - - - - - - - -->
-                                    <div class="table_cell">
+                                    <div class="table_cell" style="width:360px!important;">
                                         <fieldset>
                                             <legend>Giá </legend>
                                             <div class="range">
                                                 Phạm vi :
                                                 <span class="min_val">0</span> -
-                                                <span class="max_val">50000000</span>
+                                                <span class="max_val">200000000</span>
                                                 <input type="hidden" name="" class="min_value" value="0">
-                                                <input type="hidden" name="" class="max_value" value="50000000">
+                                                <input type="hidden" name="" class="max_value" value="200000000">
                                             </div>
                                             <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
                                                 <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                                <span class="ui-slider-handle ui-state-default ui-corner-all"></span>
-                                                <span class="ui-slider-handle ui-state-default ui-corner-all"></span>
+                                                <span class="ui-slider-handle ui-state-default ui-corner-all" ng-model="a" ng-mouseleave="changeRangePrice()"></span>
+                                                <span class="ui-slider-handle ui-state-default ui-corner-all" ng-model="b" ng-mouseleave="changeRangePrice()"></span>
                                             </div>
                                         </fieldset>
                                     </div><!--/ .table_cell -->
@@ -125,7 +134,7 @@
                                 <select id="input-limit" class="form-control" ng-model="pageSize" ng-change="changePageSize()">
                                     <option value="15" selected="selected">15</option>
                                     <option value="25">25</option>
-                                    <option value="30">50</option>
+                                    <option value="50">50</option>
                                     <option value="75">75</option>
                                     <option value="100">100</option>
                                 </select>
@@ -135,7 +144,7 @@
                 </div>
                 <!-- //end Filters -->
                 <!--changed listings-->
-                <div class="products-list row nopadding-xs so-filter-gird">
+                <div class="products-list row nopadding-xs so-filter-gird" ng-if="products.length > 0">
 
                     <div class="product-layout col-lg-15 col-md-4 col-sm-6 col-xs-12" ng-repeat="product in products">
                         <div class="product-item-container">
@@ -201,15 +210,22 @@
                 </div>
                 <!--// End Changed listings-->
                 <!-- Filters -->
-                <div class="product-filter product-filter-bottom filters-panel">
+                <div class="product-filter product-filter-bottom filters-panel" ng-if="products.length > 0">
                     <div class="row">
                         <div class="col-sm-6 text-left">Hiển thị từ {{page * pageSize}} đến {{page * pageSize + products.length}} trong tổng số {{totalCount}}</div>
-                        <div class="col-sm-6 text-right"><pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="getListProduct(page)"></pager-directive></div>
+                        <div class="col-sm-6 text-right"><pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="search(page)"></pager-directive></div>
                     </div>
                 </div>
-              
                 <!-- //end Filters -->
-
+                <div ng-if="products.length === 0">
+                    <div class="fs-senull" style="text-align: center; padding-bottom: 30px;">
+                        <p class="fs-senull-l1">
+                            <img src="/assets/client/image/noti-search.png">
+                        </p>
+                        <p class="fs-senull-l2">Rất tiếc chúng tôi không tìm thấy kết quả theo yêu cầu của bạn</p>
+                        <p class="fs-senull-l3">Vui lòng thử lại .</p>
+                    </div>
+                </div>
             </div>
 
         </div>
