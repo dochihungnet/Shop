@@ -33,7 +33,7 @@ namespace Shop.Service
         Product GetByIdInclude(int id);
         IEnumerable<Tag> GetListTagByProductId(int id);
         void IncreaseView(int id);
-        IEnumerable<Product> GetListProductByTag(string tagId, int sortBy);
+        IEnumerable<Product> GetListProductByTag(string tagId, string keyword, decimal minPrice, decimal maxPrice, int? categoryId, int ?brandId, int sortBy);
         void SaveChanges();
     }
     public class ProductService : IProductService
@@ -171,10 +171,37 @@ namespace Shop.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Product> GetListProductByTag(string tagId, int sortBy)
+        public IEnumerable<Product> GetListProductByTag(string tagId, string keyword, decimal minPrice, decimal maxPrice, int? categoryId, int? brandId, int sortBy)
         {
 
             var list = _productRepository.GetListProductByTag(tagId);
+
+            if (categoryId.HasValue && brandId.HasValue)
+            {
+                var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+                list = list.Where(x => x.BrandId == brandId.Value && (x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(c => x.CategoryId == c.Id) != null));
+            }
+            else if (categoryId.HasValue && !brandId.HasValue)
+            {
+                var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
+                list = list.Where(x => x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(y => x.CategoryId == y.Id) != null);
+            }
+            else if (brandId.HasValue && !categoryId.HasValue)
+            {
+                list = list.Where(x => x.BrandId == brandId.Value);
+            }
+            
+
+            list = list.Where(x =>
+            {
+                if (x.PriceAfterDiscount.HasValue) return x.PriceAfterDiscount >= minPrice && x.PriceAfterDiscount <= maxPrice;
+                return x.Price >= minPrice && x.Price <= maxPrice;
+            });
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                list = list.Where(x => x.Name.Contains(keyword));
+            }
 
             switch (sortBy)
             {
@@ -195,10 +222,6 @@ namespace Shop.Service
                 .Select(y => y.Tag);
         }
 
-        public Tag GetTag(string tagId)
-        {
-            throw new NotImplementedException();
-        }
 
         public void IncreaseView(int id)
         {
@@ -315,6 +338,11 @@ namespace Shop.Service
             }   
 
             return list;
+        }
+
+        public Tag GetTagById(string tagId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -87,7 +87,7 @@
 
                     <div class="content-product-left class-honizol col-md-5 col-sm-12 col-xs-12">
                         <div class="large-image">
-                            <img src="{{product.Image}}" data-zoom-image="{{product.Image}}" title="{{product.Name}}" alt="{{product.Name}}">
+                            <img src="{{product.Image}}" title="{{product.Name}}" alt="{{product.Name}}">
                         </div>
 
                         <div id="thumb-slider" class="yt-content-slider full_slider owl-drag" data-rtl="yes" data-autoplay="no" data-autoheight="no" data-delay="4" data-speed="0.6" data-margin="10" data-items_column0="4" data-items_column1="3" data-items_column2="4" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
@@ -242,7 +242,7 @@
                             </form>
                         </div>
                         <div id="tab-4" class="tab-pane fade">
-                            <a href="#" ng-repeat="tag in listTagByProductId">{{tag.Name}},</a>
+                            <a ui-sref="product_tags({id:tag.Id})" ng-repeat="tag in listTagByProductId">{{tag.Name}},</a>
                         </div>
                     </div>
                 </div>

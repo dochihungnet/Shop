@@ -1,0 +1,227 @@
+﻿<!-- Main Container  -->
+<div class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i></a></li>
+        <li><a href="#">Tags</a></li>
+        <li><a href="#">{{tag.Name}}</a></li>
+    </ul>
+
+    <div class="row">
+
+        <!--Middle Part Start-->
+        <div id="content" class="col-md-12 col-sm-12">
+
+            <div class="products-category">
+                <!--Content Top -->
+                <div class="module filter-v3">
+                    <h3 class="modtitle" style="border: none; font-size: 16px; color: #000; font-weight: 700; text-transform: uppercase;">Lọc sản phẩm</h3>
+                    <div class="modcontent ">
+                        <form class="type_2">
+
+                            <div class="table_layout filter-row">
+                                <div class="table_row">
+                                    <!-- - - - - - - - - - - - - - Category filter - - - - - - - - - - - - - - - - -->
+                                    <div class="table_cell" style="z-index: 103;">
+                                        <legend>Tìm kiếm</legend>
+                                        <input class="form-control" type="text" value="" size="30" autocomplete="off" placeholder="Tìm kiếm" name="search" ng-model="keyword">
+                                    </div><!--/ .table_cell -->
+                                    <!-- - - - - - - - - - - - - - End of category filter - - - - - - - - - - - - - - - - -->
+                                    <!-- - - - - - - - - - - - - - SUB CATEGORY - - - - - - - - - - - - - - - - -->
+                                    <div class="table_cell">
+                                        <fieldset>
+                                            <legend>Danh mục</legend>
+                                            <ul class="checkboxes_list">
+                                                <li ng-repeat="pc in productCategories">
+                                                    <input type="checkbox" ng-model="pc.checked" name="category" id="category_{{pc.Id}}" ng-change="handlerCheckedInputProductCategory(pc.Id)">
+                                                    <label for="category_{{pc.Id}}">{{pc.Name}}</label>
+                                                </li>
+                                            </ul>
+
+                                        </fieldset>
+
+                                    </div><!--/ .table_cell -->
+                                    <!-- - - - - - - - - - - - - - End SUB CATEGORY - - - - - - - - - - - - - - - - -->
+                                    <!-- - - - - - - - - - - - - - Manufacturer - - - - - - - - - - - - - - - - -->
+                                    <div class="table_cell">
+                                        <fieldset>
+                                            <legend>Thương hiệu</legend>
+                                            <ul class="checkboxes_list">
+                                                <li ng-repeat="b in brands">
+                                                    <input type="checkbox" ng-model="b.checked" name="{{b.Name}}" id="manufacturer_{{b.Id}}" ng-change="handlerCheckedInputBrand(b.Id)">
+                                                    <label for="manufacturer_{{b.Id}}">{{b.Name}}</label>
+                                                </li>
+                                            </ul>
+
+                                        </fieldset>
+
+                                    </div><!--/ .table_cell -->
+                                    <!-- - - - - - - - - - - - - - End manufacturer - - - - - - - - - - - - - - - - -->
+                                    <!-- - - - - - - - - - - - - - Price - - - - - - - - - - - - - - - - -->
+                                    <div class="table_cell" style="width:360px!important;">
+                                        <fieldset>
+                                            <legend>Giá </legend>
+                                            <div class="range">
+                                                Phạm vi :
+                                                <span class="min_val">0</span> -
+                                                <span class="max_val">200000000</span>
+                                                <input type="hidden" name="" class="min_value" value="0">
+                                                <input type="hidden" name="" class="max_value" value="200000000">
+                                            </div>
+                                            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                                <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+                                                <span class="ui-slider-handle ui-state-default ui-corner-all" ng-model="a" ng-mouseleave="changeRangePrice()"></span>
+                                                <span class="ui-slider-handle ui-state-default ui-corner-all" ng-model="b" ng-mouseleave="changeRangePrice()"></span>
+                                            </div>
+                                        </fieldset>
+                                    </div><!--/ .table_cell -->
+                                    <!-- - - - - - - - - - - - - - End price - - - - - - - - - - - - - - - - -->
+                                    <!-- - - - - - - - - - - - - - Price - - - - - - - - - - - - - - - - -->
+
+
+                                </div><!--/ .table_row -->
+                                <footer class="bottom_box">
+                                    <div class="buttons_row">
+                                        <button type="submit" class="button_grey button_submit" ng-click="search()">Tìm kiếm</button>
+                                        <button type="reset" class="button_grey " ng-click="reset()">Reset</button>
+                                    </div>
+                                    <!--Back To Top-->
+                                    <div class="back-to-top"><i class="fa fa-angle-up"></i></div>
+                                </footer>
+                            </div><!--/ .table_layout -->
+
+
+
+                        </form>
+                    </div>
+
+                </div>
+                <!--Content Top End -->
+                <!-- Filters -->
+                <div class="product-filter product-filter-top filters-panel">
+                    <div class="row">
+                        <div class="col-sm-5 view-mode">
+
+                            <div class="list-view">
+                                <button class="btn btn-default grid active" data-view="grid" data-toggle="tooltip" data-original-title="Grid"><i class="fa fa-th"></i></button>
+                                <button class="btn btn-default list" data-view="list" data-toggle="tooltip" data-original-title="List"><i class="fa fa-th-list"></i></button>
+                            </div>
+
+                        </div>
+                        <div class="short-by-show form-inline text-right col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group short-by">
+                                <label class="control-label" for="input-sort">Sắp xếp theo:</label>
+                                <select id="input-sort" class="form-control" ng-model="sortBy" ng-change="changeSortBy()">
+                                    <option value="0" selected="selected">Mặc định</option>
+                                    <option value="1">Tên sản phẩm (A - Z)</option>
+                                    <option value="2">Tên sản phẩm (Z - A)</option>
+                                    <option value="3">Giá (Thấp &gt; Cao)</option>
+                                    <option value="4">Giá (Cao &gt; Thấp)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-limit">Hiển thị:</label>
+                                <select id="input-limit" class="form-control" ng-model="pageSize" ng-change="changePageSize()">
+                                    <option value="15" selected="selected">15</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="75">75</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //end Filters -->
+                <!--changed listings-->
+                <div class="products-list row nopadding-xs so-filter-gird" ng-if="products.length > 0">
+
+                    <div class="product-layout col-lg-15 col-md-4 col-sm-6 col-xs-12" ng-repeat="product in products">
+                        <div class="product-item-container">
+                            <div class="left-block">
+                                <div class="product-image-container second_img">
+                                    <a ui-sref="product_details({id:product.Id})" title="{{product.Name}}">
+                                        <img src="{{product.Image}}" class="img-1 img-responsive" alt="image">
+                                        <img src="{{product.Image}}" class="img-2 img-responsive" alt="image">
+                                    </a>
+                                </div>
+                                <div class="box-label">
+                                    <span ng-if="product.StatusDiscount" class="label-product label-sale"> -13% </span>
+                                    <span ng-if="product.IsANewProduct" class="label-product label-new"> New </span>
+                                </div>
+                                <div class="button-group so-quickview cartinfo--left">
+                                    <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
+                                        <i class="fa fa-shopping-basket"></i>
+                                        <span>Thêm giỏ hàng</span>
+                                    </button>
+                                    <button type="button" class="wishlist btn-button" title="Thêm danh sách yêu thích" onclick="wishlist.add('60');">
+                                        <i class="fa fa-heart"></i><span>Thêm danh sách yêu thích</span>
+                                    </button>
+                                    <button type="button" class="compare btn-button" title="So sánh" onclick="compare.add('60');">
+                                        <i class="fa fa-refresh"></i><span>So sánh sản phẩm</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="right-block">
+                                <div class="caption">
+                                    <div class="rating">
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    </div>
+                                    <h4><a ui-sref="product_details({id:product.Id})" title="{{product.Name}}">"{{product.Name}}</a></h4>
+                                    <div ng-if="product.StatusDiscount" class="price">
+                                        <span class="price-new">{{product.PriceAfterDiscount | currency : "" : 0}}</span>
+                                        <span class="price-old">{{product.Price | currency : "" : 0}}</span>
+                                    </div>
+                                    <div ng-if="product.StatusDiscount == false || product.StatusDiscount == null" class="price">
+                                        {{product.Price | currency : "" : 0}}
+                                    </div>
+                                    <div class="description item-desc">
+                                        <p>{{product.Description}}</p>
+                                    </div>
+                                    <div class="list-block">
+                                        <button class="addToCart btn-button" type="button" title="Thêm giỏ hàng" onclick="cart.add('101', '1');">
+                                            <i class="fa fa-shopping-basket"></i>
+                                        </button>
+                                        <button class="wishlist btn-button" type="button" title="Yêu thích" onclick="wishlist.add('101');">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
+                                        <button class="compare btn-button" type="button" title="So sánh sản phẩm" onclick="compare.add('101');">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// End Changed listings-->
+                <!-- Filters -->
+                <div class="product-filter product-filter-bottom filters-panel" ng-if="products.length > 0">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">Hiển thị từ {{page * pageSize}} đến {{page * pageSize + products.length}} trong tổng số {{totalCount}}</div>
+                        <div class="col-sm-6 text-right"><pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="search(page)"></pager-directive></div>
+                    </div>
+                </div>
+                <!-- //end Filters -->
+                <div ng-if="products.length === 0">
+                    <div class="fs-senull" style="text-align: center; padding-bottom: 30px;">
+                        <p class="fs-senull-l1">
+                            <img src="/assets/client/image/noti-search.png">
+                        </p>
+                        <p class="fs-senull-l2">Rất tiếc chúng tôi không tìm thấy kết quả theo yêu cầu của bạn</p>
+                        <p class="fs-senull-l3">Vui lòng thử lại .</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <!--Middle Part End-->
+</div>
+<!-- //Main Container -->

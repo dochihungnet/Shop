@@ -45,7 +45,7 @@
 
         function loadParentCategory() {
             apiService.get(
-                'https://localhost:44353/api/productcategory/getallparents',
+                'https://localhost:44353/api/productcategory/getallroot',
                 null,
                 function (result) {
                     $scope.parentCategories = result.data;

@@ -9,5 +9,26 @@ using System.Threading.Tasks;
 
 namespace Shop.Service
 {
+    public interface ITagService
+    {
+        Tag GetTagById(string tagId);
+    }
+
+    public class TagService : ITagService
+    {
+        ITagRepository _tagRepository;
+        IUnitOfWork _unitOfWork;
+        public TagService(ITagRepository tagRepository, IUnitOfWork unitOfWork)
+        {
+            _tagRepository = tagRepository;
+            _unitOfWork = unitOfWork;
+        }
+        public Tag GetTagById(string tagId)
+        {
+            return _tagRepository.GetSingleByCondition(x => x.Id == tagId);
+        }
+    }
+
+
 }
 

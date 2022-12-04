@@ -259,6 +259,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Controllers\SlideGroupController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -297,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Tag\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\style.css" />

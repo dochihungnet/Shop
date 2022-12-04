@@ -170,13 +170,13 @@ namespace Shop.Api.Controllers
         [Route("getallproductbytagid")]
         [HttpGet]               
         
-        public HttpResponseMessage GetAllProductByTagId(HttpRequestMessage request, string tagId, int page = 0, int pageSize = 15, int sortBy = 0)
+        public HttpResponseMessage GetAllProductByTagId(HttpRequestMessage request, string tagId, string keyword, int page, int pageSize, decimal minPrice = 0, decimal maxPrice = decimal.MaxValue, int? categoryId = null, int? brandId = null, int sortBy = 0)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
 
-                var listProductByTagId = _productService.GetListProductByTag(tagId, sortBy);
+                var listProductByTagId = _productService.GetListProductByTag(tagId, keyword, minPrice, maxPrice, categoryId, brandId, sortBy);
 
                 var totalRow = listProductByTagId.Count();
 

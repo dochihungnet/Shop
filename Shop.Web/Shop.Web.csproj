@@ -156,6 +156,9 @@
     <Content Include="app\components\product_details\product_detail.controller.js" />
     <Content Include="app\components\product_details\product_detail.module.js" />
     <Content Include="app\components\product_details\product_detail.view.html" />
+    <Content Include="app\components\product_tags\product_tag.controller.js" />
+    <Content Include="app\components\product_tags\product_tag.module.js" />
+    <Content Include="app\components\product_tags\product_tag.view.html" />
     <Content Include="app\shared\views\base.view.html" />
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\brands\brands.module.js" />
