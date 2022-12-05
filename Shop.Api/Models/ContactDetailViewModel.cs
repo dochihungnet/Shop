@@ -1,46 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Shop.Model.Models
+namespace Shop.Api.Models
 {
-    // Contact details: chi tiết liên lạc
-    [Table("ContactDetails")]
-    public class ContactDetail
+    public class ContactDetailViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
 
-        [StringLength(250)]
         [Required]
         public string Name { set; get; }
 
-        [StringLength(50)]
+        [MaxLength(10, ErrorMessage = "Số điện thoại tối đa 10 chữ số.")]
         public string Phone { set; get; }
 
-        [StringLength(250)]
+        [MaxLength(50, ErrorMessage = "Email không vượt quá 50 kí tự.")]
         public string Email { set; get; }
 
-        [StringLength(250)]
+
+        [MaxLength(250, ErrorMessage = "Website không vượt quá 250 kí tự.")]
         public string Website { set; get; }
 
-        [StringLength(250)]
+        [MaxLength(250, ErrorMessage = "Địa chỉ không vượt quá 250 kí tự.")]
         public string Address { set; get; }
-
         public string Other { set; get; }
-
-        [DefaultValue(0)]
         public double? Lat { set; get; }
-
-        [DefaultValue(0)]
         public double? Lng { set; get; }
-
         public bool Status { set; get; }
     }
 }

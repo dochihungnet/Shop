@@ -23,6 +23,7 @@ namespace Shop.Api.Mappings
             Mapper.CreateMap<Slide, SlideViewModel>().ReverseMap();
             Mapper.CreateMap<SlideGroup, SlideGroupViewModel>().ReverseMap();
             Mapper.CreateMap<Tag, TagViewModel>().ReverseMap();
+            Mapper.CreateMap<ContactDetail, ContactDetailViewModel>().ReverseMap();
         }
     }
 }

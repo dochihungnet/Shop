@@ -131,6 +131,9 @@
     <Content Include="app\components\carts\carts.controller.js" />
     <Content Include="app\components\carts\carts.module.js" />
     <Content Include="app\components\carts\carts.view.html" />
+    <Content Include="app\components\contact\contact.controller.js" />
+    <Content Include="app\components\contact\contact.module.js" />
+    <Content Include="app\components\contact\contact.view.html" />
     <Content Include="app\components\footer\footer.controller.js" />
     <Content Include="app\components\footer\footer.module.js" />
     <Content Include="app\components\footer\footer.view.html" />
@@ -159,6 +162,8 @@
     <Content Include="app\components\product_tags\product_tag.controller.js" />
     <Content Include="app\components\product_tags\product_tag.module.js" />
     <Content Include="app\components\product_tags\product_tag.view.html" />
+    <Content Include="app\components\register\register.controller.js" />
+    <Content Include="app\components\register\register.view.html" />
     <Content Include="app\shared\views\base.view.html" />
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\brands\brands.module.js" />
@@ -7953,6 +7958,7 @@
     <Content Include="shared\services\authData.js" />
     <Content Include="shared\services\authenticationService.js" />
     <Content Include="shared\services\commonService.js" />
+    <Content Include="shared\services\compareTo.js" />
     <Content Include="shared\services\loginService.js" />
     <Content Include="shared\services\notificationService.js" />
     <Content Include="shared\views\base.view.html" />
@@ -7970,7 +7976,6 @@
   <ItemGroup>
     <Folder Include="app\components\posts\" />
     <Folder Include="app\components\signin\" />
-    <Folder Include="app\components\signup\" />
     <Folder Include="App_Data\" />
     <Folder Include="assets\admin\plugins\nicescroll\css\" />
     <Folder Include="assets\client\image\theme\home5\" />

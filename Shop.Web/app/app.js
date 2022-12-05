@@ -8,6 +8,7 @@
         'shop.product_details',
         'shop.product_categories',
         'shop.product_tags',
+        'shop.contact',
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -25,6 +26,12 @@
                 parent: 'base',
                 templateUrl: "/app/components/home/home.view.html",
                 controller: "homeController"
+            })
+            .state('register', {
+                url: "/register",
+                parent: 'base',
+                templateUrl: "/app/components/register/register.view.html",
+                controller: "registerController"
             })
 
 

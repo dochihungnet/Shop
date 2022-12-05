@@ -26,6 +26,7 @@
             CreateProductCategorySimple(context);
             CreateBrandSimple(context);
             CreateSlideGroup(context);
+            CreateContactDetailSimple(context);
 
         }
 
@@ -104,6 +105,27 @@
                     new ProductCategory(){ Name = "Trang sức", Alias = "trang-suc", Status = true },
                 };
                 context.ProductCategories.AddRange(listProductCategory);
+            }
+        }
+
+        private void CreateContactDetailSimple(ShopDbContext context)
+        {
+            if(context.ContactDetails.Count() == 0)
+            {
+                var contactDetail = new ContactDetail()
+                {
+                    Name = "Shop thời trang Đỗ Chí Hùng",
+                    Address = "Đông Kết, Khoái Châu, Hưng Yên",
+                    Email = "dochihung492002@gmail.com",
+                    Lat = 20.819945,
+                    Lng = 105.9369323,
+                    Phone = "0976580418",
+                    Website = "https://localhost:44394/home",
+                    Other = "",
+                    Status = true,
+                };
+                context.ContactDetails.Add(contactDetail);
+                context.SaveChanges();
             }
         }
     }

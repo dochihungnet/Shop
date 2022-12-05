@@ -1,5 +1,12 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Shop.Api.App_Start;
+using Shop.Api.Infrastructure.Core;
+using Shop.Api.Models;
+using Shop.Data;
+using Shop.Model.Models;
+using Shop.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +19,13 @@ using System.Web.Http;
 namespace Shop.Api.Controllers
 {
     [RoutePrefix("api/account")]
-    public class AccountController : ApiController
+    public class AccountController : ApiControllerBase
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+ 
+        public AccountController(IErrorService errorService ,ApplicationUserManager userManager, ApplicationSignInManager signInManager) :  base(errorService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -75,5 +79,51 @@ namespace Shop.Api.Controllers
             authenticationManager.SignOut();
             return request.CreateResponse(HttpStatusCode.OK, new { success = true });
         }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<HttpResponseMessage> Register(HttpRequestMessage request, RegisterViewModel register)
+        {
+            if (ModelState.IsValid)
+            {
+                var userByEmail = await _userManager.FindByEmailAsync(register.Email);
+                if (userByEmail != null)
+                {
+                    ModelState.AddModelError("email", "Email đã tồn tại");
+                    return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+
+                var userByUserName = await _userManager.FindByNameAsync(register.UserName);
+                if (userByUserName != null)
+                {
+                    ModelState.AddModelError("UserName", "Tài khoản đã tồn tại");
+                    return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+
+                var user = new ApplicationUser()
+                {
+                    UserName = register.UserName,
+                    Email = register.Email,
+                    EmailConfirmed = true,
+                    BirthDay = DateTime.Now,
+                    FullName = register.FullName,
+                    PhoneNumber = register.PhoneNumber,
+                    Address = register.Address
+                };
+
+                await _userManager.CreateAsync(user, register.Password);
+
+                var adminUser = await _userManager.FindByEmailAsync(register.Email);
+                if(adminUser != null)
+                {
+                    await _userManager.AddToRolesAsync(adminUser.Id, new string[] { "User" });
+                }
+                return request.CreateResponse(HttpStatusCode.Created, adminUser);
+            }
+            return request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+          
+            
+        }
+
     }
 }
