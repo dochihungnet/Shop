@@ -53,13 +53,14 @@
             font-family: 'Roboto', sans-serif
         }
     </style>
+    <link href="~/assets/libs/toast/toastr.css" rel="stylesheet" />
 
 
 
 
 </head>
 
-<body class="common-home res layout-2" ng-app="shop">
+<body class="common-home res layout-2" ng-app="shop" ng-controller="rootController">
 
     <div ui-view>
 
@@ -109,19 +110,19 @@
     <script src="~/assets/libs/angular-local-storage/angular-local-storage.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-
-    <script src="~/shared/modules/shop.common.js"></script>
-    <script src="~/shared/filters/statusFilter.js"></script>
-    <script src="~/shared/filters/statusBrandFilter.js"></script>
-    <script src="~/shared/filters/statusDiscountFilter.js"></script>
-    <script src="~/shared/directives/pagerDirective.js"></script>
-    <script src="~/shared/services/notificationService.js"></script>
-    <script src="~/shared/services/authData.js"></script>
-    <script src="~/shared/services/authenticationService.js"></script>
-    <script src="~/shared/services/loginService.js"></script>
-    <script src="~/shared/services/apiService.js"></script>
-    <script src="~/shared/services/commonService.js"></script>
-    <script src="~/shared/services/compareTo.js"></script>
+    <script src="~/app/shared/modules/shop.common.js"></script>
+    <script src="~/app/shared/filters/statusFilter.js"></script>
+    <script src="~/app/shared/filters/statusBrandFilter.js"></script>
+    <script src="~/app/shared/filters/statusDiscountFilter.js"></script>
+    <script src="~/app/shared/directives/pagerDirective.js"></script>
+    <script src="~/app/shared/services/notificationService.js"></script>
+    <script src="~/app/shared/services/authData.js"></script>
+    <script src="~/app/shared/services/authenticationService.js"></script>
+    <script src="~/app/shared/services/loginService.js"></script>
+    <script src="~/app/shared/services/apiService.js"></script>
+    <script src="~/app/shared/services/commonService.js"></script>
+    <script src="~/app/shared/services/compareTo.js"></script>
+    <script src="~/app/shared/services/cartService.js"></script>
 
     <script src="~/app/components/header/header.module.js"></script>
     <script src="~/app/components/footer/footer.module.js"></script>
@@ -135,6 +136,7 @@
 
     <script src="~/app/app.js"></script>
 
+    <script src="~/app/components/home/root.controller.js"></script>
     <script src="~/app/components/header/header.controller.js"></script>
     <script src="~/app/components/footer/footer.controller.js"></script>
     <script src="~/app/components/home/list_product_one_home/list_product_one_home.controller.js"></script>
@@ -145,7 +147,7 @@
     <script src="~/app/components/product_tags/product_tag.controller.js"></script>
     <script src="~/app/components/contact/contact.controller.js"></script>
     <script src="~/app/components/register/register.controller.js"></script>
-
+    <script src="~/app/components/login/login.controller.js"></script>
 
     <script src="~/app/components/home/home.controller.js"></script>
 

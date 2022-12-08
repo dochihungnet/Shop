@@ -1,6 +1,6 @@
 ﻿(function (app) {
-    app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService', 'authData',
-        function ($scope, loginService, $injector, notificationService, authData) {
+    app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService',
+        function ($scope, loginService, $injector, notificationService) {
 
             $scope.loginData = {
                 userName: "",
@@ -15,7 +15,6 @@
                     else {
                         var stateService = $injector.get('$state');
                         stateService.go('home');
-                        console.log(authData.authenticationData);
                     }
                 });
             }

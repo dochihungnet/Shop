@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.controller('homeController', homeController);
 
-	homeController.$inject = ['$scope', '$timeout', 'apiService', '$q']
+	homeController.$inject = ['$scope', '$timeout', 'apiService', '$q', 'cartService']
 
-    function homeController($scope, $timeout, apiService, $q) {
+    function homeController($scope, $timeout, apiService, $q, cartService) {
 
         const GroupSlide = "Group Slide";
         const GroupSlideBanner = "Group Slide Banner";
@@ -15,6 +15,7 @@
         $scope.rootProductCategories = [];
         $scope.brands = [];
 
+
         $q.all([getAllGroupSlide(GroupSlide), getAllGroupSlide(GroupSlideBanner), getAllGroupSlide(GroupBanner), getAllRootProductCategories(), getAllBrand()]).then(function (result) {
             $scope.groupSlides = result[0];
             $scope.groupSlideBanners = result[1];
@@ -24,7 +25,6 @@
             /*$timeout(init, 0);*/
 
         });
-
 
         function getAllGroupSlide(groupName) {
             var deferred = $q.defer();
@@ -81,11 +81,6 @@
 
             return deferred.promise;
         }
-
-		//// Thêm file js vào cuối body sau khi chạy hết logic angularjs + html/csss
-  //      function init() {
-  //          $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/homepage.js"></script>');
-  //      }
 	}
 
 

@@ -9,8 +9,13 @@
     <div class="row">
         <div id="content" class="col-sm-12">
             <h2 class="title">Đăng ký tài khoản</h2>
-            <p>Nếu bạn đã có tài khoản với chúng tôi, vui lòng đăng nhập tại<a ui-sref="login">trang đăng nhập</a>.</p>
-            <div ng-if="registerStatus">Đăng ký thành công.</div>
+            <p>Nếu bạn đã có tài khoản với chúng tôi, vui lòng đăng nhập tại <a ui-sref="login">trang đăng nhập</a>.</p>
+            <div ng-if="registerStatus">
+                <div class="alert alert-success" role="alert">
+                    <strong>Chúc mừng bạn</strong> đã đăng ký thành công.
+                    Bạn có thể  <a ui-sref="login" class="agree"><b>đăng nhập tại đây.</b></a>
+                </div>
+            </div>
             <form ng-if="!registerStatus" novalidate name="frmRegister" role="form" ng-submit="Register()" class="form-horizontal account-register clearfix">
                 <fieldset id="account">
                     <legend>Thông tin cá nhân của bạn</legend>

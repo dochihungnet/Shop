@@ -153,6 +153,9 @@
     <Content Include="app\components\home\posts_home\post_home.view.html" />
     <Content Include="app\components\home\list_product_one_home\list_product_one_home.controller.js" />
     <Content Include="app\components\home\list_product_one_home\list_product_one_home.view.html" />
+    <Content Include="app\components\home\root.controller.js" />
+    <Content Include="app\components\login\login.controller.js" />
+    <Content Include="app\components\login\login.view.html" />
     <Content Include="app\components\product_categories\product_categories.module.js" />
     <Content Include="app\components\product_categories\product_categories.controller.js" />
     <Content Include="app\components\product_categories\product_categories.view.html" />
@@ -164,6 +167,20 @@
     <Content Include="app\components\product_tags\product_tag.view.html" />
     <Content Include="app\components\register\register.controller.js" />
     <Content Include="app\components\register\register.view.html" />
+    <Content Include="app\shared\directives\pagerDirective.html" />
+    <Content Include="app\shared\directives\pagerDirective.js" />
+    <Content Include="app\shared\filters\statusBrandFilter.js" />
+    <Content Include="app\shared\filters\statusDiscountFilter.js" />
+    <Content Include="app\shared\filters\statusFilter.js" />
+    <Content Include="app\shared\modules\shop.common.js" />
+    <Content Include="app\shared\services\apiService.js" />
+    <Content Include="app\shared\services\authData.js" />
+    <Content Include="app\shared\services\authenticationService.js" />
+    <Content Include="app\shared\services\cartService.js" />
+    <Content Include="app\shared\services\commonService.js" />
+    <Content Include="app\shared\services\compareTo.js" />
+    <Content Include="app\shared\services\loginService.js" />
+    <Content Include="app\shared\services\notificationService.js" />
     <Content Include="app\shared\views\base.view.html" />
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\brands\brands.module.js" />
@@ -206,6 +223,20 @@
     <Content Include="Areas\Admin\app\components\slides\slide_list.controller.js" />
     <Content Include="Areas\Admin\app\components\slides\slide_edit.controller.js" />
     <Content Include="Areas\Admin\app\components\slides\slide_add.controller.js" />
+    <Content Include="Areas\Admin\app\shared\directives\pagerDirective.html" />
+    <Content Include="Areas\Admin\app\shared\directives\pagerDirective.js" />
+    <Content Include="Areas\Admin\app\shared\filters\statusBrandFilter.js" />
+    <Content Include="Areas\Admin\app\shared\filters\statusDiscountFilter.js" />
+    <Content Include="Areas\Admin\app\shared\filters\statusFilter.js" />
+    <Content Include="Areas\Admin\app\shared\modules\shop.common.js" />
+    <Content Include="Areas\Admin\app\shared\services\apiService.js" />
+    <Content Include="Areas\Admin\app\shared\services\authData.js" />
+    <Content Include="Areas\Admin\app\shared\services\authenticationService.js" />
+    <Content Include="Areas\Admin\app\shared\services\commonService.js" />
+    <Content Include="Areas\Admin\app\shared\services\compareTo.js" />
+    <Content Include="Areas\Admin\app\shared\services\loginService.js" />
+    <Content Include="Areas\Admin\app\shared\services\notificationService.js" />
+    <Content Include="Areas\Admin\app\shared\views\base.view.html" />
     <Content Include="Areas\Admin\app\shared\views\modal_add_discount.html" />
     <Content Include="Areas\Admin\Libs\CKFinder.dll" />
     <Content Include="assets\admin\css\bootstrap-extended.css" />
@@ -7948,21 +7979,6 @@
     <Content Include="Global.asax" />
     <Content Include="libman.json" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="shared\directives\pagerDirective.html" />
-    <Content Include="shared\directives\pagerDirective.js" />
-    <Content Include="shared\filters\statusBrandFilter.js" />
-    <Content Include="shared\filters\statusDiscountFilter.js" />
-    <Content Include="shared\filters\statusFilter.js" />
-    <Content Include="shared\modules\shop.common.js" />
-    <Content Include="shared\services\apiService.js" />
-    <Content Include="shared\services\authData.js" />
-    <Content Include="shared\services\authenticationService.js" />
-    <Content Include="shared\services\commonService.js" />
-    <Content Include="shared\services\compareTo.js" />
-    <Content Include="shared\services\loginService.js" />
-    <Content Include="shared\services\notificationService.js" />
-    <Content Include="shared\views\base.view.html" />
-    <Content Include="shared\views\modal_add_discount.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -7979,7 +7995,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="assets\admin\plugins\nicescroll\css\" />
     <Folder Include="assets\client\image\theme\home5\" />
-    <Folder Include="shared\navigation\" />
     <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>
@@ -8191,7 +8206,6 @@
     <Content Include="assets\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="assets\libs\angular-animate\angular-animate.min.js.map" />
     <Content Include="assets\libs\angular-aria\angular-aria.min.js.map" />
-    <Content Include="Areas\Admin\app\shared\views\base.view.html" />
     <Content Include="Areas\Admin\app\components\home\root.controller.js" />
     <Content Include="assets\client\css\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="assets\client\css\bootstrap\css\bootstrap.css.map" />

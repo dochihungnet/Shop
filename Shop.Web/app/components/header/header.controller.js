@@ -1,11 +1,26 @@
 ﻿// Register `phoneList` component, along with its associated controller and template
-
-angular.
-    module('shop.header', ['shop.common']).
-    component('headerView', {  // This name is what AngularJS uses to match to the `<phone-list>` element.
+(function (app) {
+    app.component('headerView', {  // This name is what AngularJS uses to match to the `<phone-list>` element.
         templateUrl: "/app/components/header/header.view.html",
-        controller: ['apiService', '$q', '$timeout', function HeaderController(apiService, $q, $timeout) {
+        controller: ['$scope', 'apiService', '$q', '$timeout', 'cartService', 'authData', function HeaderController($scope, apiService, $q, $timeout, cartService, authData) {
+
+            
             var self = this;
+
+            // THEO DOI XEM DA DANG NHAP HAY CHUA
+            $scope.$watch(function () { return authData.authenticationData; }, function (newVal, oldVal) {
+
+
+            }, true);
+
+            // THEO DOI XEM CART CO THAY DOI HAY KHONG
+            $scope.$watch(function () { return cartService.cart; }, function (newVal, oldVal) {
+
+
+            }, true);
+
+
+
 
             this.productCategories = [];
             this.rootProductCategories = [];
@@ -65,3 +80,4 @@ angular.
             }
         }]
     });
+})(angular.module('shop'));

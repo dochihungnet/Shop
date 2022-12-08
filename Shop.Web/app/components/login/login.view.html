@@ -1,0 +1,52 @@
+﻿<!-- Main Container  -->
+<div class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i></a></li>
+        <li><a href="#">Tài khoản</a></li>
+        <li><a href="#">Đăng nhập</a></li>
+    </ul>
+
+    <div class="row">
+        <div id="content" class="col-sm-12">
+            <div class="page-login">
+
+                <div class="account-border">
+                    <div class="row">
+                        <div class="col-sm-6 new-customer">
+                            <div class="well">
+                                <h2><i class="fa fa-file-o" aria-hidden="true"></i> Khách hàng mới</h2>
+                                <p>Bằng cách tạo tài khoản, bạn sẽ có thể mua sắm nhanh hơn, cập nhật trạng thái của đơn hàng và theo dõi các đơn hàng bạn đã thực hiện trước đó.</p>
+                            </div>
+                            <div class="bottom-form">
+                                <a ui-sref="register" class="btn btn-default pull-right">Tạo tài khoản</a>
+                            </div>
+                        </div>
+
+                        <form novalidate role="form" method="post" ng-submit="loginSubmit()">
+                            <div class="col-sm-6 customer-login">
+                                <div class="well">
+                                    <h2><i class="fa fa-file-text-o" aria-hidden="true"></i>Phản hồi khách hàng</h2>
+                                    <p><strong>Tôi là một khách hàng cũ</strong></p>
+                                    <div class="form-group">
+                                        <label class="control-label " for="input-email">Tài khoản</label>
+                                        <input type="text" name="email" value="" id="input-email" class="form-control" ng-model="loginData.userName"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label " for="input-password">Mật khẩu</label>
+                                        <input type="password" name="password" value="" id="input-password" class="form-control" ng-model="loginData.password"/>
+                                    </div>
+                                </div>
+                                <div class="bottom-form">
+                                    <a href="#" class="forgot">Quên mật khẩu</a>
+                                    <button type="submit" class="btn btn-default pull-right">Đăng nhập</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Main Container -->

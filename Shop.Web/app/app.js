@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('shop', [
-        'shop.header',
+        'shop.common',
         'shop.footer',
         'shop.list_product_one_home',
         'shop.list_product_two_home',
@@ -12,6 +12,8 @@
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+    
 
     function config($stateProvider, $urlRouterProvider) {
 
@@ -32,6 +34,12 @@
                 parent: 'base',
                 templateUrl: "/app/components/register/register.view.html",
                 controller: "registerController"
+            })
+            .state('login', {
+                url: "/login",
+                parent: 'base',
+                templateUrl: "/app/components/login/login.view.html",
+                controller: "loginController"
             })
 
 
