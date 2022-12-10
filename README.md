@@ -27,7 +27,7 @@
 + Hiển thị được các sản phẩm đang giảm giá
 + Hiển thị được top 3 danh mục sản phẩm bán chạy nhất (dựa vào số lượng bán của mỗi sản phẩm thuộc danh mục)
 + Hiển thị được sản phẩm top (dựa vào số lượng bán nhiều nhất), new (ngày tạo), đánh giá tốt
-+ Menu đa cấp (2 cấp), nhiều hơn cũng xử lý được
++ Menu đa cấp (2 cấp)
 #### Đăng nhập, đăng xuất
 #### Liên hệ
 #### Trang sản phẩm theo danh mục sản phẩm
