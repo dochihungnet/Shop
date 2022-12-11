@@ -9,12 +9,11 @@
         'shop.product_categories',
         'shop.product_tags',
         'shop.contact',
+        'shop.carts'
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
-
     
-
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider

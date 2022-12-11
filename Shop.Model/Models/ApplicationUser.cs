@@ -27,7 +27,7 @@ namespace Shop.Model.Models
             // Add custom user claims here
             return userIdentity;
         }
-
+        public virtual IEnumerable<ShoppingCart> ShoppingCarts { set; get; }
         public virtual IEnumerable<Order> Orders { set; get; }
     }
 }

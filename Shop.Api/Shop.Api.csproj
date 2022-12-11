@@ -253,14 +253,14 @@
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PostCategoryController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Controllers\SlideGroupController.cs" />
     <Compile Include="Controllers\TagController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -270,6 +270,8 @@
     <Compile Include="Models\BrandViewModel.cs" />
     <Compile Include="Models\ContactDetailViewModel.cs" />
     <Compile Include="Models\FooterViewModel.cs" />
+    <Compile Include="Models\OrderDetailViewModel.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\PageViewModel.cs" />
     <Compile Include="Models\PostCategoryViewModel.cs" />
     <Compile Include="Models\PostTagViewModel.cs" />

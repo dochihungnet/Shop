@@ -40,6 +40,7 @@ namespace Shop.Data
         public DbSet<SystemConfig> SystemConfigs { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<VisitorStatistic> VisitorStatistics { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
 
         // method create return new ShopDbContext();

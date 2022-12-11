@@ -1,14 +1,18 @@
 ﻿(function (app) {
     app.controller('rootController', rootController);
 
-    rootController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService'];
+    rootController.$inject = ['$scope', 'apiService', '$q', '$timeout', 'cartService', 'authData', 'loginService', '$state'];
 
-    function rootController($state, authData, loginService, $scope, authenticationService) {
-        $scope.logOut = function () {
-            loginService.logOut();
-            $state.go('login');
-        }
-        $scope.authentication = authData.authenticationData;
-        authenticationService.validateRequest();
+    function rootController($scope, apiService, $q, $timeout, cartService, authData, loginService, $state) {
+        
+        // THEO DOI XEM DA DANG NHAP HAY CHUA
+        $scope.$watch(function () { return authData.authenticationData; }, function (newVal, oldVal) {
+            if(authData.authenticationData.IsAuthenticated === true){
+                cartService.init();
+            }
+            else {
+                cartService.init();
+            }
+        }, true);
     }
 })(angular.module('shop'));

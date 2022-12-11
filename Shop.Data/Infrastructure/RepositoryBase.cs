@@ -32,6 +32,7 @@ namespace Shop.Data.Infrastructure
             dbSet = DbContext.Set<T>();
         }
 
+
         #region Implementation
         public virtual T Add(T entity)
         {

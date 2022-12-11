@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.controller('productDetailsController', productDetailsController);
 
-    productDetailsController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', '$timeout', '$q'];
+    productDetailsController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', '$timeout', '$q', 'cartService'];
 
-    function productDetailsController(apiService, $scope, $state, notificationService, $stateParams, $timeout, $q) {
+    function productDetailsController(apiService, $scope, $state, notificationService, $stateParams, $timeout, $q, cartService) {
 
         $scope.product = null;
         $scope.moreImages = [];
@@ -16,7 +16,10 @@
 
         $scope.getAllProductCategoryChild = getAllProductCategoryChild;
         $scope.checkExistChild = checkExistChild;
-        
+        $scope.addProductShoppingCart = addProductShoppingCart;
+        $scope.increaseQuantity = increaseQuantity;
+        $scope.decreaseQuantity = decreaseQuantity;
+        $scope.changeQuantity = changeQuantity;
 
         $q.all([
             loadProductDetail(),
@@ -25,6 +28,7 @@
 
         ]).then(function (result) {
             $scope.product = result[0];
+            $scope.product.buyingQuantity = 1;
             $scope.moreImages = JSON.parse($scope.product.MoreImages);
 
             $scope.listRootProductCategory = result[1];
@@ -48,10 +52,26 @@
         ////////////////////////////////////////////////////////////////////////
         //////////////////// FUNC HANDELER
         ///////////////////////////////////////////////////////////////////////
-
-
+        
+        function increaseQuantity(){
+            $scope.product.buyingQuantity = $scope.product.buyingQuantity + 1;
+        }
+        
+        function decreaseQuantity(){
+            if($scope.product.buyingQuantity > 1) $scope.product.buyingQuantity = $scope.product.buyingQuantity - 1;
+        }
+        
+        function changeQuantity(){
+            if($scope.product.buyingQuantity < 1) $scope.product.buyingQuantity = 1;
+        }
+        
+        function addProductShoppingCart(product, quantity){
+            cartService.addProductShoppingCart(product, quantity);
+            $state.go('carts');
+        }
+        
         function loadProductDetail() {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
 
             apiService.get(
                 'https://localhost:44353/api/product/getbyidinclude/' + $stateParams.id,
@@ -68,9 +88,9 @@
         }
 
         function getAllTagByProductId() {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
 
-            var config = {
+            let config = {
                 params: {
                     productId: $stateParams.id
                 }
@@ -92,9 +112,9 @@
         }
 
         function getAllProductLatest(size) {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
 
-            var config = {
+            let config = {
                 params: {
                     size: size
                 }
@@ -115,9 +135,9 @@
         }
 
         function getAllProductRelated(categoryId, size) {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
 
-            var config = {
+            let config = {
                 params: {
                     productId: $stateParams.id,
                     categoryId: categoryId,
@@ -140,7 +160,7 @@
         }
 
         function getAllRootProductCategory() {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
             apiService.get(
                 'https://localhost:44353/api/productcategory/getallroot',
                 null,
@@ -156,7 +176,7 @@
         }
 
         function getAllProductCategory() {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
             apiService.get(
                 'https://localhost:44353/api/productcategory/getallparents',
                 null,

@@ -9,7 +9,7 @@
                 url: '/carts',
                 parent: 'base',
                 templateUrl: '/app/components/carts/carts.view.html',
-                controller: 'CartsController'
+                controller: 'shoppingCartController'
             })
     }
 })();

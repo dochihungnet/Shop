@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="header-top-left col-lg-6 col-md-8 col-sm-6 col-xs-4">
-                    <div class="hidden-sm hidden-xs welcome-msg"><b>Chào mừng bạn đến với Shop by Đỗ Chí Hùng {{$ctrl.ae89hy}}</b> Hãy khám phá ngay xem shop có gì nào !!!</div>
+                    <div class="hidden-sm hidden-xs welcome-msg"><b>Chào mừng bạn đến với Shop by Đỗ Chí Hùng</b> Hãy khám phá ngay xem shop có gì nào !!!</div>
                 </div>
                 <div class="header-top-right collapsed-block col-lg-6 col-md-4 col-sm-6 col-xs-8">
                     <ul class="top-link list-inline lang-curr">
@@ -17,7 +17,7 @@
                                     </a>
                                     <ul class="dropdown-menu btn-xs">
                                         <li> <a href="#">(€)&nbsp;Euro</a></li>
-                                        <li> <a href="#">(£)&nbsp;Pounds    </a></li>
+                                        <li> <a href="#">(£)&nbsp;Pounds</a></li>
                                         <li> <a href="#">($)&nbsp;US Dollar </a></li>
                                     </ul>
                                 </form>
@@ -40,9 +40,7 @@
 
                         </li>
                     </ul>
-
-
-
+                    
                 </div>
             </div>
         </div>
@@ -54,7 +52,7 @@
             <div class="row">
                 <!-- Logo -->
                 <div class="navbar-logo col-lg-2 col-md-3 col-sm-12 col-xs-12">
-                    <div class="logo"><a href="index.html"><img src="/assets/client/image/catalog/logo2.png" title="Your Store" alt="Your Store" /></a></div>
+                    <div class="logo"><a ui-sref="home"><img src="/assets/client/image/catalog/logo2.png" title="" alt="Đỗ Chí Hùng" /></a></div>
                 </div>
                 <!-- //end Logo -->
                 <!-- Search -->
@@ -87,7 +85,7 @@
                     <div class="shopping_cart">
                         <div id="cart" class="btn-shopping-cart">
 
-                            <a data-loading-text="Loading... " class="btn-group top_cart dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <a ui-sref="carts" data-loading-text="Loading... " class="btn-group top_cart dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <div class="shopcart">
                                     <span class="icon-c">
                                         <i class="fa fa-shopping-bag"></i>
@@ -98,50 +96,37 @@
                                         </p>
 
                                         <span class="total-shopping-cart cart-total-full">
-                                            <span class="items_cart">02</span><span class="items_cart2"> item(s)</span><span class="items_carts"> - $162.00 </span>
+                                            <span class="items_cart">{{$ctrl.carts.length}}</span>
+                                            <span class="items_cart2"> item(s)</span>
                                         </span>
                                     </div>
                                 </div>
                             </a>
-
-                            <ul class="dropdown-menu pull-right shoppingcart-box" role="menu">
+                            <ul class="dropdown-menu pull-right shoppingcart-box" role="menu" ng-if="$ctrl.carts.length == 0">
+                                
+                                <li style="width: 100%; height: 100px; display: flex; justify-content: center; align-items: center">Chưa có sản phẩm nào!</li>
+                                
+                            </ul>
+                            <ul class="dropdown-menu pull-right shoppingcart-box" role="menu" ng-if="$ctrl.carts.length != 0">
                                 <li>
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" style="width: 420px;">
                                         <tbody>
-                                            <tr>
+                                            <tr ng-repeat="cart in $ctrl.carts">
                                                 <td class="text-center" style="width:70px">
-                                                    <a href="product.html">
-                                                        <img src="/assets/client/image/catalog/demo/product/80/1.jpg" style="width:70px" alt="Yutculpa ullamcon" title="Yutculpa ullamco" class="preview">
+                                                    <a ui-sref="product_details({id:cart.ProductId})">
+                                                        <img src="{{cart.Image}}" style="width:70px" alt="{{cart.Name}}" title="{{cart.Name}}" class="preview">
                                                     </a>
                                                 </td>
                                                 <td class="text-left">
-                                                    <a class="cart_product_name" href="product.html">Yutculpa ullamco</a>
+                                                    <a class="cart_product_name" ui-sref="product_details({id:cart.ProductId})">{{cart.Name}}</a>
                                                 </td>
-                                                <td class="text-center">x1</td>
-                                                <td class="text-center">$80.00</td>
+                                                <td class="text-center">x{{cart.Quantity}}</td>
+                                                <td class="text-center">{{cart.Price | currency : "" : 0}}</td>
                                                 <td class="text-right">
-                                                    <a href="product.html" class="fa fa-edit"></a>
-                                                </td>
-                                                <td class="text-right">
-                                                    <a onclick="cart.remove('2');" class="fa fa-times fa-delete"></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center" style="width:70px">
-                                                    <a href="product.html">
-                                                        <img src="/assets/client/image/catalog/demo/product/80/2.jpg" style="width:70px" alt="Xancetta bresao" title="Xancetta bresao" class="preview">
-                                                    </a>
-                                                </td>
-                                                <td class="text-left">
-                                                    <a class="cart_product_name" href="product.html">Xancetta bresao</a>
-                                                </td>
-                                                <td class="text-center">x1</td>
-                                                <td class="text-center">$60.00</td>
-                                                <td class="text-right">
-                                                    <a href="product.html" class="fa fa-edit"></a>
+                                                    <a ui-sref="product_details({id:cart.ProductId})" class="fa fa-edit"></a>
                                                 </td>
                                                 <td class="text-right">
-                                                    <a onclick="cart.remove('1');" class="fa fa-times fa-delete"></a>
+                                                    <a ng-click="$ctrl.deleteProduct(cart.ProductId)" class="fa fa-times fa-delete"></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -153,32 +138,16 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="text-left">
-                                                        <strong>Sub-Total</strong>
+                                                        <strong>Tổng tiền</strong>
                                                     </td>
-                                                    <td class="text-right">$140.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <strong>Eco Tax (-2.00)</strong>
+                                                    <td class="text-right">
+                                                        {{$ctrl.totalCart | currency : "" : 0}}đ
                                                     </td>
-                                                    <td class="text-right">$2.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <strong>VAT (20%)</strong>
-                                                    </td>
-                                                    <td class="text-right">$20.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <strong>Total</strong>
-                                                    </td>
-                                                    <td class="text-right">$162.00</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <p class="text-right">
-                                            <a class="btn view-cart" href="cart.html"><i class="fa fa-shopping-cart"></i>View Cart</a>&nbsp;&nbsp;&nbsp; <a class="btn btn-mega checkout-cart" href="checkout.html"><i class="fa fa-share"></i>Checkout</a>
+                                            <a class="btn view-cart" ui-sref="carts"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>&nbsp;&nbsp;&nbsp; <a class="btn btn-mega checkout-cart" href="checkout.html"><i class="fa fa-share"></i>Thanh toán</a>
                                         </p>
                                     </div>
                                 </li>
@@ -341,10 +310,24 @@
                 <!-- //end Main menu -->
 
 
-                <div class="bottom2 col-lg-4 hidden-md col-sm-6 col-xs-8">
+                <div class="bottom2 col-lg-4 hidden-md col-sm-6 col-xs-8" style="display: flex;align-items: center;flex-direction: row-reverse;background: none;">
                     <div class="signin-w font-title hidden-sm hidden-xs">
                         <ul class="signin-link blank">
-                            <li class="log login"><i class="fa fa-lock"></i> <a class="link-lg" ui-sref="login">Đăng nhập </a> || <a ui-sref="register">Đăng ký</a></li>
+                            <li class="log login" ng-if="$ctrl.loginStatus === false">
+                                <i class="fa fa-lock"></i> 
+                                <a class="link-lg" ui-sref="login">Đăng nhập </a> || <a ui-sref="register">Đăng ký</a>
+                            </li>
+                            <li class="log login" ng-if="$ctrl.loginStatus === true">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: none;border: none;">
+                                        <i class="fa fa-user"></i>
+                                        {{$ctrl.fullName}}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <button ng-click="$ctrl.logOut()" class="dropdown-item" type="button" style="background: none;border: none;">Đăng xuất</button>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <div class="telephone hidden-xs hidden-sm hidden-md">

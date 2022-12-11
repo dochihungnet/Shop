@@ -131,6 +131,9 @@
     <Content Include="app\components\carts\carts.controller.js" />
     <Content Include="app\components\carts\carts.module.js" />
     <Content Include="app\components\carts\carts.view.html" />
+    <Content Include="app\components\checkout\checkout.controller.js" />
+    <Content Include="app\components\checkout\checkout.module.js" />
+    <Content Include="app\components\checkout\checkout.view.html" />
     <Content Include="app\components\contact\contact.controller.js" />
     <Content Include="app\components\contact\contact.module.js" />
     <Content Include="app\components\contact\contact.view.html" />
@@ -7991,7 +7994,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\components\posts\" />
-    <Folder Include="app\components\signin\" />
     <Folder Include="App_Data\" />
     <Folder Include="assets\admin\plugins\nicescroll\css\" />
     <Folder Include="assets\client\image\theme\home5\" />
@@ -8262,7 +8264,6 @@
     <TypeScriptCompile Include="assets\libs\ngBootbox\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="assets\libs\ngBootbox\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="assets\libs\ngBootbox\typings\tsd.d.ts" />
-    <TypeScriptCompile Include="assets\libs\simplebar\simplebar.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -34,7 +34,7 @@
                                         <div ng-if="product.IsANewProduct" class="box-label"> <span class="label-product label-new"> New </span></div>
                                         <div ng-if="product.StatusDiscount" class="box-label"> <span class="label-product label-sale"> -{{product.PromotionPrice}}% </span></div>
                                         <div class="button-group so-quickview cartinfo--left">
-                                            <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" onclick="cart.add('60 ');">
+                                            <button type="button" class="addToCart btn-button" title="Thêm giỏ hàng" ng-click="$ctrl.addProductShoppingCart(product)">
                                                 <i class="fa fa-shopping-basket"></i>
                                                 <span>Thêm giỏ hàng </span>
                                             </button>

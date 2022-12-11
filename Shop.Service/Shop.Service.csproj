@@ -53,6 +53,8 @@
     <Compile Include="ProductService.cs" />
     <Compile Include="ProductTagService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\OrderService.cs" />
+    <Compile Include="ShoppingCartService.cs" />
     <Compile Include="SlideGroupService.cs" />
     <Compile Include="SlideService.cs" />
     <Compile Include="TagService.cs" />

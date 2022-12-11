@@ -11,8 +11,8 @@
         $scope.page = 0;
         $scope.pageSize = 10;
         $scope.pageCount = 0;
-        $scope.categoryId; 
-        $scope.brandId;
+        $scope.categoryId = null; 
+        $scope.brandId = null;
         $scope.status = null;
 
         $scope.getListProduct = getListProduct;
@@ -37,12 +37,12 @@
 
 
         function deleteMultiple() {
-            var listId = [];
+            let listId = [];
             $.each($scope.selected, function (idx, item) {
                 listId.push(item.Id);
             });
 
-            var config = {
+            let config = {
                 params: {
                     checkedProducts: JSON.stringify(listId)
                 }
@@ -81,7 +81,7 @@
 
         $scope.$watch("products", function (newVal, oldVal) {
 
-            var checked = $filter("filter")(newVal, { checked: true });
+            let checked = $filter("filter")(newVal, { checked: true });
 
             if (checked && checked.length) {
                 $scope.selected = checked;
@@ -97,7 +97,7 @@
             $ngBootbox.confirm('Bạn có chắc muốn xóa sản phẩm này không?')
                 .then(function (result) {
 
-                    var config = {
+                    let config = {
                         params: {
                             id: id
                         }
@@ -123,13 +123,13 @@
         function getListProduct(page) {
             page = page || 0;
 
-            var category = $scope.productCategories.find(x => x.checked);
+            let category = $scope.productCategories.find(x => x.checked);
             $scope.categoryId = category ? category.Id : null;
 
-            var brand = $scope.brands.find(x => x.checked);
+            let brand = $scope.brands.find(x => x.checked);
             $scope.brandId = brand ? brand.Id : null;
 
-            var config = {
+            let config = {
                 params: {
                     PAGE: page,
                     pageSize: $scope.pageSize,
@@ -232,7 +232,7 @@
 
         function handlerEventClickInputStatusProduct($event, id) {
             $event.preventDefault();
-            var product = { ...$scope.products.find(x => x.Id == id) };
+            let product = { ...$scope.products.find(x => x.Id == id) };
 
             product.Status = !product.Status;
 
@@ -257,10 +257,10 @@
 
         function handlerEventClickInputStatusDiscountProduct($event, id) {
             $event.preventDefault();
-            var product = { ...$scope.products.find(x => x.Id == id) };
+            let product = { ...$scope.products.find(x => x.Id == id) };
             product.EndDiscountDate = product.StatusDiscount ? new Date(product.EndDiscountDate) : product.EndDiscountDate;
 
-            var modalInstance = $uibModal.open({
+            let modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
@@ -291,7 +291,7 @@
     }
 
     app.controller('ModalInstanceCtrl', function ($uibModalInstance, product, apiService, notificationService) {
-        var $ctrl = this;
+        let $ctrl = this;
 
         $ctrl.product = product;
         $ctrl.minEndDate = new Date();
@@ -393,9 +393,8 @@ function handleSearchProduct($state ,$scope, $q, $log, apiService) {
 
 
     function querySearch(query) {
-        console.log($scope.repos);
-        var results = query ? $scope.repos.filter(createFilterFor(query)) : $scope.repos, deferred;
-        return results;
+        let result = query ? $scope.repos.filter(createFilterFor(query)) : $scope.repos, deferred;
+        return result;
     }
 
     function searchTextChange(text) {
@@ -405,16 +404,15 @@ function handleSearchProduct($state ,$scope, $q, $log, apiService) {
     function selectedItemChange(item) {
         $log.info('Item changed to ' + JSON.stringify(item));
         console.log(item);
-        var idProductSelect = item.Id;
+        let idProductSelect = item.Id;
         console.log(item.Id);
         console.log($state);
         $state.go(`product_details`, { id: idProductSelect });
     }
 
     function loadAll() {
-
-        var repos = [];
-        var deferred = $q.defer();
+        let repos = [];
+        let deferred = $q.defer();
         apiService.get(
             'https://localhost:44353/api/product/getall',
             null,
@@ -438,7 +436,7 @@ function handleSearchProduct($state ,$scope, $q, $log, apiService) {
     }
 
     function createFilterFor(query) {
-        var lowercaseQuery = query.toLowerCase();
+        let lowercaseQuery = query.toLowerCase();
 
         return function filterFn(item) {
             return (item.value.indexOf(lowercaseQuery) === 0);

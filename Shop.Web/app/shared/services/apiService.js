@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.factory('apiService', apiService);
 
-    apiService.$inject = ['$http', 'authenticationService'];
+    apiService.$inject = ['$http', 'authenticationService', 'notificationService'];
 
-    function apiService($http, authenticationService) {
+    function apiService($http, authenticationService, notificationService) {
         return {
             get, // read
             post, // Create

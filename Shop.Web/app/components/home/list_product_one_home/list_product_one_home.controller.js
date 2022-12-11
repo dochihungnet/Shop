@@ -2,31 +2,35 @@
     module('shop.list_product_one_home', ['shop.common']).
     component('listProductOneHomeView', {  // This name is what AngularJS uses to match to the `<phone-list>` element.
         templateUrl: "/app/components/home/list_product_one_home/list_product_one_home.view.html",
-        controller: ['apiService', '$q', '$timeout', function ListProductOneHomeController(apiService, $q, $timeout) {
-            var $scope = this;
+        controller: ['apiService', '$q', '$timeout', '$scope', 'cartService',
+            function ListProductOneHomeController(apiService, $q, $timeout, $scope, cartService) {
+            let self = this;
 
-            $scope.listProductDealsOfTheWeek = [];
-            $scope.threeProductCategoryBestSelling = [];
-            $scope.listProductBestSelling = [];
+            self.listProductDealsOfTheWeek = [];
+            self.threeProductCategoryBestSelling = [];
+            self.listProductBestSelling = [];
 
-            $scope.handlerEventClickChooseProductCategory = handlerEventClickChooseProductCategory;
-
-
+            self.handlerEventClickChooseProductCategory = handlerEventClickChooseProductCategory;
+            self.addProductShoppingCart = addProductShoppingCart;
+            
             $q.all([getAllProductDealsOfTheWeek(), getAllProductCategoryBestSelling(3)]).then(function (result) {
-                $scope.listProductDealsOfTheWeek = result[0];
-                $scope.threeProductCategoryBestSelling = result[1];
+                self.listProductDealsOfTheWeek = result[0];
+                self.threeProductCategoryBestSelling = result[1];
 
-                getAllProductBestSellingByCategory($scope.threeProductCategoryBestSelling[0].Id, 8).then(result => {
-                    $scope.listProductBestSelling = handlerResponseData(result, 1);
-                    console.log($scope.listProductBestSelling);
+                getAllProductBestSellingByCategory(self.threeProductCategoryBestSelling[0].Id, 8).then(result => {
+                    self.listProductBestSelling = handlerResponseData(result, 1);
                     $timeout(init, 10);
                 })
             });
 
+            
 
+            function addProductShoppingCart(product){
+                cartService.addProductShoppingCart(product);
+            }
 
             function getAllProductDealsOfTheWeek() {
-                var deferred = $q.defer();
+                let deferred = $q.defer();
                 apiService.get(
                     'https://localhost:44353/api/product/getalldealsoftheweek',
                     null,
@@ -42,9 +46,9 @@
             }
 
             function getAllProductCategoryBestSelling(amount) {
-                var deferred = $q.defer();
+                let deferred = $q.defer();
 
-                var config = {
+                let config = {
                     params: {
                         amount: amount
                     }
@@ -65,9 +69,9 @@
             }
 
             function getAllProductBestSellingByCategory(categoryId, size) {
-                var deferred = $q.defer();
+                let deferred = $q.defer();
 
-                var config = {
+                let config = {
                     params: {
                         categoryId: categoryId,
                         size: size
@@ -98,7 +102,7 @@
             // xử lý xem sản phẩm nào là sản phẩm new
             function handlerResponseData(product, days) {
                 return product.map(x => {
-                    var result = new Date(x.CreatedDate);
+                    let result = new Date(x.CreatedDate);
                     result.setDate(result.getDate() + days);
 
                     if (result > new Date()) {

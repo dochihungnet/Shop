@@ -1,0 +1,195 @@
+﻿using Microsoft.AspNet.Identity.Owin;
+using Shop.Api.App_Start;
+using Shop.Api.Infrastructure.Core;
+using Shop.Api.Models;
+using Shop.Model.Models;
+using Shop.Service;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using AutoMapper;
+using Microsoft.AspNet.Identity;
+using System.Web.Script.Serialization;
+
+namespace Shop.Api.Controllers
+{
+    [RoutePrefix("api/shopping-cart")]
+    // [Authorize]
+    public class ShoppingCartController: ApiControllerBase
+    {
+        private IShoppingCartService _shoppingCartService;
+        private IProductService _productService;
+        private ApplicationUserManager _userManager;
+        public ShoppingCartController(IErrorService errorService, IShoppingCartService shoppingCartService, IProductService productService, ApplicationUserManager userManager) : base(errorService)
+        {
+            _shoppingCartService = shoppingCartService;
+            _productService = productService;
+            _userManager = userManager;
+        }
+        
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        
+        [Route("get-all-product-by-customer-id")]
+        [HttpGet]
+        public HttpResponseMessage GetAllProductByCustomerId(HttpRequestMessage request, string customerId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var shoppingCarts = _shoppingCartService.GetAllProductShoppingCartByCustomerId(customerId);
+
+                var shoppingCartsViewModel = Mapper.Map<List<ShoppingCartViewModel>>(shoppingCarts);
+
+                response = request.CreateResponse(HttpStatusCode.OK, shoppingCartsViewModel);
+
+                return response;
+            });
+        }
+        
+        [Route("add-product-shopping-cart")]
+        [HttpPost]
+        public HttpResponseMessage AddProductShoppingCart(HttpRequestMessage request, ShoppingCartViewModel shoppingCartViewModel)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, false);
+                    return response;
+                }
+
+                // IF PRODUCT SHOPPING CART ALREADY EXIST
+                var productShoppingCart =
+                    _shoppingCartService.GetSingleProductShoppingCart(shoppingCartViewModel.CustomerId,
+                        shoppingCartViewModel.ProductId);
+                
+                if (productShoppingCart != null)
+                {
+                    productShoppingCart.Quantity += shoppingCartViewModel.Quantity;
+                    productShoppingCart.UpdatedBy = productShoppingCart.CreatedBy;
+                    productShoppingCart.UpdatedDate = DateTime.Now;
+                    _shoppingCartService.SaveChanges();
+                    
+                    response = request.CreateResponse(HttpStatusCode.OK, true);
+                    return response;
+                }
+                
+                // IF PRODUCT SHOPPING CART NOT EXISTED YET
+                var customer = _userManager.FindById(shoppingCartViewModel.CustomerId);
+                var product = _productService.GetById(shoppingCartViewModel.ProductId);
+                
+                var newShoppingCart = Mapper.Map<ShoppingCart>(shoppingCartViewModel);
+                newShoppingCart.CreatedDate = DateTime.Now;
+                newShoppingCart.CreatedBy = customer.FullName;
+                newShoppingCart.Name = product.Name;
+                newShoppingCart.Image = product.Image;
+                newShoppingCart.Price = product.PriceAfterDiscount.HasValue == true ? product.PriceAfterDiscount.Value : product.Price;
+
+                _shoppingCartService.AddProductShoppingCart(newShoppingCart);
+
+                response = request.CreateResponse(HttpStatusCode.OK, true);
+                
+                return response;
+            });
+        }
+        
+        
+        [Route("delete-product-shopping-cart")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteProductShoppingCart(HttpRequestMessage request, string customerId, int productId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                
+                _shoppingCartService.DeleteProductShoppingCart(customerId, productId);
+
+                response = request.CreateResponse(HttpStatusCode.OK, true);
+                
+                return response;
+            });
+        }
+
+        [Route("delete-shopping-cart")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteShoppingCart(HttpRequestMessage request, string customerId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                _shoppingCartService.DeleteShoppingCart(customerId);
+
+                response = request.CreateResponse(HttpStatusCode.OK, true);
+                
+                return response;
+            });
+        }
+        
+        [Route("update-quantity")]
+        [HttpPut]
+        public HttpResponseMessage UpdateQuantityProductShoppingCart(HttpRequestMessage request,
+            ShoppingCartViewModel shoppingCartViewModel)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.OK, false);
+                    return response;
+                }
+                    
+                var shoppingCart = Mapper.Map<ShoppingCart>(shoppingCartViewModel);
+                _shoppingCartService.UpdateQuantityProductShoppingCart(shoppingCart);
+                
+                response = request.CreateResponse(HttpStatusCode.OK, true);
+                return response;
+            });
+        }
+        
+        [Route("update-shopping-cart")]
+        [HttpPut]
+        public HttpResponseMessage UpdateShoppingCart(HttpRequestMessage request, List<ShoppingCartViewModel> shoppingCartsViewModel)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var customerId = shoppingCartsViewModel[0].CustomerId;
+                
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, false);
+                    return response;
+                }
+
+                var newShoppingCarts = Mapper.Map<List<ShoppingCart>>(shoppingCartsViewModel);
+
+                _shoppingCartService.UpdateShoppingCart(customerId, newShoppingCarts);
+
+                response = request.CreateResponse(HttpStatusCode.OK, true);
+
+                return response;
+            });
+        }
+    }
+}

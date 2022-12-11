@@ -27,6 +27,7 @@
             CreateBrandSimple(context);
             CreateSlideGroup(context);
             CreateContactDetailSimple(context);
+            CreateShoppingCartSimple(context);
 
         }
 
@@ -107,7 +108,6 @@
                 context.ProductCategories.AddRange(listProductCategory);
             }
         }
-
         private void CreateContactDetailSimple(ShopDbContext context)
         {
             if(context.ContactDetails.Count() == 0)
@@ -125,6 +125,25 @@
                     Status = true,
                 };
                 context.ContactDetails.Add(contactDetail);
+                context.SaveChanges();
+            }
+        }
+
+        private void CreateShoppingCartSimple(ShopDbContext context)
+        {
+            if (context.ShoppingCarts.Count() == 0)
+            {
+                var shoppingCarts = new List<ShoppingCart>()
+                {
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 15, Quantity = 10, Price = 40000000},
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 16, Quantity = 10, Price = 40000000},
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 17, Quantity = 10, Price = 40000000},
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 38, Quantity = 10, Price = 80000000},
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 35, Quantity = 10, Price = 40000000},
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 37, Quantity = 10, Price = 40000000},
+                    new ShoppingCart(){CustomerId = "60cbd86f-54f3-43a1-8be4-018884a83dcf", ProductId = 39, Quantity = 10, Price = 80000000},
+                };
+                context.ShoppingCarts.AddRange(shoppingCarts);
                 context.SaveChanges();
             }
         }

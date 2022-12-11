@@ -1,12 +1,20 @@
 ﻿(function (app) {
     app.controller('productCategoriesController', productCategoriesController);
 
-    productCategoriesController.$inject = ['apiService', '$scope', '$state', 'notificationService', '$stateParams', '$timeout', '$q'];
+    productCategoriesController.$inject = [
+        'apiService', 
+        '$scope',
+        '$state', 
+        'notificationService',
+        '$stateParams',
+        '$timeout',
+        '$q',
+        'cartService'
+    ];
 
-    function productCategoriesController(apiService, $scope, $state, notificationService, $stateParams, $timeout, $q) {
-
-
-        $scope.productCategory;
+    function productCategoriesController(apiService, $scope, $state, notificationService, $stateParams, $timeout, $q, cartService) {
+        
+        $scope.productCategory = null;
         $scope.products = [];
         $scope.brands = [];
         $scope.productCategoriesChild = [];
@@ -18,8 +26,8 @@
         $scope.page = 0;
         $scope.pageSize = 15;
         $scope.pageCount = 0;
-        $scope.categoryId;
-        $scope.brandId;
+        $scope.categoryId = null;
+        $scope.brandId = null;
 
         getProductCategory().then(result => {
             $scope.productCategory = result;
@@ -49,13 +57,18 @@
         $scope.changeSortBy = changeSortBy;
         $scope.changePageSize = changePageSize;
         $scope.search = search;
-
+        
         $scope.changeRangePrice = changeRangePrice;
-
+        
+        $scope.addProductShoppingCart = addProductShoppingCart;
 
         /////////////////////////////////////////////////////////////////////////////////
         //////////////////// FUNCTION HANDLER
         /////////////////////////////////////////////////////////////////////////////////
+        
+        function addProductShoppingCart(product){
+            cartService.addProductShoppingCart(product);
+        }
         function changeRangePrice() {
             $scope.minPrice = $('.min_value').val();
             $scope.maxPrice = $('.max_value').val();

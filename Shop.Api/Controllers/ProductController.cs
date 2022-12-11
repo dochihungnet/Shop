@@ -349,7 +349,7 @@ namespace Shop.Api.Controllers
                 }
 
                 var newProduct = Mapper.Map<Product>(productViewModel);
-                newProduct.QuantityHasSell = 100;
+                newProduct.QuantityHasSell = 0;
                 newProduct.CreatedDate = DateTime.Now;
                 newProduct.CreatedBy = User.Identity.Name;
 
