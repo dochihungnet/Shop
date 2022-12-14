@@ -21,7 +21,7 @@ namespace Shop.Model.Models
 
         [Required]
         [MaxLength(256)]
-        public string CustomerAddress { set; get; }
+        public string CustomerDeliveryAddress { set; get; }
 
         [Required]
         [MaxLength(256)]

@@ -61,6 +61,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\ContactDetail.cs" />
+    <Compile Include="Models\DeliveryAddress.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Footer.cs" />

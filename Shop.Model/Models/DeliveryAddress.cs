@@ -1,7 +1,22 @@
-﻿namespace Shop.Model.Models
+﻿using Shop.Model.Abstract;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Shop.Model.Models
 {
-    public class DeliveryAddress
+    [Table("DeliveryAddress")]
+    public class DeliveryAddress : Auditable
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        
+        [Required]
+        [MaxLength(256)]
+        public string CustomerDeliveryAddress { set; get; }
+        
+        [ForeignKey("CustomerId")]
+        public virtual ApplicationUser User { set; get; }
         
     }
 }

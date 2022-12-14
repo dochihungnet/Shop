@@ -9,7 +9,8 @@
         'shop.product_categories',
         'shop.product_tags',
         'shop.contact',
-        'shop.carts'
+        'shop.carts',
+        'shop.checkout'
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
