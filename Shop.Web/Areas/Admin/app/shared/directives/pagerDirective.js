@@ -15,7 +15,7 @@
             },
             replace: true,
             restrict: 'E',
-            templateUrl: '~/Areas/Admin/app/shared/directives/pagerDirective.html',
+            templateUrl: '/Areas/Admin/app/shared/directives/pagerDirective.html',
             controller: [
                 '$scope', function ($scope) {
                     $scope.search = function (i) {

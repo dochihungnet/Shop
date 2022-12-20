@@ -12,7 +12,6 @@
                     headers:
                         { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).then(function (response) {
-                    console.log(response);
                     userInfo = {
                         accessToken: response.data.access_token,
                         userName: userName,

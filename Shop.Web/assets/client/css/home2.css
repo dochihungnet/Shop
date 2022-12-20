@@ -8436,3 +8436,26 @@ footer .copyright a {
         max-width: 20%;
     }
 }
+
+.md-virtual-repeat-container.md-autocomplete-suggestions-container,
+.md-standard-list-container.md-autocomplete-suggestions-container {
+  z-index: 1051 !important;
+
+}
+
+md-autocomplete md-autocomplete-wrap{
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+}
+
+.layout-column {
+  flex-direction: column !important;
+  border: none !important;
+  background: none !important;
+}
+
+md-autocomplete .md-show-clear-button button{
+  display: none !important;
+}

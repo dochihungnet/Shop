@@ -8,200 +8,284 @@
 
     <div class="row">
         <!--Middle Part Start-->
-        <div id="content" class="col-sm-12">
+        <div ng-if="Display === true" id="content" class="col-sm-12">
             <h2 class="title">Thanh toán</h2>
-            <div class="so-onepagecheckout row">
-                <div class="col-left col-sm-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-sign-in"></i> Tạo một tài khoản hoặc đăng nhập</h4>
-                        </div>
-                        <div class="panel-body">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" value="register" name="account">
-                                    Đăng ký tài khoản</label>
+            <form novalidate name="frmCheckOut" role="form" ng-submit="OrderConfirmation()">
+                <div class="so-onepagecheckout row">
+                    <div  class="col-left col-sm-3" ng-if="!loginStatus">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-user"></i> Thông tin cá nhân</h4>
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" checked="checked" value="guest" name="account">
-                                    Khách thanh toán</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" value="returning" name="account">
-                                    Phản hồi khách hàng</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-user"></i> Thông tin cá nhân</h4>
-                        </div>
-                        <div class="panel-body">
-                            <fieldset id="account">
-                                <div class="form-group required">
-                                    <label for="input-payment-firstname" class="control-label">Họ tên</label>
-                                    <input type="text" class="form-control" id="input-payment-firstname" placeholder="First Name" value="" name="firstname">
-                                </div>
-                                <div class="form-group required">
-                                    <label for="input-payment-email" class="control-label">E-Mail</label>
-                                    <input type="text" class="form-control" id="input-payment-email" placeholder="E-Mail" value="" name="email">
-                                </div>
-                                <div class="form-group required">
-                                    <label for="input-payment-telephone" class="control-label">Điện thoại</label>
-                                    <input type="text" class="form-control" id="input-payment-telephone" placeholder="Telephone" value="" name="telephone">
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-book"></i>Địa chỉ của bạn</h4>
-                        </div>
-                        <div class="panel-body">
-                            <fieldset id="address" class="required">
-                                <div class="form-group">
-                                    <label for="input-payment-company" class="control-label">Số nhà</label>
-                                    <input type="text" class="form-control" id="input-payment-company" placeholder="Company" value="" name="company">
-                                </div>
-                                <div class="form-group required">
-                                    <label for="input-payment-address-1" class="control-label">Tỉnh/Thành phố, Quận/Huyện, Phường,/Xã</label>
-                                    <input type="text" class="form-control" id="input-payment-address-1" placeholder="Address 1" value="" name="address_1">
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-payment-address-2" class="control-label">Địa chỉ cụ thể</label>
-                                    <input type="text" class="form-control" id="input-payment-address-2" placeholder="Address 2" value="" name="address_2">
-                                </div>
-                                
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" checked="checked" value="1" name="shipping_address">
-                                        Địa chỉ giao hàng và thanh toán của tôi giống nhau.</label>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-right col-sm-9">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="panel panel-default no-padding">
-                                <div class="col-sm-6 checkout-shipping-methods">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><i class="fa fa-truck"></i> Phương thức vận chuyển</h4>
+                            <div class="panel-body">
+                                <fieldset id="account">
+                                    <div class="form-group required">
+                                        <label for="input-payment-firstname" class="control-label">Họ tên</label>
+                                        <input type="text" class="form-control" id="input-payment-firstname" placeholder="Họ tên" name="customerName" ng-minlength="3" required ng-model="order.CustomerName">
+                                        <div ng-show="frmCheckOut.customerName.$error.minlength || frmCheckOut.customerName.$invalid" class="invalid-feedback d-block" style="color: red">Họ tên không hợp lệ.</div>
                                     </div>
-                                    <div class="panel-body ">
-                                        <p>Vui lòng chọn phương thức vận chuyển để sử dụng cho đơn hàng này.</p>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" checked="checked" name="FreeShipping">
-                                                Chuyển phát nhanh - 100.000đ</label>
+                                    <div class="form-group required">
+                                        <label for="input-payment-email" class="control-label">E-Mail</label>
+                                        <input type="email" class="form-control" id="input-payment-email" placeholder="E-Mail" name="email" ng-minlength="3" required ng-model="order.CustomerEmail">
+                                        <div ng-show="frmCheckOut.email.$error.minlength || frmCheckOut.email.$invalid" class="invalid-feedback d-block" style="color: red">E-mail không hợp lệ.</div>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="input-payment-telephone" class="control-label">Điện thoại</label>
+                                        <input type="text" class="form-control" id="input-payment-telephone" placeholder="Số điện thoại" name="phone" ng-minlength="10" ng-maxlength="10" required ng-model="order.CustomerMobile">
+                                        <div ng-show="frmCheckOut.phone.$error.minlength || frmCheckOut.phone.$error.maxlength || frmCheckOut.phone.$invalid" class="invalid-feedback d-block" style="color: red">Số điện thoại không hợp lệ.</div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-book"></i>Địa chỉ của bạn</h4>
+                            </div>
+                            <div class="panel-body">
+                                <fieldset id="address" class="required">
+                                    <div class="form-group required">
+                                        <label  class="control-label">Tỉnh/Thành phố</label>
+                                        <div ng-cloak>
+                                            <md-content layout-padding layout="column">
+                                                <div style="padding: 0;">
+                                                    <md-autocomplete id="custom-template"
+                                                                     ng-disabled="inputProvince_isDisabled"
+                                                                     md-no-cache="noCache"
+                                                                     md-selected-item="selectedItem"
+                                                                     md-search-text="searchText"
+                                                                     md-selected-item-change="selectedItemChange(item)"
+                                                                     md-items="item in querySearch(searchText)"
+                                                                     md-item-text="item.province_name"
+                                                                     md-min-length="0"
+                                                                     md-escape-options="clear"
+                                                                     placeholder="Province"
+                                                                     md-menu-class="autocomplete-custom-template"
+                                                                     md-menu-container-class="custom-container">
+                                                        <md-item-template>
+                                                            <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                                                <div class="product-info">
+                                                                    <h5 class="product-name mb-1">{{item.province_name}}</h5>
+                                                                </div>
+                                                            </div>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                </div>
+                                            </md-content>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="FlatShippingRate">
-                                                Bình thường - 50.000đ</label>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label class="control-label">Quận/Huyện</label>
+                                        <div ng-cloak>
+                                            <md-content layout-padding layout="column">
+                                                <div style="padding: 0;">
+                                                    <md-autocomplete id="custom-template_2"
+                                                                     ng-disabled="inputDistrict_isDisabled"
+                                                                     md-no-cache="noCache"
+                                                                     md-search-text="searchTextDistrict"
+                                                                     md-selected-item-change="selectedDistrictItemChange(item)"
+                                                                     md-items="item in querySearchDistrict(searchTextDistrict)"
+                                                                     md-item-text="item.district_name"
+                                                                     md-min-length="0"
+                                                                     md-escape-options="clear"
+                                                                     placeholder="District"
+                                                                     md-menu-class="autocomplete-custom-template"
+                                                                     md-menu-container-class="custom-container">
+                                                        <md-item-template>
+                                                            <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                                                <div class="product-info">
+                                                                    <h5 class="product-name mb-1">{{item.district_name}}</h5>
+                                                                </div>
+                                                            </div>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                </div>
+                                            </md-content>
                                         </div>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label class="control-label">Phường/Xã</label>
+                                        <div ng-cloak>
+                                            <md-content layout-padding layout="column">
+                                                <div style="padding: 0;">
+                                                    <md-autocomplete id="custom-template_3"
+                                                                     ng-disabled="inputWard_isDisabled"
+                                                                     md-no-cache="noCache"
+                                                                     md-search-text="searchTextWard"
+                                                                     md-selected-item-change="selectedWardItemChange(item)"
+                                                                     md-items="item in querySearchWard(searchTextWard)"
+                                                                     md-item-text="item.ward_name"
+                                                                     md-min-length="0"
+                                                                     md-escape-options="clear"
+                                                                     placeholder="Ward"
+                                                                     md-menu-class="autocomplete-custom-template"
+                                                                     md-menu-container-class="custom-container">
+                                                        <md-item-template>
+                                                            <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                                                <div class="product-info">
+                                                                    <h5 class="product-name mb-1">{{item.ward_name}}</h5>
+                                                                </div>
+                                                            </div>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                </div>
+                                            </md-content>
+                                        </div>
+                                    </div>
 
+
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-right" ng-class="{'col-sm-9': !loginStatus, 'col-sm-12': loginStatus}">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default no-padding">
+                                    <div class="col-sm-6 checkout-shipping-methods">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><i class="fa fa-truck"></i> Phương thức vận chuyển</h4>
+                                        </div>
+                                        <div class="panel-body ">
+                                            <p>Vui lòng chọn phương thức vận chuyển để sử dụng cho đơn hàng này.</p>
+                                            <div class="radio" ng-repeat="shippingMethod in shippingMethods">
+                                                <label>
+                                                    <input type="checkbox" ng-model="shippingMethod.checked" ng-change="handlerEventChangeInputShippingMethod(shippingMethod.id);">
+                                                    {{shippingMethod.text}} - {{shippingMethod.price | currency : "" : 0}}đ
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6  checkout-payment-methods">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><i class="fa fa-credit-card"></i> Phương thức thanh toán</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>Vui lòng chọn phương thức thanh toán để sử dụng cho đơn hàng này.</p>
+                                            <div class="radio" ng-repeat="checkoutMethod in checkoutMethods">
+                                                <label>
+                                                    <input type="checkbox" ng-model="checkoutMethod.checked" ng-change="handlerEventChangeInputCheckoutMethod(checkoutMethod.id)">
+                                                    {{checkoutMethod.text}}
+                                                </label>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6  checkout-payment-methods">
+                            </div>
+                            <div class="col-sm-12" ng-if="loginStatus">
+                                <div style="height: 3px;width: 100%;background-position-x: -30px;background-size: 116px 3px;background-image: repeating-linear-gradient(45deg,#6fa6d6,#6fa6d6 33px,transparent 0,transparent 41px,#f18d9b 0,#f18d9b 74px,transparent 0,transparent 82px);"></div>
+                                <div class="panel panel-default no-padding" style="padding: 15px 30px;">
+                                    <div style="font-size: 16px; font-weight: 500; display:  flex; align-items: center;">
+                                        <i class="fa fa-location-arrow"></i>
+                                        <p style="margin: 0 0 0 5px">Địa chỉ nhân hàng</p>
+                                    </div>
+                                    <div style="margin-top: 10px; display: flex; align-items: center;" ng-if="deliveryAddress !== null">
+                                        <div>
+                                            <strong>{{deliveryAddress.CustomerName}} - {{deliveryAddress.CustomerMobile}}</strong>
+                                        </div>
+                                        <div>
+                                            <span style="margin-left: 20px">{{deliveryAddress.CustomerDeliveryAddress}}</span>
+                                        </div>
+                                        <div>
+                                            <span style="padding: 2px 5px;margin-left: 1.5em;color: #ee4d2d;border-radius: 1px;border: 0.5px solid;font-size: 10px;text-transform: capitalize;flex-shrink: 0;">Mặc định</span>
+                                            <div style="display: inline-block;color: #4080ee;text-transform: capitalize;margin-left: 2.5rem;cursor: pointer; border: none; font-size: 14px; background-color: white;" ng-click="handlerEventClickChangeDeliveryAddress(null, null)">Thay đổi</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 10px; display: flex; align-items: center;" ng-if="deliveryAddress === null">
+                                        <div>
+                                            <span>Chưa có địa chỉ nhận hàng</span>
+                                        </div>
+                                        <div>
+                                            <span style="padding: 2px 5px;margin-left: 1.5em;color: #ee4d2d;border-radius: 1px;border: 0.5px solid;font-size: 10px;text-transform: capitalize;flex-shrink: 0;">Mặc định</span>
+                                            <div style="display: inline-block;color: #4080ee;text-transform: capitalize;margin-left: 2.5rem;cursor: pointer; border: none; font-size: 14px; background-color: white;" ng-click="handlerEventClickChangeDeliveryAddress(null, null)">Thay đổi</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><i class="fa fa-credit-card"></i> Phương thức thanh toán</h4>
+                                        <h4 class="panel-title"><i class="fa fa-shopping-cart"></i>Giỏ hàng</h4>
                                     </div>
                                     <div class="panel-body">
-                                        <p>Vui lòng chọn phương thức thanh toán để sử dụng cho đơn hàng này.</p>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" checked="checked" name="CashOnDelivery">Thanh toán khi nhận hàng</label>
-                                        </div>
-
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="Paypal">Chuyển khoản</label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <td class="text-center">Hình ảnh</td>
+                                                    <td class="text-left">Tên sản phẩm</td>
+                                                    <td class="text-left">Số lượng</td>
+                                                    <td class="text-right">Đơn giá</td>
+                                                    <td class="text-right">Tổng tiền</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="product in carts">
+                                                    <td class="text-center"><a ui-sref="product_details({id:product.ProductId})"><img width="70px" src="{{product.Image}}" alt="{{product.Name}}" title="{{product.Name}}" class="img-thumbnail" /></a></td>
+                                                    <td class="text-left">
+                                                        <a ui-sref="product_details({id:product.ProductId})">{{product.Name}}</a><br />
+                                                    </td>
+                                                    <td class="text-left" width="200px">
+                                                        <div class="input-group btn-block quantity">
+                                                            <input type="number" name="quantity"  size="1" class="form-control" ng-model="product.Quantity" min="1"/>
+                                                            <span class="input-group-btn">
+                                                            <button style="border: none" type="button" data-toggle="tooltip" title="Cập nhập" class="btn btn-primary" ng-click="updateProductShoppingCart(product.ProductId)"><i class="fa fa-clone"></i></button>
+                                                            <button style="border: none" type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger" ng-click="deleteProduct(product.ProductId)"><i class="fa fa-times-circle"></i></button>
+                                                        </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-right">{{product.Price  | currency : "" : 0}}</td>
+                                                    <td class="text-right">{{product.Price * product.Quantity | currency : "" : 0}}</td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td class="text-right" colspan="4">
+                                                        <strong>Tổng tiền</strong>
+                                                    </td>
+                                                    <td class="text-right">{{totalCart | currency : "" : 0}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="4">
+                                                        <strong>Phí vận chuyển</strong>
+                                                    </td>
+                                                    <td class="text-right">{{transportFee | currency : "" : 0}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="4">
+                                                        <strong>Thuế (20%):</strong>
+                                                    </td>
+                                                    <td class="text-right">{{totalCart * vat / 100 | currency : "" : 0}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="4">
+                                                        <strong>Tổng thanh toán:</strong>
+                                                    </td>
+                                                    <td class="text-right">{{(totalCart + totalCart * vat / 100) + transportFee | currency : "" : 0}}</td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
-                        </div>
-                        
-
-                        <div class="col-sm-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><i class="fa fa-shopping-cart"></i>Giỏ hàng</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <td class="text-center">Hình ảnh</td>
-                                                <td class="text-left">Tên sản phẩm</td>
-                                                <td class="text-left">Số lượng</td>
-                                                <td class="text-right">Đơn giá</td>
-                                                <td class="text-right">Tổng tiền</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td class="text-center"><a href="product.html"><img width="60px" src="image/catalog/demo/product/funiture/10.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                                <td class="text-left"><a href="product.html">Emasa rumas gacem</a></td>
-                                                <td class="text-left"><div class="input-group btn-block" style="min-width: 100px;">
-                                                    <input type="text" name="quantity" value="1" size="1" class="form-control">
-                                                    <span class="input-group-btn">
-										<button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-										<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
-										</span></div></td>
-                                                <td class="text-right">$114.35</td>
-                                                <td class="text-right">$114.35</td>
-                                            </tr>
-                                            </tbody>
-                                            <tfoot>
-                                            <tr>
-                                                <td class="text-right" colspan="4"><strong>Sub-Total:</strong></td>
-                                                <td class="text-right">$93.73</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right" colspan="4"><strong>Flat Shipping Rate:</strong></td>
-                                                <td class="text-right">$4.69.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right" colspan="4"><strong>Eco Tax (-2.00):</strong></td>
-                                                <td class="text-right">$3.75.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right" colspan="4"><strong>VAT (20%):</strong></td>
-                                                <td class="text-right">$19.68</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right" colspan="4"><strong>Total:</strong></td>
-                                                <td class="text-right">$121.85</td>
-                                            </tr>
-                                            </tfoot>
-                                        </table>
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><i class="fa fa-pencil"></i> Thêm bình luận về đơn hàng của bạn.</h4>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><i class="fa fa-pencil"></i> Thêm bình luận về đơn hàng của bạn.</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <textarea rows="4" class="form-control" id="confirm_comment" name="comments"></textarea>
-                                    <br>
-                                    <label class="control-label" for="confirm_agree">
-                                        <input type="checkbox" checked="checked" value="1" required="" class="validate required" id="confirm_agree" name="confirm">
-                                        <span>Tôi đã đọc và đồng ý với <a class="agree" href="#"><b>Điều khoản &amp; Điều kiện</b></a></span> </label>
-                                    <div class="buttons">
-                                        <div class="pull-right">
-                                            <button type="button" class="btn btn-primary" id="button-confirm">Xác nhận đơn hàng</button>
+                                    <div class="panel-body">
+                                        <textarea rows="4" class="form-control" ng-model="order.CustomerMessage"></textarea>
+                                        <br>
+                                        <label class="control-label" for="confirm_agree">
+                                            <input type="checkbox" checked="checked" value="1" required="" class="validate required" id="confirm_agree" name="confirm">
+                                            <span>Tôi đã đọc và đồng ý với <a class="agree" href="#"><b>Điều khoản &amp; Điều kiện</b></a></span> </label>
+                                        <div class="buttons">
+                                            <div class="pull-right">
+                                                <button type="button" class="btn btn-primary" id="button-confirm" ng-click="OrderConfirmation()">Xác nhận đơn hàng</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -209,10 +293,18 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <!--Middle Part End -->
 
+        <!--Middle Part Start-->
+        <div ng-if="Display === false" class="col-sm-12">
+            <div class="alert alert-success" role="alert">
+                <strong>Chúc mừng bạn</strong> đã đăt hàng thành công.
+                Bạn có thể  <a ui-sref="home" class="agree"><b>tiếp tục mua hàng tại đây.</b></a>
+            </div>
+        </div>
+        <!--Middle Part End -->
     </div>
 </div>
 <!-- //Main Container -->

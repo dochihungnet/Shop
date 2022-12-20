@@ -31,16 +31,28 @@ namespace Shop.Model.Models
         [MaxLength(50)]
         public string CustomerMobile { set; get; }
 
-        [Required]
-        [MaxLength(256)]
         public string CustomerMessage { set; get; }
 
-        [MaxLength(256)]
-        public string PaymentMethod { set; get; }
+        public string PaymentMethod { set; get; } //bỏ qua
 
         public DateTime? CreatedDate { set; get; }
+        
         public string CreatedBy { set; get; }
-        public string PaymentStatus { set; get; }
+        
+        // true: đã thanh toán
+        // false: chưa thanh toán
+        public bool PaymentStatus { set; get; }
+        
+        // 1: Chưa duyệt
+        // 2: Đã duyệt
+        // 3: Đang gói hàng
+        // 4: Đang vận chuyển
+        // 5: Đã giao hàng
+        public int? OrderStatus { set; get; }
+        public decimal? TransportFee { set; get; }
+        public float? Vat { set; get; }
+
+        // trạng thái
         public bool Status { set; get; }
 
         [StringLength(128)]
@@ -49,7 +61,6 @@ namespace Shop.Model.Models
 
         [ForeignKey("CustomerId")]
         public virtual ApplicationUser User { set; get; }
-
-        public virtual IEnumerable<OrderDetail> OrderDetails { set; get; }
+        public ICollection<OrderDetail> OrderDetails { set; get; }
     }
 }

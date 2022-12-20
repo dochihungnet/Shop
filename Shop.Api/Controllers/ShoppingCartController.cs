@@ -23,11 +23,13 @@ namespace Shop.Api.Controllers
     {
         private IShoppingCartService _shoppingCartService;
         private IProductService _productService;
+        private IOrderService _orderService;
         private ApplicationUserManager _userManager;
-        public ShoppingCartController(IErrorService errorService, IShoppingCartService shoppingCartService, IProductService productService, ApplicationUserManager userManager) : base(errorService)
+        public ShoppingCartController(IErrorService errorService, IShoppingCartService shoppingCartService, IProductService productService, ApplicationUserManager userManager, IOrderService orderService) : base(errorService)
         {
             _shoppingCartService = shoppingCartService;
             _productService = productService;
+            _orderService = orderService;
             _userManager = userManager;
         }
         
@@ -188,6 +190,28 @@ namespace Shop.Api.Controllers
 
                 response = request.CreateResponse(HttpStatusCode.OK, true);
 
+                return response;
+            });
+        }
+
+        [Route("check-out")]
+        [HttpPost]
+        public HttpResponseMessage CheckOut(HttpRequestMessage request, OrderViewModel orderViewModel)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.OK, false);
+                    return response;
+                }
+
+                var order = Mapper.Map<Order>(orderViewModel);
+                bool result = _orderService.AddOrder(order);
+
+                response = request.CreateResponse(HttpStatusCode.OK, result);
                 return response;
             });
         }

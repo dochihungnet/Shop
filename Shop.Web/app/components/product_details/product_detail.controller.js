@@ -63,6 +63,7 @@
         
         function changeQuantity(){
             if($scope.product.buyingQuantity < 1) $scope.product.buyingQuantity = 1;
+            if($scope.product.buyingQuantity > $scope.product.Quantity) $scope.product.buyingQuantity = $scope.product.Quantity;
         }
         
         function addProductShoppingCart(product, quantity){

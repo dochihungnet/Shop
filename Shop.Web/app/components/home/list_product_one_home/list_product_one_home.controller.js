@@ -15,6 +15,7 @@
             
             $q.all([getAllProductDealsOfTheWeek(), getAllProductCategoryBestSelling(3)]).then(function (result) {
                 self.listProductDealsOfTheWeek = result[0];
+                console.log(self.listProductDealsOfTheWeek);
                 self.threeProductCategoryBestSelling = result[1];
 
                 getAllProductBestSellingByCategory(self.threeProductCategoryBestSelling[0].Id, 8).then(result => {

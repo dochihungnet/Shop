@@ -57,13 +57,7 @@
                                 </td>
                                 <td class="text-right">{{totalCart | currency : "" : 0}}</td>
                             </tr>
-                            <tr>
-                                <td class="text-right">
-                                    <strong>Phí vận chuyển</strong>
-                                </td>
-                                <td class="text-right">{{transportFee | currency : "" : 0}}</td>
-                            </tr>
-                           
+
                             <tr>
                                 <td class="text-right">
                                     <strong>Thuế (20%):</strong>
@@ -74,7 +68,7 @@
                                 <td class="text-right">
                                     <strong>Tổng thanh toán:</strong>
                                 </td>
-                                <td class="text-right">{{(totalCart + totalCart * vat / 100 + transportFee) | currency : "" : 0}}</td>
+                                <td class="text-right">{{(totalCart + totalCart * vat / 100) | currency : "" : 0}}</td>
                             </tr>
                         </tbody>
                     </table>

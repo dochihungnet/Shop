@@ -8,8 +8,9 @@
             this.loginStatus = false;
             this.userName = null;
             this.userId = null;
+            this.product = [];
             
-
+            
             init();
             
             return {
@@ -24,7 +25,8 @@
                 updateProductShoppingCart,  // func update product shopping cart
                 updateShoppingCart, // func update shopping cart
                 getUserByUserName,
-                deleteShoppingCartLocalStorage
+                deleteShoppingCartLocalStorage,
+                checkOut
             }
             
             // get all shopping cart
@@ -54,8 +56,25 @@
                     Price: (product.PriceAfterDiscount === null
                         || product.PriceAfterDiscount === 0) ? product.Price : product.PriceAfterDiscount
                 }
+
+                let productInCart = shoppingCart.carts.find(x => x.Id === productNew.Id);
+                if(productInCart){
+                    let totalQuantity = productInCart.Quantity + productNew.Quantity;
+                    if(totalQuantity > product.Quantity){
+                        notificationService.displayWarning("Cửa hàng đã hết sản phẩm này.");
+                        return;
+                    }
+                }
+                else {
+                    let totalQuantity = productNew.Quantity;
+                    if(totalQuantity > product.Quantity){
+                        notificationService.displayWarning("Cửa hàng đã hết sản phẩm này.");
+                        return;
+                    }
+                }
                 
                 if(self.loginStatus){
+                    // check quantity product
                     productNew.CustomerId = self.userId;
                     addProductShoppingCartServer(productNew).then(result => {
                         if(result){
@@ -135,10 +154,6 @@
                                 shoppingCart.carts = [];
                                 syncCarts();
                                 calculateTotalMoneyShoppingCart();
-                                notificationService.displaySuccess("Delete shopping cart success.");
-                            }
-                            else {
-                                notificationService.displayError("Delete shopping cart failure.");
                             }
                         }
                     })
@@ -147,39 +162,46 @@
                     shoppingCart.carts = [];
                     syncCarts();
                     calculateTotalMoneyShoppingCart();
-                    notificationService.displaySuccess("Delete shopping cart success.");
                 }
             }
             
             // update product shopping cart / update quantity
             function updateProductShoppingCart(_shoppingCart) {
-                if(self.loginStatus){
-                    updateProductShoppingCartSever(_shoppingCart).then(result => {
-                        if(result){
-                            shoppingCart.carts = shoppingCart.carts.map(el => {
-                                if(el.ProductId === _shoppingCart.ProductId){
-                                    el.Quantity = _shoppingCart.Quantity;
-                                }
-                                return el;
-                            })
-                            syncCarts();
-                            calculateTotalMoneyShoppingCart();
-                            notificationService.displaySuccess("Update product shopping cart success.");
-                        }else {
-                            notificationService.displaySuccess("Update product shopping cart failure.");
-                        }
-                    })
-                }else {
-                    shoppingCart.carts = shoppingCart.carts.map(el => {
-                        if(el.ProductId === _shoppingCart.ProductId){
-                            el.Quantity = _shoppingCart.Quantity;
-                        }
-                        return el;
-                    })
-                    syncCarts();
-                    calculateTotalMoneyShoppingCart();
-                    notificationService.displaySuccess("Update product shopping cart success.");
-                }
+                getProductById(_shoppingCart.ProductId).then(result => {
+                    // check quantity
+                    if(result.Quantity < _shoppingCart.Quantity){
+                        notificationService.displayWarning("Not enough inventory");
+                        return;
+                    }
+                    // handler
+                    if(self.loginStatus){
+                        updateProductShoppingCartSever(_shoppingCart).then(result => {
+                            if(result){
+                                shoppingCart.carts = shoppingCart.carts.map(el => {
+                                    if(el.ProductId === _shoppingCart.ProductId){
+                                        el.Quantity = _shoppingCart.Quantity;
+                                    }
+                                    return el;
+                                })
+                                syncCarts();
+                                calculateTotalMoneyShoppingCart();
+                                notificationService.displaySuccess("Update product shopping cart success.");
+                            }else {
+                                notificationService.displaySuccess("Update product shopping cart failure.");
+                            }
+                        })
+                    }else {
+                        shoppingCart.carts = shoppingCart.carts.map(el => {
+                            if(el.ProductId === _shoppingCart.ProductId){
+                                el.Quantity = _shoppingCart.Quantity;
+                            }
+                            return el;
+                        })
+                        syncCarts();
+                        calculateTotalMoneyShoppingCart();
+                        notificationService.displaySuccess("Update product shopping cart success.");
+                    }
+                })
             }
             
             // update shopping cart
@@ -202,7 +224,24 @@
                     notificationService.displaySuccess("Update product shopping cart success.");
                 }
             }
-            
+
+            // checkout
+            function checkOut(order) {
+                let deferred = $q.defer();
+
+                apiService.post(
+                    'https://localhost:44353/api/shopping-cart/check-out',
+                    order,
+                    function (response) {
+                        deferred.resolve(response.data);
+                    },
+                    function (error) {
+                        deferred.reject(error);
+                    }
+                )
+                return deferred.promise;
+            }
+
             // set cart
             function init(){
                 let deferred = $q.defer();
@@ -231,6 +270,7 @@
                     calculateTotalMoneyShoppingCart();
                     deferred.resolve(self.carts);
                 }
+                
                 return deferred.promise;
             }
             
@@ -386,10 +426,39 @@
                     }
                 );
                 return deferred.promise;
-                
-                
             }
+            
+            function getAllProduct(){
+                let deferred = $q.defer();
 
+                apiService.put(
+                    'https://localhost:44353/api/product/getall',
+                    null,
+                    function (response){
+                        deferred.resolve(response.data);
+                    },
+                    function (error){
+                        deferred.reject(error);
+                    }
+                );
+                return deferred.promise;
+            }
+            
+            function getProductById(id){
+                let deferred = $q.defer();
+
+                apiService.get(
+                    'https://localhost:44353/api/product/getbyid/' + id,
+                    null,
+                    function (response){
+                        deferred.resolve(response.data);
+                    },
+                    function (error){
+                        deferred.reject(error);
+                    }
+                );
+                return deferred.promise;
+            }
             function deleteShoppingCartLocalStorage(){
                 shoppingCart.carts = [];
                 syncCarts();

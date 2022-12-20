@@ -1,0 +1,49 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Địa Chỉ Của tôi</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row mb-3" style="padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.09);background: #fff;" ng-repeat="deliveryAddress in listDeliveryAddress">
+        <div class="col-sm-1">
+            <input type="checkbox" ng-model="deliveryAddress.Checked" ng-change="handlerCheckedInputDeliveryAddressDefault(deliveryAddress.Id)">
+        </div>
+        <div class="col-sm-9">
+            <div style="display: flex">
+                <span style="font-weight: 500;min-width: 0;">
+                    <div style="color: rgba(0,0,0,.87);font-size: 18px;line-height: 20px;">{{deliveryAddress.CustomerName}}</div>
+                </span>
+                <div style="border-left: 0.5px solid rgba(0,0,0,.26); margin: 0 8px;"></div>
+                <div style="font-size: 15px;line-height: 20px;color: rgba(0,0,0,.54);">{{deliveryAddress.CustomerMobile}}</div>
+            </div>
+            <div style="padding: 5px 0 0 0">
+                <div>
+                    {{deliveryAddress.CustomerDeliveryAddress}}
+                </div>
+            </div>
+            <div style="margin: 5px 0 0 0" ng-if="deliveryAddress.Default">
+                <span style="
+                    font-size: 11px;
+                    color: #ee4d2d;
+                    border-radius: 1px;
+                    padding: 2px 4px;
+                    border: 0.5px solid #ee4d2d;
+                ">
+                    Mặc định
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-2" style="padding: 0 5px">
+            <button class="btn btn-danger" style="border: none; background-color: white; color: red" ng-click="update(deliveryAddress.Id)">Cập nhập</button>
+        </div>
+    </div>
+    
+    
+    <div class="modal-footer row">
+        <div class="col-sm-6" style="display: flex; justify-content: flex-start">
+            <button style="width: 110px" class="btn btn-danger" type="button" ng-click="add()">Thêm địa chỉ</button>
+        </div>
+        <div class="col-sm-6" style="display: flex; justify-content: flex-end">
+            <button style="width: 110px" class="btn" type="button" ng-click="cancel()">Hủy</button>
+            <button style="width: 110px" class="btn btn-primary" type="button" ng-click="confirm__()">Xác nhận</button>
+        </div>
+    </div>
+</div>

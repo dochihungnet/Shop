@@ -22,7 +22,7 @@ namespace Shop.Service
         IEnumerable<Product> GetAll(int? categoryId, int? brandId, bool? status);
         IEnumerable<Product> GetAll(string keyword, decimal minPrice, decimal maxPrice, int? categoryId, int? brandId, int sortBy);
         IEnumerable<Product> GetAllProductDealsOfTheWeek();
-        IEnumerable<Product> GetAllProductBestSellingByCategoryId(int CategoryId, int size);
+        IEnumerable<Product> GetAllProductBestSellingByCategoryId(int categoryId, int size);
         IEnumerable<Product> GetListProductByName(string name);
         IEnumerable<Product> GetListBestSeller(int size);
         IEnumerable<Product> GetListNew(int size);
@@ -85,8 +85,7 @@ namespace Shop.Service
                 }
                 _unitOfWork.Commit();
             }
-
-           return productSave;
+            return productSave;
         }
 
         public Product Delete(Product product)
@@ -124,7 +123,8 @@ namespace Shop.Service
             if(categoryId.HasValue && brandId.HasValue)
             {
                 var listProductCategoryChild = _productCategoryRepository.GetMulti(x => x.ParentId == categoryId);
-                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && (x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(c => x.CategoryId == c.Id) != null));
+                return _productRepository.GetMulti(x => x.BrandId == brandId.Value && 
+                                                        (x.CategoryId == categoryId.Value || listProductCategoryChild.FirstOrDefault(c => x.CategoryId == c.Id) != null));
             }
             else if(categoryId.HasValue && !brandId.HasValue)
             {

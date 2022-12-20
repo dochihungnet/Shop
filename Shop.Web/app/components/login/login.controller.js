@@ -9,7 +9,7 @@
 
             $scope.loginSubmit = function () {
                 loginService.login($scope.loginData.userName, $scope.loginData.password).then(function (response) {
-                    if (response != null && response.data.error != undefined) {
+                    if (response != null && response.data?.error != undefined) {
                         notificationService.displayError("Login failure.");
                     }
                     else {

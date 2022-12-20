@@ -359,7 +359,7 @@ namespace Shop.Api.Controllers
 
                 var newProductViewModel = Mapper.Map<ProductViewModel>(newProduct);
 
-                response = request.CreateResponse(HttpStatusCode.Created, newProduct);
+                response = request.CreateResponse(HttpStatusCode.Created, newProductViewModel);
 
                 return response;
             });

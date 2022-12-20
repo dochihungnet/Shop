@@ -14,7 +14,7 @@ namespace Shop.Api.Models
 
         [Required]
         [MaxLength(256)]
-        public string CustomerAddress { set; get; }
+        public string CustomerDeliveryAddress { set; get; }
 
         [Required]
         [MaxLength(256)]
@@ -24,21 +24,20 @@ namespace Shop.Api.Models
         [MaxLength(50)]
         public string CustomerMobile { set; get; }
 
-        [Required]
-        [MaxLength(256)]
         public string CustomerMessage { set; get; }
 
-        [MaxLength(256)]
-        public string PaymentMethod { set; get; }
-
+        public string PaymentMethod { set; get; } // phương thức thanh toán
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }
-        public string PaymentStatus { set; get; }
+        public int? OrderStatus { set; get; } // trạng thái đơn hàng, chưa duyệt, đã duyệt,
+        public bool PaymentStatus { set; get; } // đã thanh toán hay chưa
+        public decimal? TransportFee { set; get; }
+        public float? Vat { set; get; }
         public bool Status { set; get; }
 
         [StringLength(128)]
         public string CustomerId { set; get; }
         
-        public virtual IEnumerable<OrderDetailViewModel> OrderDetails { set; get; }
+        public IEnumerable<OrderDetailViewModel> OrderDetails { set; get; }
     }
 }

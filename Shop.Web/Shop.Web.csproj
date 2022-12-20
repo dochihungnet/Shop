@@ -159,6 +159,12 @@
     <Content Include="app\components\home\root.controller.js" />
     <Content Include="app\components\login\login.controller.js" />
     <Content Include="app\components\login\login.view.html" />
+    <Content Include="app\components\order_details\order_detail.controller.js" />
+    <Content Include="app\components\order_details\order_detail.view.html" />
+    <Content Include="app\components\order_details\order_details.module.js" />
+    <Content Include="app\components\orders\order.controller.js" />
+    <Content Include="app\components\orders\order.view.html" />
+    <Content Include="app\components\orders\orders.module.js" />
     <Content Include="app\components\product_categories\product_categories.module.js" />
     <Content Include="app\components\product_categories\product_categories.controller.js" />
     <Content Include="app\components\product_categories\product_categories.view.html" />
@@ -182,9 +188,13 @@
     <Content Include="app\shared\services\cartService.js" />
     <Content Include="app\shared\services\commonService.js" />
     <Content Include="app\shared\services\compareTo.js" />
+    <Content Include="app\shared\services\locationData.js" />
+    <Content Include="app\shared\services\locationService.js" />
     <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="app\shared\views\base.view.html" />
+    <Content Include="app\shared\views\modal_add_delivery_address.html" />
+    <Content Include="app\shared\views\modal_list_delivery_address.html" />
     <Content Include="Areas\Admin\app\app.js" />
     <Content Include="Areas\Admin\app\components\brands\brands.module.js" />
     <Content Include="Areas\Admin\app\components\brands\brand_edit.controller.js" />
@@ -237,6 +247,7 @@
     <Content Include="Areas\Admin\app\shared\services\authenticationService.js" />
     <Content Include="Areas\Admin\app\shared\services\commonService.js" />
     <Content Include="Areas\Admin\app\shared\services\compareTo.js" />
+    <Content Include="Areas\Admin\app\shared\services\locationService.js" />
     <Content Include="Areas\Admin\app\shared\services\loginService.js" />
     <Content Include="Areas\Admin\app\shared\services\notificationService.js" />
     <Content Include="Areas\Admin\app\shared\views\base.view.html" />

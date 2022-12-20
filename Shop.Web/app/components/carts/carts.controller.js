@@ -3,9 +3,8 @@
     shoppingCartController.$inject = ['$scope', 'apiService', '$q', '$timeout', 'cartService', 'authData', 'loginService', '$state'];
     function shoppingCartController($scope, apiService, $q, $timeout, cartService, authData, loginService, $state){
         
-        $scope.transportFee = 30000;
         $scope.vat = 20;
-        $scope.carts = cartService.getTotalShoppingCart();
+        $scope.carts = cartService.getAllProductShoppingCart();
         $scope.totalCart = cartService.getTotalShoppingCart();
 
         $scope.cartService = cartService;

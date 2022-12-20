@@ -13,10 +13,20 @@ namespace Shop.Model.Models
         
         [Required]
         [MaxLength(256)]
+        public string CustomerName { set; get; }
+
+        [Required]
+        [MaxLength(50)]
+        public string CustomerMobile { set; get; }
+        
+        [Required]
+        [MaxLength(256)]
         public string CustomerDeliveryAddress { set; get; }
+        
+        public string CustomerId { set; get; }
         
         [ForeignKey("CustomerId")]
         public virtual ApplicationUser User { set; get; }
-        
+
     }
 }

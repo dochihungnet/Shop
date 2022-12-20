@@ -129,7 +129,7 @@
 
 
                         <div id="product">
-                            <h4>Tùy chọn có sẵn</h4>
+                            <h4>Còn sẵn {{product.Quantity}} sản phẩm</h4>
 
                             <div class="form-group box-info-product">
                                 <div class="option quantity">
@@ -137,7 +137,7 @@
                                         <label>Số lượng</label>
                                         <input class="form-control" type="number"
                                                ng-model="product.buyingQuantity" ng-change="changeQuantity()"
-                                               min="1" style="width:63px; text-align: center;"/>
+                                               min="1" style="width:100px; text-align: center;"/>
                                         <span class="input-group-addon product_quantity_down" ng-click="decreaseQuantity()">−</span>
                                         <span class="input-group-addon product_quantity_up" ng-click="increaseQuantity()">+</span>
                                     </div>

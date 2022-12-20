@@ -274,7 +274,6 @@
                     }
                 }
             });
-
             modalInstance.result.then(function () {
                 getListProduct();
             });
@@ -403,10 +402,7 @@ function handleSearchProduct($state ,$scope, $q, $log, apiService) {
 
     function selectedItemChange(item) {
         $log.info('Item changed to ' + JSON.stringify(item));
-        console.log(item);
         let idProductSelect = item.Id;
-        console.log(item.Id);
-        console.log($state);
         $state.go(`product_details`, { id: idProductSelect });
     }
 

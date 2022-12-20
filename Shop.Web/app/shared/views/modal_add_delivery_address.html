@@ -1,0 +1,189 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">{{title}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <form form novalidate name="addDeliveryAddress" role="form">
+        <div class="row mb-3" style="padding: 16px 0">
+            <label class="col-sm-3" style=" 
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: inherit;
+            line-height: 1.5;
+            display: flex;
+            width: 25%;
+            ">Tên khách hàng</label>
+            <div class="col-sm-9" style="padding: 0 32px 0 32px;">
+                <input type="text" class="form-control" placeholder="Customer Name" name="customerName" required ng-minlength="2" ng-model="deliveryAddress.CustomerName"
+                style="font-size: 14px;
+                    box-sizing: border-box;
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    width: 100%;
+                    padding: 0 15px;
+                    line-height: 40px;
+                    height: 40px;
+                    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+                    border-radius: 0;
+                ">
+                <div ng-show="addDeliveryAddress.customerName.$invalid" class="invalid-feedback d-block red" style="color: red;">Tên khách hàng không hợp lệ.</div>
+            </div>
+        </div>
+
+        <div class="row mb-3" style="padding: 16px 0;">
+            <label class="col-sm-3" style=" 
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: inherit;
+            line-height: 1.5;
+            display: flex;
+            width: 25%;
+            ">Số điện thoại</label>
+            <div class="col-sm-9" style="padding: 0 32px 0 32px;">
+                <input type="text" class="form-control" placeholder="Customer Mobile" name="customerMobile" required ng-minlength="10" ng-maxlength="10" ng-model="deliveryAddress.CustomerMobile"
+                style="font-size: 14px;
+                    box-sizing: border-box;
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    width: 100%;
+                    padding: 0 15px;
+                    line-height: 40px;
+                    height: 40px;
+                    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+                    border-radius: 0;
+                ">
+                <div ng-show="addDeliveryAddress.customerMobile.$invalid" class="invalid-feedback d-block red" style="color: red;">Số điện thoại không hợp lệ</div>
+            </div>
+        </div>
+        
+        <div class="row mb-3"  style="display: flex; align-items: center;">
+            <label class="col-sm-3" style=" 
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: inherit;
+            line-height: 1.5;
+            display: flex;
+            width: 25%;
+            ">Tỉnh / Thành thố</label>
+            <div class="col-sm-9">
+                <div ng-cloak>
+                    <md-content layout-padding layout="column">
+                        <div>
+                            <md-autocomplete id="custom-template"
+                                             ng-disabled="inputProvince_isDisabled"
+                                             md-no-cache="noCache"
+                                             md-selected-item="selectedItem"
+                                             md-search-text="searchText"
+                                             md-selected-item-change="selectedItemChange(item)"
+                                             md-items="item in querySearch(searchText)"
+                                             md-item-text="item.province_name"
+                                             md-min-length="0"
+                                             md-escape-options="clear"
+                                             placeholder="Province"
+                                             md-menu-class="autocomplete-custom-template"
+                                             md-menu-container-class="custom-container">
+                                <md-item-template>
+                                    <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                        <div class="product-info">
+                                            <h5 class="product-name mb-1">{{item.province_name}}</h5>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3"  style="display: flex; align-items: center;">
+            <label class="col-sm-3" style=" 
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: inherit;
+            line-height: 1.5;
+            display: flex;
+            width: 25%;
+            ">Quận / Huyện</label>
+            <div class="col-sm-9">
+                <div ng-cloak>
+                    <md-content layout-padding layout="column">
+                        <div >
+                            <md-autocomplete id="custom-template_2"
+                                             ng-disabled="inputDistrict_isDisabled"
+                                             md-no-cache="noCache"
+                                             md-search-text="searchTextDistrict"
+                                             md-selected-item-change="selectedDistrictItemChange(item)"
+                                             md-items="item in querySearchDistrict(searchTextDistrict)"
+                                             md-item-text="item.district_name"
+                                             md-min-length="0"
+                                             md-escape-options="clear"
+                                             placeholder="District"
+                                             md-menu-class="autocomplete-custom-template"
+                                             md-menu-container-class="custom-container">
+                                <md-item-template>
+                                    <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                        <div class="product-info">
+                                            <h5 class="product-name mb-1">{{item.district_name}}</h5>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3"  style="display: flex; align-items: center;">
+            <label class="col-sm-3" style=" 
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: inherit;
+            line-height: 1.5;
+            display: flex;
+            width: 25%;
+            ">Phường / Xã</label>
+            <div class="col-sm-9">
+                <div ng-cloak>
+                    <md-content layout-padding layout="column">
+                        <div>
+                            <md-autocomplete id="custom-template_3"
+                                             ng-disabled="inputWard_isDisabled"
+                                             md-no-cache="noCache"
+                                             md-search-text="searchTextWard"
+                                             md-selected-item-change="selectedWardItemChange(item)"
+                                             md-items="item in querySearchWard(searchTextWard)"
+                                             md-item-text="item.ward_name"
+                                             md-min-length="0"
+                                             md-escape-options="clear"
+                                             placeholder="Ward"
+                                             md-menu-class="autocomplete-custom-template"
+                                             md-menu-container-class="custom-container">
+                                <md-item-template>
+                                    <div class="d-flex align-items-center gap-3 w-100 h-100">
+                                        <div class="product-info">
+                                            <h5 class="product-name mb-1">{{item.ward_name}}</h5>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" ng-if="btnAddShow" ng-disabled="btnAdd_isDisabled && addDeliveryAddress.$invalid" ng-click="add()">Thêm địa chỉ</button>
+            <button class="btn btn-success" type="button" ng-if="btnEditShow" ng-disabled="btnEdit_isDisabled && addDeliveryAddress.$invalid" ng-click="edit()">Cập nhập</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Quay lại</button>
+        </div>
+    </form>
+</div>
