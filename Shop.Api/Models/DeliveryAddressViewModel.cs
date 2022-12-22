@@ -12,7 +12,7 @@ namespace Shop.Api.Models
         public string CustomerName { set; get; }
         
         public string CustomerMobile { set; get; }
-
+        
         public string CustomerDeliveryAddress { set; get; }
         
         public string CustomerId { set; get; }

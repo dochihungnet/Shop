@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <h2>{{Name}},</h2>
+    <div>Cảm ơn bạn đã đặt hàng từ {{ShopName}}.</div>
+    
+    <div>Bạn có thể xem lại trạng thái đơn đặt hàng của mình bất kỳ lúc nào bằng cách truy cập <a href="{{LinkOrder}}"><strong>tại đây</strong></a>.</div>
+    
+    <h3 style="margin-top: 10px">Thông tin đơn hàng:</h3>
+    <p style="margin: 5px 0">
+        Mã đơn hàng: {{OrderId}}, <br>
+        Ngày đặt hàng: {{OrderCreateDate}},<br>
+        Tổng đơn hàng: Truy cập link để xem chi tiết <a href="{{LinkOrder}}"><strong>tại đây</strong></a>,<br>
+        Thanh toán: {{PaymentStatus}}, <br>
+    </p>
+    <h4>
+        ĐỊA CHỈ GIAO HÀNG: <strong>{{CustomerName}} - {{CustomerPhone}}</strong> - {{DeliveryAddress}}
+    </h4>
+
+    <div style="margin-top: 10px">Chúng tôi hy vọng bạn thích trải nghiệm mua sắm của mình với chúng tôi và bạn sẽ sớm ghé thăm lại <a href="{{linkWeb}}">chúng tôi</a>.</div>
+    
+</body>
+</html>

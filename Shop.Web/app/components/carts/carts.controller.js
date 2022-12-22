@@ -26,7 +26,7 @@
             cartService.updateShoppingCart($scope.carts);
         }
 
-        // THEO DOI XEM DA DANG NHAP HAY CHUA
+        // theo dõi sự thay đổi của shoppingCart.carts trong cartService
         $scope.$watch(function () { return cartService.shoppingCart.carts; }, function (newVal, oldVal) {
             $scope.carts = cartService.getAllProductShoppingCart();
             $scope.totalCart = cartService.getTotalShoppingCart();

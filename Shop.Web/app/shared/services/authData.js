@@ -3,9 +3,9 @@
 
     app.factory('authData', [
         function () {
-            var authDataFactory = {};
+            let authDataFactory = {};
 
-            var authentication = {
+            let authentication = {
                 IsAuthenticated: false,
                 userName: ""
             };

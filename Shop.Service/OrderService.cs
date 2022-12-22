@@ -11,10 +11,11 @@ namespace Shop.Service
 {
     public interface IOrderService
     {
-        bool AddOrder(Order order);
+        Order AddOrder(Order order);
         void UpdateOrder(Order order);
         Order DeleteOrder(Order order);
         Order DeleteOrder(int orderId);
+        Order GetOrderById(int orderId);
         IEnumerable<Order> GetAllOrder();
         IEnumerable<Order> GetAllOrderByCustomerId(string customerId);
         IEnumerable<Order> GetAllOrderByDay(DateTime day);
@@ -34,18 +35,17 @@ namespace Shop.Service
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
         }
-        public bool AddOrder(Order order)
+        public Order AddOrder(Order order)
         {
             var orderNew = _orderRepository.Add(order);
             SaveChanges();
-            foreach (var orderDetail in orderNew.OrderDetails)
+            foreach (var orderDetail in order.OrderDetails)
             {
-                orderDetail.OrderId = orderNew.Id;
-                _orderDetailRepository.Add(orderDetail);
                 var product = _productRepository.GetSingleById(orderDetail.ProductId);
                 if (orderDetail.Quantity > product.Quantity)
                 {
-                    return false;
+                    _orderRepository.Delete(orderNew.Id);
+                    return null;
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace Shop.Service
             }
             SaveChanges();
             
-            return true;
+            return orderNew;
         }
 
         public void UpdateOrder(Order order)
@@ -74,6 +74,11 @@ namespace Shop.Service
             return _orderRepository.Delete(orderId);
         }
 
+        public Order GetOrderById(int orderId)
+        {
+            return _orderRepository.GetOrderById(orderId);
+        }
+
         public IEnumerable<Order> GetAllOrder()
         {
             return _orderRepository.GetAll();
@@ -81,7 +86,7 @@ namespace Shop.Service
 
         public IEnumerable<Order> GetAllOrderByCustomerId(string customerId)
         {
-            return _orderRepository.GetMulti(x => x.CustomerId == customerId, new string[]{"OrderDetails"});
+            return _orderRepository.GetMulti(x => x.CustomerId == customerId, new string[]{"OrderDetails"}).OrderByDescending(y => y.CreatedDate);
         }
 
         public IEnumerable<Order> GetAllOrderByDay(DateTime day)

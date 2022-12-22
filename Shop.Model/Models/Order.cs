@@ -61,6 +61,7 @@ namespace Shop.Model.Models
 
         [ForeignKey("CustomerId")]
         public virtual ApplicationUser User { set; get; }
+        
         public ICollection<OrderDetail> OrderDetails { set; get; }
     }
 }

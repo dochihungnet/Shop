@@ -1,1 +1,116 @@
-﻿
+﻿<!-- Main Container  -->
+<div class="main-container container" ng-if="loginStatus">
+    <ul class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i></a></li>
+        <li><a href="#">Chi tiết đơn hàng</a></li>
+    </ul>
+
+    <div class="row">
+        <!--Middle Part Start-->
+        <div id="content" class="col-sm-12">
+            <h2 class="title">Chi tiết đơn hàng</h2>
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td colspan="2" class="text-left">Chi tiết đặt hàng</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="width: 50%;" class="text-left"> <b>Mã đơn hàng:</b> #{{order.Id}}
+                        <br>
+                        <b>Ngày đặt:</b> {{order.CreatedDate | date:'dd-MM-yyyy'}}</td>
+                    <td style="width: 50%;" class="text-left"> <b>Trạng thái thanh toán: </b> {{order.PaymentStatusText}}
+                        <br>
+                        <b>Phương thức vận chuyển:</b> {{order.TransportFee === 30000 ? "Bình thường" : "Chuyển phát nhanh"}} </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td style="width: 50%; vertical-align: top;" class="text-left">Người nhận hàng</td>
+                    <td style="width: 50%; vertical-align: top;" class="text-left">Địa chỉ giao hàng</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-left"><strong>{{order.CustomerName}}</strong> - <strong>{{order.CustomerMobile}}</strong></td>
+                    <td class="text-left">{{order.CustomerDeliveryAddress}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td class="text-left">Tên sản phẩm</td>
+                        <td class="text-left">Mã sản phẩm</td>
+                        <td class="text-right">Số lượng</td>
+                        <td class="text-right">Giá mua</td>
+                        <td class="text-right">Tổng tiền</td>
+                        <td style="width: 20px;">Chức năng</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="orderDetail in order.OrderDetails">
+                        <td class="text-left">{{orderDetail.Product.Name}}</td>
+                        <td style="cursor: pointer;" ui-sref="product_details({id: orderDetail.Product.Id})" class="text-left">#{{orderDetail.Product.Id}}</td>
+                        <td class="text-right">{{orderDetail.Quantity}}</td>
+                        <td class="text-right">{{orderDetail.Price | currency : "" : 0}}</td>
+                        <td class="text-right">{{orderDetail.Quantity * orderDetail.Price | currency : "" : 0}}</td>
+                        <td style="white-space: nowrap;" class="text-right"> 
+                            <a class="btn btn-primary" ui-sref="home" title="" data-toggle="tooltip" href="#" data-original-title="Tiếp tục mua hàng"><i class="fa fa-shopping-cart"></i></a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td class="text-right"><b>Phí vận chuyển</b>
+                        </td>
+                        <td class="text-right">{{order.TransportFee}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td class="text-right"><b>Thuế({{order.Vat}})%</b>
+                        </td>
+                        <td class="text-right">{{order.TotalVat | currency : "" : 0}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td class="text-right"><b>Tổng thanh toán</b>
+                        </td>
+                        <td class="text-right">{{order.TotalPayment | currency : "" : 0}}</td>
+                        <td></td>
+                    </tr>
+                    
+                    </tfoot>
+                </table>
+            </div>
+            <h3>Lịch sử trạng thái</h3>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td class="text-left">Ngày</td>
+                    <td class="text-left">Trạng thái</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-left">{{order.CreatedDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="text-left">{{order.OrderStatusText}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="buttons clearfix">
+               
+            </div>
+        </div>
+        <!--Middle Part End-->
+    </div>
+</div>

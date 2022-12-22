@@ -3,28 +3,43 @@
 
     checkOutController.$inject = ['$scope', 'apiService', '$q', '$timeout', 'cartService', 'authData', 'loginService', '$state', '$uibModal', 'locationData', 'notificationService', '$log', 'locationService'];
     function checkOutController($scope, apiService, $q, $timeout, cartService, authData, loginService, $state, $uibModal, locationData, notificationService, $log, locationService){
-        /*
-        * user chua dang nhap => phai dien CustomerName, ........
-        * 
-        */
         
-        /*
-        * user da dang nhap: get DeliveryAddressDefault(dia chi nhan hang mac dinh theo index)
-        * - neu chua co dia chi nhan hang nao => yeu cau khach hang create
-        * - neu co dia chi nhan hang roi: co the cho khach hang tao them, update dia chi nhan hang, set dia chi nhan hang
-        * mac dinh moi
-        * 
-        */
-        
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////// declare variable (khai báo biến)
-        ////////////////////////////////////////////////////////////////////////////////////////////////
         $scope.loginStatus = false;
         $scope.userName = null;
         $scope.user = null;
         
         $scope.deliveryAddress = null;
-        
+
+        // theo dõi xem đăng nhập và làm một số chức năng
+        $scope.$watch(function () { return authData.authenticationData; }, function () {
+            if(authData.authenticationData.IsAuthenticated === true){
+                $scope.loginStatus = true;
+                $scope.userName = authData.authenticationData.userName;
+                cartService.getUserByUserName($scope.userName).then(result => {
+                    $scope.user = result;
+
+                    if(!$scope.user.DeliveryAddressDefault){
+                        $scope.deliveryAddress = null;
+                        handlerEventClickAddDeliveryAddress(null, "add", "static");
+                    }
+                    else {
+                        locationData.GetDeliveryAddressById($scope.user.DeliveryAddressDefault)
+                            .then(result => {
+                                $scope.deliveryAddress = result;
+                            });
+
+                    }
+
+                });
+
+            }
+            else {
+                $scope.loginStatus = false;
+                $scope.userName = null;
+                $scope.user = null;
+                $scope.deliveryAddress = "";
+            }
+        }, true);
         
         
         // SHIPPING METHOD =============================================
@@ -107,18 +122,20 @@
         // END GET DATA CART ==========================================================
         
         
-
-        // DATA ORDER ====================================================================
+        // ORDER ===============================================================================
         $scope.transportFee = $scope.shippingMethods.find(x => x.checked).price || 0;
         $scope.vat = 20;
         $scope.order = {};
         $scope.Display = true;
         
         
-        
+        // xử lý khi người dùng nhấn đặt hàng
         $scope.OrderConfirmation = function (){
+            if(!$scope.loginStatus){
+                $scope.deliveryAddress = $scope.deliveryAddress_1;
+            }
             
-            // người dùng phải nhập địa chỉ nhá
+            // kiểm tra xem người dùng đã nhập địa chỉ hay chưa
             if(!$scope.deliveryAddress){
                 notificationService.displayError("Địa chỉ không hợp lệ");
                 
@@ -130,46 +147,22 @@
                 return;
             }
             
-            // check xem giỏ hàng có gì hay không
+            // kiểm tra xem giỏ hàng đã có sản phẩm hay chưa
             if($scope.carts.length === 0){
                 notificationService.displayWarning("Giỏ hãng rỗng");
                 notificationService.displayWarning("Mua hàng trước khi thanh toán");
                 return;
             }
             
-            $scope.order.CustomerDeliveryAddress = $scope.deliveryAddress.CustomerDeliveryAddress;
-            $scope.order.PaymentMethod = "Thanh toán khi nhận hàng";
-            $scope.order.CreatedDate = new Date();
-            $scope.order.PaymentStatus = false; // đã thanh toán // chưa thanh toán
-            $scope.order.Status = true; // trạng thái
-            $scope.order.OrderDetails = $scope.carts;
-            $scope.order.TransportFee = $scope.transportFee;
-            $scope.order.Vat = $scope.vat;
-            $scope.order.OrderStatus = 1;
-            // 1: Chưa duyệt
-            // 2: Đã duyệt
-            // 3: Đang gói hàng
-            // 4: Đang vận chuyển
-            // 5: Đã giao hàng
+            orderData();
             
-            // handler if user login
-            if (authData.authenticationData.IsAuthenticated === true) {
-                $scope.order.CustomerName = $scope.user.FullName;
-                $scope.order.CustomerEmail = $scope.user.Email;
-                $scope.order.CustomerMobile = $scope.user.PhoneNumber;
-                $scope.order.CreatedBy = $scope.user.FullName;
-                $scope.order.CustomerId = $scope.user.Id;
-            }
-            else {
-                $scope.order.CreatedBy = $scope.order.CustomerName;
-                $scope.order.CustomerId = null;
-            }
+            // thêm giỏ hàng
             cartService.checkOut($scope.order).then(result => {
                 if(result){
                     cartService.deleteShoppingCart();
                     notificationService.displaySuccess("Đặt hàng thành công");
                     if(authData.authenticationData.IsAuthenticated === true){
-                        $state.go("");
+                        $state.go("orders");
                     }
                     else {
                         $scope.Display = false;
@@ -180,16 +173,37 @@
                 }
             });
         }
-        ///////////////////////////////////////////////////////////////////////////////////
-        chooseProvince($scope, $q, $log, locationService, locationData);
-        chooseDistrict($scope, $q, $log, locationService, locationData);
-        chooseWard($scope, $q, $log, locationService, locationData);
-        /////////////////////////////////////////////////////////////////////////////////////
+        function orderData(){
+            $scope.order.CustomerDeliveryAddress = $scope.deliveryAddress.CustomerDeliveryAddress;
+            $scope.order.PaymentMethod = "Thanh toán khi nhận hàng"; // thanh toán khi nhận hàng, thanh toán qua payment
+            $scope.order.CreatedDate = new Date(); // ngày tạo đơn hàng
+            $scope.order.PaymentStatus = false; // đã thanh toán, chưa thanh toán
+            $scope.order.Status = true; // trạng thái
+            $scope.order.OrderDetails = $scope.carts;
+            $scope.order.TransportFee = $scope.transportFee;
+            $scope.order.Vat = $scope.vat;
+            $scope.order.OrderStatus = 1;
+
+            // xử lý data theo người dùng đã đăng nhập hay chưa đăng nhập
+            if (authData.authenticationData.IsAuthenticated === true) {
+                $scope.order.CustomerName = $scope.deliveryAddress.CustomerName;
+                $scope.order.CustomerEmail = $scope.user.Email;
+                $scope.order.CustomerMobile = $scope.deliveryAddress.CustomerMobile;
+                $scope.order.CreatedBy = $scope.user.FullName;
+                $scope.order.CustomerId = $scope.user.Id;
+            }
+            else {
+                $scope.order.CreatedBy = $scope.order.CustomerName;
+                $scope.order.CustomerId = null;
+            }
+        }
+        // END ORDER ================================================================================
         
-        // theo dõi location Data service để lấy $scope.deliveryAddress.CustomerDeliveryAddress
+        
+        // theo dõi location Data service để lấy $scope.deliveryAddress_1
         $scope.$watch(function () { return locationData.location  }, function (newVal, oldVal) {
             if(locationData.location.Province && locationData.location.District && locationData.location.Ward){
-                $scope.deliveryAddress = {
+                $scope.deliveryAddress_1 = {
                     CustomerDeliveryAddress: (locationData.location.Ward?.ward_name || "") + ", "
                         + locationData.location.District.district_name + ", " + locationData.location.Province.province_name
                 };
@@ -197,7 +211,8 @@
             }
         }, true);
         
-        // handler event click
+        
+        // xử lý sự kiện khi người dùng click thay đổi địa chỉ giao hàng
         $scope.handlerEventClickChangeDeliveryAddress = function (){
             if(authData.authenticationData.IsAuthenticated === true){
                 cartService.getUserByUserName(authData.authenticationData.userName).then(result => {
@@ -208,41 +223,10 @@
                         handlerEventClickChangeDeliveryAddress();
                     }
                 });
-                
+
             }
-            
+
         };
-        
-        // theo doi xem user co dang nhap hay khong
-        $scope.$watch(function () { return authData.authenticationData; }, function (newVal, oldVal) {
-            if(authData.authenticationData.IsAuthenticated === true){
-                $scope.loginStatus = true;
-                $scope.userName = authData.authenticationData.userName;
-                cartService.getUserByUserName($scope.userName).then(result => {
-                    $scope.user = result;
-                    
-                    if(!$scope.user.DeliveryAddressDefault){
-                        $scope.deliveryAddress = null;
-                        handlerEventClickAddDeliveryAddress(null, "add", "static");
-                    }
-                    else {
-                        locationData.GetDeliveryAddressById($scope.user.DeliveryAddressDefault)
-                            .then(result => {
-                                $scope.deliveryAddress = result;
-                            });
-                        
-                    }
-                    
-                });
-                
-            }
-            else {
-                $scope.loginStatus = false;
-                $scope.userName = null;
-                $scope.user = null;
-                $scope.deliveryAddress = "";
-            }
-        }, true);
         function handlerEventClickChangeDeliveryAddress($event, backdrop) {
             if($event) $event.preventDefault();
             backdrop = backdrop || "static";
@@ -279,9 +263,10 @@
                 });
             });
         }
-
+        
         // status: add or edit
         // backdrop: 'static' or true
+        // Xử lý sự kiện khi người dùng click thêm địa chỉ giao hàng
         function handlerEventClickAddDeliveryAddress($event, status, backdrop, displayModalList, deliveryId) {
             if($event) $event.preventDefault();
             
@@ -321,7 +306,13 @@
                 }
             });
         }
- 
+
+        // Xử lý 3 ô input nhập địa chỉ ====================================================
+        chooseProvince($scope, $q, $log, locationService, locationData);
+        chooseDistrict($scope, $q, $log, locationService, locationData);
+        chooseWard($scope, $q, $log, locationService, locationData);
+        //==================================================================================
+        
     }
 
     app.controller('ModalListDeliveryAddress', function ($uibModalInstance, data, locationService, $q, $log, $timeout, locationData, $scope, notificationService, authData) {

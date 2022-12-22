@@ -74,5 +74,21 @@ namespace Shop.Api.Controllers
             });
         }
         
+        [Route("get-order-by-id")]
+        [HttpGet]
+        public HttpResponseMessage GetOrderById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                
+                var order = _orderService.GetOrderById(id);
+                var orderViewModel = Mapper.Map<OrderViewModel>(order);
+
+                response = request.CreateResponse(HttpStatusCode.OK, orderViewModel);
+                return response;
+            });
+        }
+        
     }
 }

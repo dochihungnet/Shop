@@ -1,57 +1,86 @@
-﻿<!-- Main Container  -->
+﻿<style>
+    
+    h3{
+        text-align: center;
+        font-size: 24px;
+        font-weight: 500;
+    }
+    .form-group{
+        margin-bottom: 15px;
+        position: relative;
+    }
+    input{
+        height: 50px;
+        width: 300px;
+        outline: none;
+        border: 1px solid #dadce0;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: inherit;
+        color: #202124;
+        transition: all 0.3s ease-in-out;
+    }
+    label{
+        position: absolute;
+        padding: 0px 5px;
+        left: 5px;
+        top: 50%;
+        /* Quan trọng  */
+        pointer-events: none;
+        transform: translateY(-50%);
+        background: #fff;
+        transition: all 0.3s ease-in-out;
+    }
+    .form-group input:focus {
+        border: 2px solid #1a73e8;
+    }
+    .form-group input:focus + label, .form-group input:valid + label{
+        top: 0px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #1a73e8;
+    }
+    input#btn-login{
+        background: #1a73e8;
+        color: #fff;
+        cursor: pointer;
+    }
+    input#btn-login:hover{
+        opacity: 0.85;
+    }
+</style>
+
+
+<!-- Main Container  -->
 <div class="main-container container">
     <ul class="breadcrumb">
         <li><a href="#"><i class="fa fa-home"></i></a></li>
         <li><a href="#">Lịch sử đặt hàng</a></li>
     </ul>
-
-    <div class="row">
+    <div ng-if="loginStatus && countListOrder > 0" class="row">
         <!--Middle Part Start-->
-        <div id="content" class="col-sm-12">
-            <h2 class="title">Mã đơn hàng: #99999, Ngày: 11/11/2022</h2>
+        <div class="col-sm-12">
+            <h2 class="title">Lịch sử đặt hàng</h2>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <td class="text-center">Hình ảnh</td>
-                        <td class="text-left">Tên sản phẩm</td>
                         <td class="text-center">Mã đơn hàng</td>
-                        <td class="text-center">Số lượng</td>
+                        <td class="text-center">Người nhận hàng</td>
                         <td class="text-center">Trạng thái</td>
                         <td class="text-center">Ngày thêm</td>
                         <td class="text-right">Tổng cộng</td>
-                        <td></td>
+                        <td class="text-center">Thao tác</td>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-center">
-                            <a href="product.html"><img width="85" class="img-thumbnail" title="Aspire Ultrabook Laptop" alt="Aspire Ultrabook Laptop" src="image/catalog/demo/product/funiture/1.jpg">
-                            </a>
-                        </td>
-                        <td class="text-left"><a href="product.html">Aspire Ultrabook Laptop</a>
-                        </td>
-                        <td class="text-center">#214521</td>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Shipped</td>
-                        <td class="text-center">21/06/2016</td>
-                        <td class="text-right">$228.00</td>
-                        <td class="text-center"><a class="btn btn-info" title="" data-toggle="tooltip" href="order-information.html" data-original-title="View"><i class="fa fa-eye"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="product.html"><img  width="85" class="img-thumbnail" title="Xitefun Causal Wear Fancy Shoes" alt="Xitefun Causal Wear Fancy Shoes" src="image/catalog/demo/product/funiture/4.jpg">
-                            </a>
-                        </td>
-                        <td class="text-left"><a href="product.html">Xitefun Causal Wear Fancy Shoes</a>
-                        </td>
-                        <td class="text-center">#1565245</td>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Shipped</td>
-                        <td class="text-center">20/06/2016</td>
-                        <td class="text-right">$133.20</td>
-                        <td class="text-center"><a class="btn btn-info" title="" data-toggle="tooltip" href="order-information.html" data-original-title="View"><i class="fa fa-eye"></i></a>
+                    <tr ng-repeat="order in listOrderByUser">
+                        <td class="text-center">#{{order.Id}}</td>
+                        <td class="text-center">{{order.CustomerName}}</td>
+                        <td class="text-center">{{order.OrderStatusText}}</td>
+                        <td class="text-center">{{order.CreatedDate | date:'dd-MM-yyyy'}}</td>
+                        <td class="text-right">{{order.TotalPayment | currency : "" : 0}}</td>
+                        <td class="text-center"><button class="btn btn-info"  data-toggle="tooltip" ui-sref="order_detail({id:order.Id})" data-original-title="Xem chi tiết"><i class="fa fa-eye"></i></button>
                         </td>
                     </tr>
                     </tbody>
@@ -61,5 +90,53 @@
         </div>
         <!--Middle Part End-->
     </div>
+    <div ng-if="loginStatus && countListOrder === 0" class="row">
+        <!--Middle Part Start-->
+        <div class="col-sm-12">
+            <div class="row" style="display: flex; justify-content: center; align-items: center;flex-direction: column; gap:10px; margin: 10px 0;">
+                <img src="https://www.xanh.farm/assets/images/no-cart.png" alt="Giỏ hàng trống">
+                <p style="padding: 10px 0 0 0; font-size: 15px;">Bạn chưa có đơn hàng nào!</p>
+                <button style="border: none" type="button" class="btn btn-danger">
+                    <a ui-sref="home" style="color: white; font-size: 16px;">Mua hàng</a>
+                </button>
+            </div>
+        </div>
+        <!--Middle Part End -->
+    </div>
+    <div ng-if="!loginStatus" class="row">
+        <div id="wrapper" style="    text-align: center;
+            font-family: ROBOTO LIGHT;
+            background: url(https://cdn.tgdd.vn/mwgcart/orderhistory/images/bg.png) transparent repeat center top;
+            min-height: calc(100vh - 220px);
+            max-width: 100% !important;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            }">
+            <form novalidate name="frmGetOrderDetail" role="form" ng-submit="GetOrderDetail()"
+                style="display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 400px;
+                margin: 3% auto;
+                max-width: 500px;
+                border: 1px solid #ccc;
+                padding: 25px 0;
+                background-color: #fff;
+                ">
+                    <img height="190" src="https://www.thegioididong.com/lich-su-mua-hang/images/i1.png">
+                    <h3>Tra cứu thông tin đơn hàng</h3>
+                    <div class="form-group">
+                        <input type="email" required placeholder="Nhập email mua hàng" ng-model="lookUpOrderInformation.Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" required placeholder="Mã đơn hàng" ng-model="lookUpOrderInformation.OrderId">
+                    </div>
+                <input type="text" value="Tiếp tục" id="btn-login">
+            </form>
+        </div>
+    </div>
+
 </div>
 <!-- //Main Container -->

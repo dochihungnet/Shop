@@ -11,6 +11,7 @@ namespace Shop.Data.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
+        Order GetOrderById(int orderId);
     }
     public class OrderRepository : RepositoryBase<Order>, IOrderRepository
     {
@@ -18,5 +19,9 @@ namespace Shop.Data.Repositories
         {
         }
 
+        public Order GetOrderById(int orderId)
+        {
+            return DbContext.Orders.Include(x => x.OrderDetails.Select(s => s.Product)).FirstOrDefault(y => y.Id == orderId);
+        }
     }
 }

@@ -34,10 +34,11 @@ namespace Shop.Api.Models
         public decimal? TransportFee { set; get; }
         public float? Vat { set; get; }
         public bool Status { set; get; }
+        public decimal TotalPayment { set; get; }
 
         [StringLength(128)]
         public string CustomerId { set; get; }
         
-        public IEnumerable<OrderDetailViewModel> OrderDetails { set; get; }
+        public ICollection<OrderDetailViewModel> OrderDetails { set; get; }
     }
 }

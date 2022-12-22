@@ -292,6 +292,7 @@
   <ItemGroup>
     <Content Include="Assets\javascriptbe.js" />
     <Content Include="Assets\csharp.png" />
+    <Content Include="Assets\template\contact_template.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />

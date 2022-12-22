@@ -192,6 +192,7 @@
     <Content Include="app\shared\services\locationService.js" />
     <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
+    <Content Include="app\shared\services\userService.js" />
     <Content Include="app\shared\views\base.view.html" />
     <Content Include="app\shared\views\modal_add_delivery_address.html" />
     <Content Include="app\shared\views\modal_list_delivery_address.html" />

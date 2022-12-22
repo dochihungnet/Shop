@@ -14,6 +14,7 @@ using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System.Web.Script.Serialization;
+using Shop.Common;
 
 namespace Shop.Api.Controllers
 {
@@ -209,11 +210,41 @@ namespace Shop.Api.Controllers
                 }
 
                 var order = Mapper.Map<Order>(orderViewModel);
-                bool result = _orderService.AddOrder(order);
+                order.CreatedDate = DateTime.Now;
+                var orderNew = _orderService.AddOrder(order);
+                
+                if (orderNew == null)
+                {
+                    response = request.CreateResponse(HttpStatusCode.OK, false);
+                    return response;
+                }
 
-                response = request.CreateResponse(HttpStatusCode.OK, result);
+                var orderNewViewModel = Mapper.Map<OrderViewModel>(orderNew);
+                SendMailWhenOrderSuccess(orderNewViewModel);
+                
+                response = request.CreateResponse(HttpStatusCode.OK, true);
                 return response;
             });
+        }
+        
+        [NonAction]
+        public void SendMailWhenOrderSuccess(OrderViewModel orderNew)
+        {
+
+            // SendMail
+            string content = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/Assets/template/contact_template.html"));
+            content = content.Replace("{{Name}}", orderNew.CustomerName);
+            content = content.Replace("{{ShopName}}", "Shop MasterYi");
+            content = content.Replace("{{LinkOrder}}", "https://localhost:44394/home#!/orders");
+            content = content.Replace("{{LinkWeb}}", "https://localhost:44394/home#!/home");
+            content = content.Replace("{{OrderId}}", orderNew.Id.ToString());
+            content = content.Replace("{{OrderCreateDate}}", orderNew.CreatedDate?.ToString("dd/MM/yyyy hh:mm tt"));
+            content = content.Replace("{{PaymentStatus}}", orderNew.PaymentStatus ? "Đã thanh toán" : "Thanh toán khi nhận hàng");
+            content = content.Replace("{{CustomerName}}", orderNew.CustomerName);
+            content = content.Replace("{{CustomerPhone}}", orderNew.CustomerMobile);
+            content = content.Replace("{{DeliveryAddress}}", orderNew.CustomerDeliveryAddress);
+
+            MailHelper.SendMail(orderNew.CustomerEmail,  "Thông tin đơn hàng", content);
         }
     }
 }
