@@ -67,8 +67,10 @@
         }
         
         function addProductShoppingCart(product, quantity){
-            cartService.addProductShoppingCart(product, quantity);
-            $state.go('carts');
+            let result =  cartService.addProductShoppingCart(product, quantity);
+            if(result){
+                $state.go('carts');
+            }
         }
         
         function loadProductDetail() {

@@ -20,6 +20,8 @@ namespace Shop.Service
         IEnumerable<Order> GetAllOrderByCustomerId(string customerId);
         IEnumerable<Order> GetAllOrderByDay(DateTime day);
         IEnumerable<Order> GetAllOrderByPaymentStatus(bool status);
+        bool UpdatePaymentStatus(int orderId, bool status);
+        Order GetOrderByEmailOrderId(string email, int orderId);
         void SaveChanges();
     }
     public class OrderService : IOrderService
@@ -103,6 +105,18 @@ namespace Shop.Service
             return _orderRepository.GetMulti(x => x.Status == status);
         }
 
+        public bool UpdatePaymentStatus(int orderId, bool status)
+        {
+            var order = _orderRepository.GetSingleById(orderId);
+            order.PaymentStatus = status;
+            _orderRepository.Update(order);
+            return true;
+        }
+
+        public Order GetOrderByEmailOrderId(string email, int orderId)
+        {
+            return _orderRepository.GetSingleByCondition(o => o.CustomerEmail == email && o.Id == orderId);
+        }
 
         public void SaveChanges()
         {

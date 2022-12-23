@@ -62,14 +62,14 @@
                     let totalQuantity = productInCart.Quantity + productNew.Quantity;
                     if(totalQuantity > product.Quantity){
                         notificationService.displayWarning("Cửa hàng đã hết sản phẩm này.");
-                        return;
+                        return false;
                     }
                 }
                 else {
                     let totalQuantity = productNew.Quantity;
                     if(totalQuantity > product.Quantity){
                         notificationService.displayWarning("Cửa hàng đã hết sản phẩm này.");
-                        return;
+                        return false;
                     }
                 }
                 
@@ -94,9 +94,11 @@
                             syncCarts();
                             calculateTotalMoneyShoppingCart();
                             notificationService.displaySuccess("Add product shopping cart success.");
+                            return true;
                         }
                         else {
                             notificationService.displayError("Add product shopping cart failure.");
+                            return  false;
                         }
                     })
                 }else {
@@ -116,6 +118,7 @@
                     syncCarts();
                     calculateTotalMoneyShoppingCart();
                     notificationService.displaySuccess("Add product shopping cart success.");
+                    return true;
                 }
             }
             

@@ -2,8 +2,8 @@
     'use strict';
     app.service('loginService', ['$http', '$q', 'authenticationService', 'authData', 'apiService',
         function ($http, $q, authenticationService, authData, apiService) {
-            var userInfo;
-            var deferred;
+            let userInfo;
+            let deferred;
 
             this.login = function (userName, password) {
                 deferred = $q.defer();

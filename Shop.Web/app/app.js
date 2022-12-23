@@ -12,7 +12,8 @@
         'shop.carts',
         'shop.checkout',
         'shop.orders',
-        'shop.order_details'
+        'shop.order_details',
+        'shop.payments'
     ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];

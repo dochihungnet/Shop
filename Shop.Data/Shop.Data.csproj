@@ -84,6 +84,14 @@
     <Compile Include="Migrations\202212201010338_Update.designer.cs">
       <DependentUpon>202212201010338_Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202212221540454_Update_Nekkk.cs" />
+    <Compile Include="Migrations\202212221540454_Update_Nekkk.designer.cs">
+      <DependentUpon>202212221540454_Update_Nekkk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212230317121_Update_Identity.cs" />
+    <Compile Include="Migrations\202212230317121_Update_Identity.designer.cs">
+      <DependentUpon>202212230317121_Update_Identity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BrandRepository.cs" />
@@ -141,6 +149,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212201010338_Update.resx">
       <DependentUpon>202212201010338_Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212221540454_Update_Nekkk.resx">
+      <DependentUpon>202212221540454_Update_Nekkk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212230317121_Update_Identity.resx">
+      <DependentUpon>202212230317121_Update_Identity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

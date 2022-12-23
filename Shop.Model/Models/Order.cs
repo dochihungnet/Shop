@@ -33,7 +33,7 @@ namespace Shop.Model.Models
 
         public string CustomerMessage { set; get; }
 
-        public string PaymentMethod { set; get; } //bỏ qua
+        public int PaymentMethod { set; get; } 
 
         public DateTime? CreatedDate { set; get; }
         

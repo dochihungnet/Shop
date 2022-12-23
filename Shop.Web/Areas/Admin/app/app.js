@@ -5,7 +5,8 @@
         'shop.products',
         'shop.product_categories',
         'shop.brands',
-        'shop.slides'
+        'shop.slides',
+        'shop.orders'
     ]).config(config)
         .config(configAuth);
 

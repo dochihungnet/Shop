@@ -55,7 +55,10 @@ namespace Shop.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+            modelBuilder.Entity<IdentityRole>().ToTable("ApplicationUserRoles");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("ApplicationUserLogins");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("ApplicationUserClaims");
+            modelBuilder.Entity<IdentityRole>().ToTable("ApplicationRoles");
         }
     }
 }

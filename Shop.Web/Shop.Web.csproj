@@ -119,6 +119,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Content Include="Areas\Admin\app\components\orders\order_detail.controller.js" />
+    <Content Include="Areas\Admin\app\components\orders\order_detail.view.html" />
+    <Content Include="Areas\Admin\app\components\orders\order_list.view.html" />
+    <Content Include="Areas\Admin\app\components\orders\orders.module.js" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -165,6 +169,9 @@
     <Content Include="app\components\orders\order.controller.js" />
     <Content Include="app\components\orders\order.view.html" />
     <Content Include="app\components\orders\orders.module.js" />
+    <Content Include="app\components\payment\payment.controller.js" />
+    <Content Include="app\components\payment\payment.view.html" />
+    <Content Include="app\components\payment\payments.module.js" />
     <Content Include="app\components\product_categories\product_categories.module.js" />
     <Content Include="app\components\product_categories\product_categories.controller.js" />
     <Content Include="app\components\product_categories\product_categories.view.html" />
@@ -192,6 +199,7 @@
     <Content Include="app\shared\services\locationService.js" />
     <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
+    <Content Include="app\shared\services\paymentService.js" />
     <Content Include="app\shared\services\userService.js" />
     <Content Include="app\shared\views\base.view.html" />
     <Content Include="app\shared\views\modal_add_delivery_address.html" />
@@ -214,6 +222,7 @@
     <Content Include="Areas\Admin\app\components\menus\menu_edit.view.html" />
     <Content Include="Areas\Admin\app\components\menus\menu_list.controller.js" />
     <Content Include="Areas\Admin\app\components\menus\menu_list.view.html" />
+    <Content Include="Areas\Admin\app\components\orders\order_list.controller.js" />
     <Content Include="Areas\Admin\app\components\products\product_details.view.html" />
     <Content Include="Areas\Admin\app\components\products\product_details.controller.js" />
     <Content Include="Areas\Admin\app\components\products\product_edit.view.html" />
@@ -1483,6 +1492,7 @@
     <Content Include="assets\client\image\icon\next-prev-detail.png" />
     <Content Include="assets\client\image\icon\promotion.png" />
     <Content Include="assets\client\image\noti-search.png" />
+    <Content Include="assets\client\image\success-svgrepo-com.svg" />
     <Content Include="assets\client\image\theme\color\blue\payment-bg.png" />
     <Content Include="assets\client\image\theme\color\blue\policy_1.png" />
     <Content Include="assets\client\image\theme\color\blue\policy_2.png" />

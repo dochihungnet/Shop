@@ -1,15 +1,15 @@
 ﻿(function (app){
     app.controller('checkOutController', checkOutController);
 
-    checkOutController.$inject = ['$scope', 'apiService', '$q', '$timeout', 'cartService', 'authData', 'loginService', '$state', '$uibModal', 'locationData', 'notificationService', '$log', 'locationService'];
-    function checkOutController($scope, apiService, $q, $timeout, cartService, authData, loginService, $state, $uibModal, locationData, notificationService, $log, locationService){
+    checkOutController.$inject = ['$scope', 'apiService', '$q', '$timeout', 'cartService', 'authData', 'loginService', '$state', '$uibModal', 'locationData', 'notificationService', '$log', 'locationService', 'paymentService'];
+    function checkOutController($scope, apiService, $q, $timeout, cartService, authData, loginService, $state, $uibModal, locationData, notificationService, $log, locationService, paymentService){
         
         $scope.loginStatus = false;
         $scope.userName = null;
         $scope.user = null;
-        
         $scope.deliveryAddress = null;
-
+        $scope.paymentOnline = false;
+        
         // theo dõi xem đăng nhập và làm một số chức năng
         $scope.$watch(function () { return authData.authenticationData; }, function () {
             if(authData.authenticationData.IsAuthenticated === true){
@@ -82,11 +82,27 @@
             },
             {
                 id: 2,
-                text: "Chuyển khoản",
+                text: "Thanh toan bằng VnPay",
                 checked: false
             }
         ]
 
+        // theo dõi checkoutMethods
+        $scope.$watch("checkoutMethods", function () {
+            for (const item of $scope.checkoutMethods) {
+                if(item.id === 1 && item.checked){
+                    $scope.paymentOnline = false;
+                    $scope.order.PaymentMethod = 0;
+                    $scope.order.PaymentStatus = false;
+                }
+                else if(item.id === 2 && item.checked){
+                    $scope.paymentOnline = true;
+                    $scope.order.PaymentMethod = 1;
+                    $scope.order.PaymentStatus = true;
+                }
+            }
+        }, true);
+        
         $scope.handlerEventChangeInputCheckoutMethod = function (id){
 
             $scope.checkoutMethods = $scope.checkoutMethods.map(x => {
@@ -110,7 +126,7 @@
             $scope.carts = cartService.getAllProductShoppingCart();
             $scope.totalCart = cartService.getTotalShoppingCart();
         }, true);
-
+        
         $scope.deleteProduct = function (productId) {
             cartService.deleteProductShoppingCart(productId);
         }
@@ -131,6 +147,7 @@
         
         // xử lý khi người dùng nhấn đặt hàng
         $scope.OrderConfirmation = function (){
+            
             if(!$scope.loginStatus){
                 $scope.deliveryAddress = $scope.deliveryAddress_1;
             }
@@ -158,8 +175,28 @@
             
             // thêm giỏ hàng
             cartService.checkOut($scope.order).then(result => {
-                if(result){
-                    cartService.deleteShoppingCart();
+                if(!result){
+                    notificationService.displayError("Đặt hàng thất bại");
+                    return;
+                }
+
+                cartService.deleteShoppingCart();
+                if($scope.paymentOnline){
+                    paymentService.Order.OrderId = result.Id;
+                    let total =  ($scope.totalCart + $scope.totalCart * $scope.vat / 100) + $scope.transportFee;
+                    let model = {
+                        OrderType: "Tổng hợp",
+                        Amount: total,
+                        OrderDescription: "Tôi đồng ý",
+                        Name : result.CustomerName
+                    };
+                    createPayment(model).then(result => {
+                        if(result){
+                            window.location.href = result;
+                        }
+                    })
+                }
+                else {
                     notificationService.displaySuccess("Đặt hàng thành công");
                     if(authData.authenticationData.IsAuthenticated === true){
                         $state.go("orders");
@@ -168,16 +205,13 @@
                         $scope.Display = false;
                     }
                 }
-                else {
-                    notificationService.displayError("Đặt hàng thất bại");
-                }
             });
         }
         function orderData(){
             $scope.order.CustomerDeliveryAddress = $scope.deliveryAddress.CustomerDeliveryAddress;
-            $scope.order.PaymentMethod = "Thanh toán khi nhận hàng"; // thanh toán khi nhận hàng, thanh toán qua payment
+            // $scope.order.PaymentMethod = 0; // 0 thanh toán khi nhận hàng, 1 thanh toán qua payment
             $scope.order.CreatedDate = new Date(); // ngày tạo đơn hàng
-            $scope.order.PaymentStatus = false; // đã thanh toán, chưa thanh toán
+            // $scope.order.PaymentStatus = false; // đã thanh toán, chưa thanh toán
             $scope.order.Status = true; // trạng thái
             $scope.order.OrderDetails = $scope.carts;
             $scope.order.TransportFee = $scope.transportFee;
@@ -197,6 +231,22 @@
                 $scope.order.CustomerId = null;
             }
         }
+        
+        function createPayment(PaymentInformationModel){
+            let deferred = $q.defer();
+            apiService.post(
+                'https://localhost:44353/api/payment/create',
+                PaymentInformationModel,
+                function (result){
+                    deferred.resolve(result.data);
+                },
+                function (error){
+                    deferred.reject("create payment failure");
+                }
+            );
+            return deferred.promise;
+        }
+        
         // END ORDER ================================================================================
         
         

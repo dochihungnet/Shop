@@ -15,7 +15,25 @@
             OrderId: undefined
         };
         
-        $scope.GetOrderDetail = GetOrderDetail;
+        $scope.handlerEventSubmitBtn = function (){
+            if(!($scope.lookUpOrderInformation.Email && $scope.lookUpOrderInformation.OrderId)){
+                notificationService.displayWarning("Thông tin không hợp lệ");
+                return;
+            }
+            getOrderByEmailAndOrderId($scope.lookUpOrderInformation.Email, $scope.lookUpOrderInformation.OrderId)
+                .then(result => {
+                    if(result){
+                        $state.go("order_detail", {
+                            id: result.Id
+                        })
+                    }
+                    else {
+                        notificationService.displayWarning("Thông tin không hợp lệ");
+                    }
+                }
+            )
+            
+        };
         
         $scope.$watch(function () { return authData.authenticationData; }, function () {
             if(authData.authenticationData.IsAuthenticated === true){
@@ -117,14 +135,28 @@
             });
         }
         
-        function GetOrderDetail(){
-            if( $scope.lookUpOrderInformation.Email &&  $scope.lookUpOrderInformation.OrderId){
-                
+        function getOrderByEmailAndOrderId(email, orderId){
+            let deferred = $q.defer();
+            let config = {
+                params: {
+                    email: email,
+                    orderId: parseInt(orderId)
+                }
             }
-            else {
-                notificationService.displayWarning("Thông tin không hợp lệ")
-            }
+            apiService.get(
+                'https://localhost:44353/api/order/get-order-by-email-order-id',
+                config,
+                function (response){
+                    deferred.resolve(response.data);
+                },
+                function (error){
+                    deferred.reject(error);
+                }
+            )
+
+            return deferred.promise;
         }
+
     }
     
 })(angular.module('shop.orders'))

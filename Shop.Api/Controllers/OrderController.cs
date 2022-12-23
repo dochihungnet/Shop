@@ -89,6 +89,56 @@ namespace Shop.Api.Controllers
                 return response;
             });
         }
-        
+
+        [Route("delete-order-by-id")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteOrderById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                
+                var order = _orderService.DeleteOrder(id);
+                _orderService.SaveChanges();
+                
+                var orderDelViewModel = Mapper.Map<OrderViewModel>(order);
+
+                response = request.CreateResponse(HttpStatusCode.OK, orderDelViewModel);
+                return response;
+            });
+        }
+
+        [Route("update-payment-status")]
+        [HttpPut]
+        public HttpResponseMessage UpdatePaymentStatus(HttpRequestMessage request, OrderViewModel orderViewModel)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                
+                var order = _orderService.UpdatePaymentStatus(orderViewModel.Id, orderViewModel.Status);
+
+                response = request.CreateResponse(HttpStatusCode.OK, order);
+                return response;
+            });
+        }
+
+        [Route("get-order-by-email-order-id")]
+        [HttpGet]
+        public HttpResponseMessage GetOrderByEmailOrderId(HttpRequestMessage request, string email, int orderId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var order = _orderService.GetOrderByEmailOrderId(email, orderId);
+
+                var orderViewModel = Mapper.Map<OrderViewModel>(order);
+
+                response = request.CreateResponse(HttpStatusCode.OK, orderViewModel);
+
+                return response;
+            });
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Shop.Api.Models
 
         public string CustomerMessage { set; get; }
 
-        public string PaymentMethod { set; get; } // phương thức thanh toán
+        public int PaymentMethod { set; get; } // phương thức thanh toán
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }
         public int? OrderStatus { set; get; } // trạng thái đơn hàng, chưa duyệt, đã duyệt,

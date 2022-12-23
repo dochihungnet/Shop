@@ -220,9 +220,28 @@ namespace Shop.Api.Controllers
                 }
 
                 var orderNewViewModel = Mapper.Map<OrderViewModel>(orderNew);
-                SendMailWhenOrderSuccess(orderNewViewModel);
+
+                if (!orderNewViewModel.PaymentStatus)
+                {
+                    SendMailWhenOrderSuccess(orderNewViewModel);
+                }
                 
-                response = request.CreateResponse(HttpStatusCode.OK, true);
+                response = request.CreateResponse(HttpStatusCode.OK, orderNewViewModel);
+                return response;
+            });
+        }
+
+        [Route("send-mail")]
+        [HttpGet]
+        public HttpResponseMessage SendMail(HttpRequestMessage request, int orderId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var order = _orderService.GetOrderById(orderId);
+                var orderViewModel = Mapper.Map<OrderViewModel>(order);
+                SendMailWhenOrderSuccess(orderViewModel);
                 return response;
             });
         }

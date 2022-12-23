@@ -284,7 +284,8 @@
                                             <span>Tôi đã đọc và đồng ý với <a class="agree" href="#"><b>Điều khoản &amp; Điều kiện</b></a></span> </label>
                                         <div class="buttons">
                                             <div class="pull-right">
-                                                <button type="button" class="btn btn-primary" id="button-confirm" ng-click="OrderConfirmation()">Xác nhận đơn hàng</button>
+                                                <button type="button" class="btn btn-primary" ng-if="paymentOnline === false" ng-click="OrderConfirmation()">Đặt hàng</button>
+                                                <button type="button" class="btn btn-primary" ng-if="paymentOnline === true" ng-click="OrderConfirmation()">Đặt hàng và thanh toán</button>
                                             </div>
                                         </div>
                                     </div>
