@@ -23,6 +23,7 @@ namespace Shop.Api.App_Start
 {
     public partial class Startup
     {
+        // dochihung
         public void Configuration(IAppBuilder app)
         {
             ConfigAutofac(app);
