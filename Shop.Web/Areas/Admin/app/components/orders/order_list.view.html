@@ -1,12 +1,12 @@
 ﻿<!--breadcrumb-->
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">eCommerce</div>
+    <div class="breadcrumb-title pe-3">Cửa hàng</div>
     <div class="ps-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                <li class="breadcrumb-item active" aria-current="page">Đơn hàng</li>
             </ol>
         </nav>
     </div>
@@ -37,19 +37,20 @@
                         </div>
                     </div>
                     <div class="col-lg-2 col-6 col-md-3">
-                        <select class="form-select">
-                            <option>Trạng thái</option>
-                            <option>Đang chờ duyệt</option>
-                            <option>Disabled</option>
-                            <option>Pending</option>
-                            <option>Show All</option>
+                        <select class="form-select" ng-model="orderStatus">
+                            <option value="1">Trạng thái</option>
+                            <option value="1">Chờ duyệt</option>
+                            <option value="2">Đã duyệt</option>
+                            <option value="3">Đang gói hàng</option>
+                            <option value="4">Giao hàng</option>
+                            <option value="5">Vận chuyển</option>
                         </select>
                     </div>
                     <div class="col-lg-2 col-6 col-md-3">
-                        <select class="form-select">
-                            <option>Show 10</option>
-                            <option>Show 30</option>
-                            <option>Show 50</option>
+                        <select class="form-select" ng-model="pageSize">
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
                         </select>
                     </div>
                 </div>
@@ -59,178 +60,24 @@
                     <table class="table align-middle">
                         <thead class="table-light">
                         <tr>
-                            <th>ID</th>
-                            <th>Customer name</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Tổng thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày đặt</th>
+                            <th>Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#872</td>
-                            <td>Thomas Hardy</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
+                        <tr ng-repeat="order in orders">
+                            <td>#{{order.Id}}</td>
+                            <td>{{order.CustomerName}}</td>
+                            <td>{{ order.TotalPayment | currency : ""}}</td>
+                            <td><span class="badge rounded-pill alert-success">{{order.OrderStatusText}}</span></td>
+                            <td>{{order.CreatedDate| date : "dd/MM/yyyy"}}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#976</td>
-                            <td>Thomas Hardy</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#683</td>
-                            <td>Victoria Hardy</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-danger">Cancelled</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#456</td>
-                            <td>Maria Anders</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#658</td>
-                            <td>Martin Loother</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-warning">Pending</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#653</td>
-                            <td>Dianne Russell</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-warning">Pending</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#875</td>
-                            <td>Jacob Jones</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#869</td>
-                            <td>Albert Flores</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-danger">Cancelled</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#245</td>
-                            <td>Guy Hawkins</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#758</td>
-                            <td>Eleanor Pena</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#356</td>
-                            <td>Savannah Nguyen</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#689</td>
-                            <td>Devon Lane</td>
-                            <td>$24.00</td>
-                            <td><span class="badge rounded-pill alert-success">Received</span></td>
-                            <td>24-06-2020</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
-                                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
+                                    <a ui-sref="order_detail({id: order.Id})" href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
                                     <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
                                     <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
                                 </div>
@@ -239,15 +86,19 @@
                         </tbody>
                     </table>
                 </div>
-                <nav class="float-end" aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info"
+                             id="example_info"
+                             role="status"
+                             aria-live="polite">
+                            Hiển thị từ {{page * pageSize}} đến {{page * pageSize + orders.length}} trong tổng số {{totalCount}}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7 d-flex justify-content-end ">
+                        <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pageCount}}" total-count="{{totalCount}}" search-func="getListOrder(page)"></pager-directive>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

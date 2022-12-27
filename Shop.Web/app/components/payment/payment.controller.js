@@ -11,22 +11,6 @@
         if(parameter["vnp_ResponseCode"] === "00"){
             $scope.statusPayment = true;
             
-            let config = {
-                params: {
-                    orderId: $scope.orderId
-                }
-            }
-            
-            apiService.get(
-                'https://localhost:44353/api/order/send-mail',
-                config, 
-                function (result){
-                    console.log("send mail success");
-                },
-                function (error){
-                    console.log("send mail failure");
-                }
-            )
         }
         else {
             deleteOrderById($scope.orderId);

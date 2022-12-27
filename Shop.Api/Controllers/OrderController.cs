@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -10,6 +11,7 @@ using Shop.Api.Infrastructure.Core;
 using Shop.Api.Models;
 using Shop.Service;
 using System.Data.Entity;
+using System.Linq;
 using System.Web.Http;
 
 namespace Shop.Api.Controllers
@@ -137,6 +139,29 @@ namespace Shop.Api.Controllers
 
                 response = request.CreateResponse(HttpStatusCode.OK, orderViewModel);
 
+                return response;
+            });
+        }
+
+        [Route("get-all-order")]
+        public HttpResponseMessage GetAllOrder(HttpRequestMessage request, int page, int pageSize, int orderStatus)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                int totalRow = 0;
+                var orders = _orderService.GetAllOrder();
+                totalRow = orders.Count();
+                orders = orders.Skip(page * pageSize).Take(pageSize);
+                var ordersViewModel = Mapper.Map<IEnumerable<OrderViewModel>>(orders);
+                var paginationSet = new PaginationSet<OrderViewModel>()
+                {
+                    Items = ordersViewModel,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
+                };
+                response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
                 return response;
             });
         }

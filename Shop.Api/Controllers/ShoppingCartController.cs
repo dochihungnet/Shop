@@ -14,6 +14,7 @@ using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 using Shop.Common;
 
 namespace Shop.Api.Controllers
@@ -221,30 +222,30 @@ namespace Shop.Api.Controllers
 
                 var orderNewViewModel = Mapper.Map<OrderViewModel>(orderNew);
 
-                if (!orderNewViewModel.PaymentStatus)
-                {
-                    SendMailWhenOrderSuccess(orderNewViewModel);
-                }
+               
+                SendMailWhenOrderSuccess(orderNewViewModel);
+             
                 
                 response = request.CreateResponse(HttpStatusCode.OK, orderNewViewModel);
                 return response;
             });
         }
 
-        [Route("send-mail")]
-        [HttpGet]
-        public HttpResponseMessage SendMail(HttpRequestMessage request, int orderId)
-        {
-            return CreateHttpResponse(request, () =>
-            {
-                HttpResponseMessage response = null;
-
-                var order = _orderService.GetOrderById(orderId);
-                var orderViewModel = Mapper.Map<OrderViewModel>(order);
-                SendMailWhenOrderSuccess(orderViewModel);
-                return response;
-            });
-        }
+        // [Route("send-mail")]
+        // [HttpGet]
+        // public HttpResponseMessage SendMail(HttpRequestMessage request, int orderId)
+        // {
+        //     return CreateHttpResponse(request, () =>
+        //     {
+        //         HttpResponseMessage response = null;
+        //
+        //         var order = _orderService.GetOrderById(orderId);
+        //         var orderViewModel = Mapper.Map<OrderViewModel>(order);
+        //         SendMailWhenOrderSuccess(orderViewModel);
+        //         response
+        //         return response;
+        //     });
+        // }
         
         [NonAction]
         public void SendMailWhenOrderSuccess(OrderViewModel orderNew)
@@ -265,5 +266,6 @@ namespace Shop.Api.Controllers
 
             MailHelper.SendMail(orderNew.CustomerEmail,  "Thông tin đơn hàng", content);
         }
+        
     }
 }

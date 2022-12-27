@@ -16,12 +16,12 @@
                 orderDataProcessing();
             }
         })
-        function GetOrderById(userId){
+        function GetOrderById(id){
             let deferred = $q.defer();
 
             let config = {
                 params: {
-                    id: userId
+                    id: id
                 }
             }
 
