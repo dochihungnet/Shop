@@ -33,21 +33,18 @@
                     <div class="col-lg-4 col-md-6 me-auto">
                         <div class="ms-auto position-relative">
                             <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-search"></i></div>
-                            <input class="form-control ps-5" type="text" placeholder="search produts">
+                            <input class="form-control ps-5" type="text" placeholder="Tìm kiếm đơn hàng" ng-model="keyword" ng-change="changeKeyword()">
                         </div>
                     </div>
                     <div class="col-lg-2 col-6 col-md-3">
-                        <select class="form-select" ng-model="orderStatus">
-                            <option value="1">Trạng thái</option>
+                        <select class="form-select" ng-model="orderStatus" ng-change="handlerEventClickChangeOrderStatus()">
+                            <option value>Trạng thái</option>
                             <option value="1">Chờ duyệt</option>
                             <option value="2">Đã duyệt</option>
-                            <option value="3">Đang gói hàng</option>
-                            <option value="4">Giao hàng</option>
-                            <option value="5">Vận chuyển</option>
                         </select>
                     </div>
                     <div class="col-lg-2 col-6 col-md-3">
-                        <select class="form-select" ng-model="pageSize">
+                        <select class="form-select" ng-model="pageSize" ng-change="handlerEventClickChangePageSize()">
                             <option value="10">10</option>
                             <option value="30">30</option>
                             <option value="50">50</option>
@@ -55,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" ng-if="orders.length > 0">
                 <div class="table-responsive">
                     <table class="table align-middle">
                         <thead class="table-light">
@@ -72,14 +69,12 @@
                         <tr ng-repeat="order in orders">
                             <td>#{{order.Id}}</td>
                             <td>{{order.CustomerName}}</td>
-                            <td>{{ order.TotalPayment | currency : ""}}</td>
-                            <td><span class="badge rounded-pill alert-success">{{order.OrderStatusText}}</span></td>
+                            <td>{{order.TotalPayment | currency : ""}}</td>
+                            <td><span ng-class="{'badge rounded-pill alert-success': order.OrderStatus === 2, 'badge rounded-pill alert-danger': order.OrderStatus === 1}">{{order.OrderStatusText}}</span></td>
                             <td>{{order.CreatedDate| date : "dd/MM/yyyy"}}</td>
                             <td>
-                                <div class="d-flex align-items-center gap-3 fs-6">
+                                <div class="d-flex align-items-center gap-3 fs-6" style="display: flex; justify-content: center;">
                                     <a ui-sref="order_detail({id: order.Id})" href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -100,45 +95,62 @@
                     </div>
                 </div>
             </div>
+            <div class="card-body" ng-if="orders.length === 0">
+                <div style="width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;">
+                    <img src="/assets/admin/images/empty_cart.png">
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-12 col-lg-3 d-flex">
         <div class="card w-100">
             <div class="card-header py-3">
-                <h5 class="mb-0">Filter by</h5>
+                <h5 class="mb-0">Lọc đơn hàng</h5>
             </div>
             <div class="card-body">
                 <form class="row g-3">
                     <div class="col-12">
-                        <label class="form-label">Order ID</label>
-                        <input type="text" class="form-control" placeholder="Order ID">
+                        <label class="form-label">Mã đơn hàng</label>
+                        <input type="text" class="form-control" ng-model="orderId" placeholder="Mã đơn hàng">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Customer</label>
-                        <input type="text" class="form-control" placeholder="Customer name">
+                        <label class="form-label">Tên khách hàng</label>
+                        <input type="text" class="form-control" ng-model="customerName" placeholder="Tên khách hàng">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Order Status</label>
-                        <select class="form-select">
-                            <option>Published</option>
-                            <option>Draft</option>
+                        <label class="form-label">E-Mail</label>
+                        <input type="text" class="form-control" ng-model="email" placeholder="E-Mail">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Thanh toán</label>
+                        <select class="form-select" ng-model="paymentStatus">
+                            <option value>Tất cả</option>
+                            <option value="0">Chưa thanh toán</option>
+                            <option value="1">Đã thanh toán</option>
                         </select>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Total</label>
-                        <input type="text" class="form-control">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" ng-model="orderStatus_">
+                            <option value>Trạng thái</option>
+                            <option value="1">Chờ duyệt</option>
+                            <option value="2">Đã duyệt</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">Ngày thêm đơn</label>
+                        <input type="date" class="form-control" ng-model="createdDate"  ng-change="changeDate()">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Date Added</label>
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Date Modified</label>
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-12">
-                        <div class="d-grid">
-                            <button class="btn btn-primary">Filter Product</button>
+                        <div class="d-flex">
+                            <button class="btn btn-primary col-5" ng-click="resetFilter()">Xóa lọc</button>
+                            <div class="col-1"></div>
+                            <button class="btn btn-primary col-6" ng-click="filterOrder()">Lọc đơn hàng</button>
                         </div>
                     </div>
                 </form>

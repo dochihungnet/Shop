@@ -231,22 +231,6 @@ namespace Shop.Api.Controllers
             });
         }
 
-        // [Route("send-mail")]
-        // [HttpGet]
-        // public HttpResponseMessage SendMail(HttpRequestMessage request, int orderId)
-        // {
-        //     return CreateHttpResponse(request, () =>
-        //     {
-        //         HttpResponseMessage response = null;
-        //
-        //         var order = _orderService.GetOrderById(orderId);
-        //         var orderViewModel = Mapper.Map<OrderViewModel>(order);
-        //         SendMailWhenOrderSuccess(orderViewModel);
-        //         response
-        //         return response;
-        //     });
-        // }
-        
         [NonAction]
         public void SendMailWhenOrderSuccess(OrderViewModel orderNew)
         {

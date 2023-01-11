@@ -5,7 +5,9 @@
         function () {
             let Order = {};
             
-            Order.OrderId = "";
+            Order = {
+                OrderId : ""
+            };
                 
             return {
                 Order

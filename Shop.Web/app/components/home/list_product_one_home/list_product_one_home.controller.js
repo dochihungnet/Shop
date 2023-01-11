@@ -15,12 +15,11 @@
             
             $q.all([getAllProductDealsOfTheWeek(), getAllProductCategoryBestSelling(3)]).then(function (result) {
                 self.listProductDealsOfTheWeek = result[0];
-                console.log(self.listProductDealsOfTheWeek);
                 self.threeProductCategoryBestSelling = result[1];
 
                 getAllProductBestSellingByCategory(self.threeProductCategoryBestSelling[0].Id, 8).then(result => {
                     self.listProductBestSelling = handlerResponseData(result, 1);
-                    $timeout(init, 10);
+                    $timeout(init, 0);
                 })
             });
 
@@ -95,8 +94,8 @@
 
             function handlerEventClickChooseProductCategory(categoryId, size) {
                 getAllProductBestSellingByCategory(categoryId, size).then(result => {
-                    $scope.listProductBestSelling = handlerResponseData(result, 1);
-                    $timeout(init, 10);
+                    self.listProductBestSelling = handlerResponseData(result, 1);
+                    $timeout(init, 0);
                 })
             }
 

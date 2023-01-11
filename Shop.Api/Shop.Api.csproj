@@ -262,6 +262,7 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Controllers\SlideGroupController.cs" />
+    <Compile Include="Controllers\StatisticalController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,6 +288,7 @@
     <Compile Include="Models\ShoppingCartViewModel.cs" />
     <Compile Include="Models\SlideGroupViewModel.cs" />
     <Compile Include="Models\SlideViewModel.cs" />
+    <Compile Include="Models\StatisticalViewModel.cs" />
     <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

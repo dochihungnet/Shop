@@ -7,7 +7,7 @@
 <div ng-if="statusPayment" class="row" style="height: calc(100vh - 190px);display: flex; justify-content: center; align-items: center; flex-direction: column">
    <img width="150px" src="/assets/client/image/success-svgrepo-com.svg" style="display: block">
    <p style="font-size: 21px;font-weight: 500;padding: 10px;">Thanh toán thành công</p>
-   <p>Mã đơn hàng của bạn là <strong>#{{$scope.orderId}}</strong></p>
-   <p>Bạn có thể theo dõi đơn hàng bạn <a ui-sref="order_detail({id: order_id})"><strong>tại đây</strong></a></p>
+   <p>Mã đơn hàng của bạn là <strong>#{{orderId}}</strong></p>
+   <p>Bạn có thể theo dõi đơn hàng bạn <a ui-sref="order_detail({id:orderId})"><strong>tại đây</strong></a></p>
    <button style="font-size: 24px;border-radius: 5px;margin-top: 10px;" class="btn  btn-success" ui-sref="home">Tiếp tục mua hàng</button>
 </div>

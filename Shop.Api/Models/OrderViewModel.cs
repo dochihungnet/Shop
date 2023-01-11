@@ -19,13 +19,10 @@ namespace Shop.Api.Models
         [Required]
         [MaxLength(256)]
         public string CustomerEmail { set; get; }
-
         [Required]
         [MaxLength(50)]
         public string CustomerMobile { set; get; }
-
         public string CustomerMessage { set; get; }
-
         public int PaymentMethod { set; get; } // phương thức thanh toán
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }

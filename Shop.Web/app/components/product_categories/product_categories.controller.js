@@ -28,15 +28,20 @@
         $scope.pageCount = 0;
         $scope.categoryId = null;
         $scope.brandId = null;
-
-        getProductCategory().then(result => {
-            $scope.productCategory = result;
-        });
+        
+        
+        getProductCategory()
+            .then(result => {
+                $scope.productCategory = result;
+            }).catch(error => {
+                $scope.productCategory = {Name: "Tất cả sản phẩm"};
+            });
 
         getListBrand().then(result => {
             $scope.brands = result;
         })
-
+        
+        
         getListProductCategoryChild().then(result => {
             $scope.productCategoriesChild = result;
         })
@@ -126,16 +131,16 @@
 
         // lấy danh sách sản phẩm theo page
         function getListProduct(page) {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
             page = page || 0;
 
-            var category = $scope.productCategoriesChild.find(x => x.checked);
+            let category = $scope.productCategoriesChild.find(x => x.checked);
             $scope.categoryId = category ? category.Id : $stateParams.id;
 
-            var brand = $scope.brands.find(x => x.checked);
+            let brand = $scope.brands.find(x => x.checked);
             $scope.brandId = brand ? brand.Id : null;
 
-            var config = {
+            let config = {
                 params: {
                     keyword: $scope.keyword,
                     page: page,
@@ -164,7 +169,7 @@
 
 
         function getProductCategory() {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
 
             apiService.get(
                 'https://localhost:44353/api/productcategory/getbyid/' + $stateParams.id ,
@@ -181,11 +186,16 @@
         }
 
         function getListProductCategoryChild(){
-            var deferred = $q.defer();
-
-            var config = {
+            let deferred = $q.defer();
+            let parentId = $stateParams.id;
+            
+            if(!parentId){
+                return deferred.promise;
+            }
+            
+            let config = {
                 params: {
-                    parentId: $stateParams.id
+                    parentId: parentId
                 }
             }
 
@@ -204,7 +214,7 @@
         }
 
         function getListBrand() {
-            var deferred = $q.defer();
+            let deferred = $q.defer();
 
             apiService.get(
                 'https://localhost:44353/api/brand/getall',
@@ -225,7 +235,7 @@
         function handlerCheckedInputProductCategory(id) {
             // nếu productcategory == id và checked == true thì tất cả các ô input khác checked = false và ô input có id thì checked == true
             // nếu productcategory == id và checked == false thì return
-            var input = $scope.productCategoriesChild.find(x => x.Id == id);
+            let input = $scope.productCategoriesChild.find(x => x.Id === id);
 
             if (!input.checked) {
                 ///////////////
@@ -248,7 +258,7 @@
         }
 
         function handlerCheckedInputBrand(id) {
-            var input = $scope.brands.find(x => x.Id == id);
+            let input = $scope.brands.find(x => x.Id === id);
 
             if (!input.checked) {
                 ///////////////
@@ -273,7 +283,7 @@
         // xử lý xem sản phẩm nào là sản phẩm new
         function handlerResponseData(product, days) {
             return product.map(x => {
-                var result = new Date(x.CreatedDate);
+                let result = new Date(x.CreatedDate);
                 result.setDate(result.getDate() + days);
 
                 if (result > new Date()) {
@@ -291,10 +301,12 @@
             $("script[src='/assets/client/js/themejs/homepage.js']").remove();
             $("script[src='/assets/client/js/themejs/so_megamenu.js']").remove();
             $("script[src='/assets/client/js/themejs/application.js']").remove();
+            
+            let body = $("body");
 
-            $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/homepage.js"></script>');
-            $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/so_megamenu.js"></script>');
-            $('body').append('<script type="text/javascript" src="/assets/client/js/themejs/application.js"></script>');
+            body.append('<script type="text/javascript" src="/assets/client/js/themejs/homepage.js"></script>');
+            body.append('<script type="text/javascript" src="/assets/client/js/themejs/so_megamenu.js"></script>');
+            body.append('<script type="text/javascript" src="/assets/client/js/themejs/application.js"></script>');
         }
 
     }

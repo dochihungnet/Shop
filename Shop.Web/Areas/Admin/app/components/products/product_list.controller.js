@@ -131,13 +131,14 @@
 
             let config = {
                 params: {
-                    PAGE: page,
+                    page: page,
                     pageSize: $scope.pageSize,
                     status: $scope.status,
                     categoryId: $scope.categoryId,
                     brandId: $scope.brandId,
                 }
             };
+            console.log(config);
             apiService.get(
                 'https://localhost:44353/api/product/getall',
                 config,

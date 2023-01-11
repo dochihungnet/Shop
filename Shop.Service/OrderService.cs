@@ -12,17 +12,21 @@ namespace Shop.Service
     public interface IOrderService
     {
         Order AddOrder(Order order);
-        void UpdateOrder(Order order);
+        Order UpdateOrder(Order order);
         Order DeleteOrder(Order order);
         Order DeleteOrder(int orderId);
         Order GetOrderById(int orderId);
         IEnumerable<Order> GetAllOrder();
+        // conditional: có điều kiện
+        IEnumerable<Order> GetAllOrderConditional(string keyword, int? orderId, string customerName, string email, bool? paymentStatus, int? orderStatus, DateTime? createdDate);
         IEnumerable<Order> GetAllOrderByCustomerId(string customerId);
         IEnumerable<Order> GetAllOrderByDay(DateTime day);
         IEnumerable<Order> GetAllOrderByPaymentStatus(bool status);
         bool UpdatePaymentStatus(int orderId, bool status);
         Order GetOrderByEmailOrderId(string email, int orderId);
         IEnumerable<Order> GetAllOrder(int orderStatus);
+        IEnumerable<Order> GetRecentOrders(int amount);
+        decimal GetTotalRevenue();
         void SaveChanges();
     }
     public class OrderService : IOrderService
@@ -45,6 +49,7 @@ namespace Shop.Service
             foreach (var orderDetail in order.OrderDetails)
             {
                 var product = _productRepository.GetSingleById(orderDetail.ProductId);
+                if (!product.QuantityHasSell.HasValue) product.QuantityHasSell = 0;
                 if (orderDetail.Quantity > product.Quantity)
                 {
                     _orderRepository.Delete(orderNew.Id);
@@ -55,16 +60,18 @@ namespace Shop.Service
                     product.Quantity = product.Quantity - orderDetail.Quantity;
                     product.QuantityHasSell = product.QuantityHasSell + orderDetail.Quantity;
                 }
-
             }
             SaveChanges();
-            
             return orderNew;
         }
 
-        public void UpdateOrder(Order order)
+        public Order UpdateOrder(Order order)
         {
-            _orderRepository.Update(order);
+            var _order =_orderRepository.GetOrderById(order.Id);
+            _order.OrderStatus = order.OrderStatus;
+            SaveChanges();
+            return _order;
+
         }
 
         public Order DeleteOrder(Order order)
@@ -84,7 +91,59 @@ namespace Shop.Service
 
         public IEnumerable<Order> GetAllOrder()
         {
-            return _orderRepository.GetAll();
+            return _orderRepository.GetAll().OrderByDescending(x => x.CreatedDate);
+        }
+
+        public IEnumerable<Order> GetRecentOrders(int amount)
+        {
+            return _orderRepository.GetAll().OrderByDescending(x => x.CreatedDate).Take(amount);
+        }
+
+        public decimal GetTotalRevenue()
+        {
+            var orders = _orderRepository.GetAll(new string[]{"OrderDetails"}).ToList();
+            decimal totalRevenue = 0;
+            foreach (var order in orders)
+            {
+                foreach (var orderdetail in order.OrderDetails)
+                {
+                    totalRevenue += orderdetail.Quantity * orderdetail.Price;
+                }
+            }
+
+            return totalRevenue;
+        }
+
+        // Conditional: có điều kiện
+        public IEnumerable<Order> GetAllOrderConditional(string keyword, int? orderId,
+            string customerName, string email, bool? paymentStatus, 
+            int? orderStatus, DateTime? createdDate)
+        {
+            IEnumerable<Order> orders = _orderRepository.GetAll(new string[]{"OrderDetails"}).OrderByDescending(x => x.CreatedDate);
+            
+            if (!String.IsNullOrEmpty(keyword)) 
+                orders = orders.Where(x => x.CustomerName.Contains(keyword));
+            
+            if (orderId.HasValue) 
+                orders = orders.Where(x => x.Id == orderId);
+           
+            if(!String.IsNullOrEmpty(customerName)) 
+                orders = orders.Where(x => x.CustomerName.Contains(customerName));
+
+            if (!String.IsNullOrEmpty(email))
+                orders = orders.Where(x => x.CustomerEmail.Contains(email));
+            
+            if (paymentStatus.HasValue)
+                orders = orders.Where(x => x.PaymentStatus == paymentStatus);
+            
+            if (orderStatus.HasValue) 
+                orders = orders.Where(x => x.OrderStatus == orderStatus);
+            
+            if (createdDate.HasValue)
+                orders = orders.Where(x => x.CreatedDate.Value.Year == createdDate.Value.Year &&
+                                           x.CreatedDate.Value.Month == createdDate.Value.Month &&
+                                           x.CreatedDate.Value.Day == createdDate.Value.Day);
+            return orders;
         }
 
         public IEnumerable<Order> GetAllOrderByCustomerId(string customerId)

@@ -107,7 +107,7 @@ namespace Shop.Service
 
             if(listProductCategory.Count < amount)
             {
-                listProductCategory.GetRange(0, listProductCategory.Count);
+                return listProductCategory.GetRange(0, listProductCategory.Count);
             }
             return listProductCategory.GetRange(0, amount);
         }

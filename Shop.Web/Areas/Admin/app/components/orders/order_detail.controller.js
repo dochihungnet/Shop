@@ -7,14 +7,44 @@
     function orderDetailController($scope, apiService, $state, notificationService, commonService, $stateParams, $q) {
         $scope.order = null;
         
+        $scope.changeOrderStatus = changeOrderStatus;
+        $scope.exportOrderToPdf = exportOrderToPdf;
+        
         GetOrderById($stateParams.id).then(result => {
             if(result){
                 $scope.order = result;
                 // xử lý dữ liệu đơn hàng
                 orderDataProcessing();
-                console.log($scope.order);
             }
         })
+        
+        function changeOrderStatus(){
+            UpdateOrder().then(result => {
+                if(result){
+                    notificationService.displaySuccess("Thay đổi trạng thái đơn hàng thành công")
+                    $scope.order = result;
+                    orderDataProcessing();
+                }
+            })
+        }
+        function UpdateOrder(){
+            let deferred = $q.defer();
+            
+            $scope.order.OrderStatus = parseInt($scope.order.OrderStatus);
+
+            apiService.put(
+                'https://localhost:44353/api/order/update',
+                $scope.order,
+                function (response){
+                    deferred.resolve(response.data);
+                },
+                function (error){
+                    deferred.reject(error);
+                }
+            )
+
+            return deferred.promise;
+        }
         function GetOrderById(id){
             let deferred = $q.defer();
 
@@ -34,43 +64,60 @@
                     deferred.reject(error);
                 }
             )
-
+            
             return deferred.promise;
         }
 
         function orderDataProcessing() {
+            $scope.TotalPayment = 0;
             $scope.order.OrderDetails.map(od => {
-                $scope.order.TotalPayment += od.Price * od.Quantity;
+                $scope.TotalPayment += od.Price * od.Quantity;
             })
-            $scope.order.TotalVat = $scope.order.TotalPayment * $scope.order.Vat / 100;
-            $scope.order.TotalPayment = $scope.order.TotalPayment + $scope.order.TotalPayment * $scope.order.Vat / 100 + $scope.order.TransportFee;
+            $scope.Total = $scope.TotalPayment;
+            $scope.TotalVat = $scope.TotalPayment * $scope.order.Vat / 100;
+            $scope.TotalPayment = $scope.TotalPayment + $scope.TotalPayment * $scope.order.Vat / 100 + $scope.order.TransportFee;
 
-            $scope.order.PaymentStatusText = $scope.order.PaymentStatus ? "Đã thanh toán" : "Thanh toán khi nhận hàng";
-
+            $scope.PaymentStatusText = $scope.order.PaymentStatus ? "Đã thanh toán" : "Thanh toán khi nhận hàng";
             switch ($scope.order.OrderStatus) {
                 case 1: {
-                    $scope.order.OrderStatusText = "Đang chờ duyệt";
+                    $scope.OrderStatusText = "Đang chờ duyệt";
                     break
                 }
                 case 2: {
-                    $scope.order.OrderStatusText = "Đã duyệt";
+                    $scope.OrderStatusText = "Đã duyệt";
+                    console.log($scope.OrderStatusText);
                     break
                 }
                 case 3: {
-                    $scope.order.OrderStatusText = "Đang gói hàng";
+                    $scope.OrderStatusText = "Đang gói hàng";
                     break
                 }
                 case 4: {
-                    $scope.order.OrderStatusText = "Đang vận chuyển";
+                    $scope.OrderStatusText = "Đang vận chuyển";
                     break
                 }
                 case 5: {
-                    $scope.order.OrderStatusText = "Đang giao hàng";
+                    $scope.OrderStatusText = "Đang giao hàng";
                     break
                 }
             }
+            $scope.order.OrderStatus = `${$scope.order.OrderStatus}`;
         }
         
+        function exportOrderToPdf(){
+
+            let element = document.getElementById('pdf');
+            let opt = {
+                margin:       1,
+                filename:     `don-hang-${$scope.order.Id}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+
+        }
     }
 
 

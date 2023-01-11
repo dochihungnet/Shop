@@ -5,7 +5,8 @@
 
     function paymentController($scope, apiService, $q, $location, loginService, $state, notificationService, locationService, paymentService) {
         $scope.statusPayment = false;
-        $scope.orderId = paymentService.Order.OrderId;
+        $scope.orderId =  localStorage.getItem('orderId');
+        console.log($scope.orderId);
         let parameter = $location.search();
         
         if(parameter["vnp_ResponseCode"] === "00"){

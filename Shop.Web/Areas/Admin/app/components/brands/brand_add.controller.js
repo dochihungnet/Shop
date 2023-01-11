@@ -32,7 +32,7 @@
         }
 
         function ChooseImage() {
-            var finder = new CKFinder();
+            let finder = new CKFinder();
             finder.selectActionFunction = function (fileUrl) {
                 $scope.$apply(function () {
                     $scope.brand.Image = fileUrl;

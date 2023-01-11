@@ -13,6 +13,7 @@ using Shop.Service;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
+using Shop.Model.Models;
 
 namespace Shop.Api.Controllers
 {
@@ -144,15 +145,22 @@ namespace Shop.Api.Controllers
         }
 
         [Route("get-all-order")]
-        public HttpResponseMessage GetAllOrder(HttpRequestMessage request, int page, int pageSize, int orderStatus)
+        [HttpGet]
+        public HttpResponseMessage GetAllOrder(HttpRequestMessage request, string keyword,
+            string customerName, string email, bool? paymentStatus = null, int? orderId = null,
+            int? orderStatus = null, DateTime? createdDate = null, int page = 0, int pageSize = 10)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
                 int totalRow = 0;
-                var orders = _orderService.GetAllOrder();
+                
+                // Conditional: có điều kiện
+                var orders = _orderService.GetAllOrderConditional(keyword, orderId, customerName, email, paymentStatus, orderStatus, createdDate);
+                
                 totalRow = orders.Count();
                 orders = orders.Skip(page * pageSize).Take(pageSize);
+                
                 var ordersViewModel = Mapper.Map<IEnumerable<OrderViewModel>>(orders);
                 var paginationSet = new PaginationSet<OrderViewModel>()
                 {
@@ -162,6 +170,24 @@ namespace Shop.Api.Controllers
                     TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
                 };
                 response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
+                return response;
+            });
+        }
+
+
+        [Route("update")]
+        [HttpPut]
+        public HttpResponseMessage Update(HttpRequestMessage request, OrderViewModel orderViewModel)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+
+                var order = Mapper.Map<Order>(orderViewModel);
+                var orderUpdate = _orderService.UpdateOrder(order);
+                var orderUpdateViewModel = Mapper.Map<OrderViewModel>(orderUpdate);
+
+                response = request.CreateResponse(HttpStatusCode.OK, orderUpdateViewModel);
                 return response;
             });
         }

@@ -34,23 +34,23 @@
                     <p class="mb-0">Mã đơn hàng : #{{order.Id}}</p>
                 </div>
                 <div class="col-12 col-lg-3 col-6 col-md-3">
-                    <select class="form-select">
-                        <option>Change Status</option>
-                        <option>Awaiting Payment</option>
-                        <option>Confirmed</option>
-                        <option>Shipped</option>
-                        <option>Delivered</option>
+                    <select class="form-select" ng-model="order.OrderStatus">
+                        <option value="1">Đang chờ duyệt</option>
+                        <option value="2">Đã duyệt</option>
+                        <option value="3">Đang gói hàng</option>
+                        <option value="4">Đang vận chuyển</option>
+                        <option value="5">Đã giao hàng</option>
                     </select>
                 </div>
                 <div class="col-12 col-lg-3 col-6 col-md-3">
-                    <button type="button" class="btn btn-primary">Lưu</button>
-                    <button type="button" class="btn btn-secondary"><i class="bi bi-printer-fill"></i> In hóa đơn</button>
+                    <button type="button" class="btn btn-primary" ng-click="changeOrderStatus()">Lưu</button>
+                    <button type="button" class="btn btn-secondary" ng-click="exportOrderToPdf()"><i class="bi bi-printer-fill"></i> In hóa đơn</button>
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
-                <div class="col">
+        <div id="pdf" class="card-body">
+            <div class="row">
+                <div class="col-12">
                     <div class="card border shadow-none radius-10">
                         <div class="card-body">
                             <div class="d-flex align-items-center gap-3">
@@ -59,15 +59,13 @@
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-2">Khách hàng</h6>
-                                    <p class="mb-1">{{order.CustomerName}}</p>
-                                    <p class="mb-1">{{order.CustomerEmail}}</p>
-                                    <p class="mb-1">{{order.CustomerMobile}}</p>
+                                    <p class="mb-1"><strong>{{order.CustomerName}}</strong> - {{order.CustomerEmail}} - {{order.CustomerMobile}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-12">
                     <div class="card border shadow-none radius-10">
                         <div class="card-body">
                             <div class="d-flex align-items-center gap-3">
@@ -76,13 +74,16 @@
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-2">Thông tin đặt hàng</h6>
-                                    <p class="mb-1"><strong>Trạng thái :</strong>{{order.PaymentStatus === true ? "Đã thanh toán" : "Chưa thanh toán"}}</p>
+                                    <div style="display: flex; gap: 30px">
+                                        <p class="mb-1"><strong>Phí vận chuyển: </strong>{{order.TransportFee | currency : "" : 0}}</p>
+                                        <p class="mb-1"><strong>Trạng thái: </strong>{{order.PaymentStatus === true ? "Đã thanh toán" : "Chưa thanh toán"}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-12">
                     <div class="card border shadow-none radius-10">
                         <div class="card-body">
                             <div class="d-flex align-items-center gap-3">
@@ -100,7 +101,7 @@
             </div><!--end row-->
 
             <div class="row">
-                <div class="col-12 col-lg-8">
+                <div class="col-12">
                     <div class="card border shadow-none radius-10">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -127,9 +128,9 @@
                                                 </a>
                                             </div>
                                         </td>
-                                        <td>{{product.Price | currency : ""}}</td>
+                                        <td>{{product.Price | currency : "" : 0}}</td>
                                         <td>{{product.Quantity}}</td>
-                                        <td>{{product.Quantity * product.Price | currency : ""}}</td>
+                                        <td>{{product.Quantity * product.Price | currency : "" : 0}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -137,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
+                <div class="col-12">
                     <div class="card border shadow-none bg-light radius-10">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-4">
@@ -145,15 +146,23 @@
                                     <h5 class="mb-0">Tóm tắt đơn hàng</h5>
                                 </div>
                                 <div class="ms-auto">
-                                    <button type="button" class="btn alert-success radius-30 px-4">{{order.OrderStatusText }}</button>
+                                    <button type="button" class="btn alert-success radius-30 px-4">{{OrderStatusText}}</button>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
                                 <div>
-                                    <p class="mb-0">Phí vận chuyển</p>sss
+                                    <p class="mb-0">Tổng tiền</p>
                                 </div>
                                 <div class="ms-auto">
-                                    <h5 class="mb-0">{{order.TransportFee | currency : ""}}</h5>
+                                    <h5 class="mb-0">{{Total | currency : "" : 0}}</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <p class="mb-0">Phí vận chuyển</p>
+                                </div>
+                                <div class="ms-auto">
+                                    <h5 class="mb-0">{{order.TransportFee | currency : "": 0}}</h5>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
@@ -161,7 +170,7 @@
                                     <p class="mb-0">Thuế ({{order.Vat}})%</p>
                                 </div>
                                 <div class="ms-auto">
-                                    <h5 class="mb-0 text-danger">{{order.TotalVat | currency : ""}}</h5>
+                                    <h5 class="mb-0 text-danger">{{TotalVat | currency : "" : 0}}</h5>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
@@ -169,7 +178,7 @@
                                     <p class="mb-0">Tổng thanh toán</p>
                                 </div>
                                 <div class="ms-auto">
-                                    <h5 class="mb-0 text-danger">{{order.TotalPayment | currency : ""}}</h5>
+                                    <h5 class="mb-0 text-danger">{{TotalPayment | currency : "" : 0}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -181,4 +190,5 @@
 
         </div>
     </div>
-
+    
+    

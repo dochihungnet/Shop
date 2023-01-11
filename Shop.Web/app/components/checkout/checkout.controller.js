@@ -115,14 +115,14 @@
                 return x;
             })
         }
-        // END CHECKOUT METHOD =====================================
+        // END CHECKOUT METHOD ==========================================
     
         
         // GET DATA CART ================================================
         $scope.carts = cartService.getAllProductShoppingCart();
         $scope.totalCart = cartService.getTotalShoppingCart();
         
-        $scope.$watch(function () { return cartService.shoppingCart.carts; }, function (newVal, oldVal) {
+        $scope.$watch(function () { return cartService.shoppingCart.carts; }, function () {
             $scope.carts = cartService.getAllProductShoppingCart();
             $scope.totalCart = cartService.getTotalShoppingCart();
         }, true);
@@ -166,7 +166,6 @@
             
             // kiểm tra xem giỏ hàng đã có sản phẩm hay chưa
             if($scope.carts.length === 0){
-                notificationService.displayWarning("Giỏ hãng rỗng");
                 notificationService.displayWarning("Mua hàng trước khi thanh toán");
                 return;
             }
@@ -179,10 +178,11 @@
                     notificationService.displayError("Đặt hàng thất bại");
                     return;
                 }
-
                 cartService.deleteShoppingCart();
                 if($scope.paymentOnline){
-                    paymentService.Order.OrderId = result.Id;
+                    // set orderId set local
+                    localStorage.setItem('orderId', result.Id);
+                    
                     let total =  ($scope.totalCart + $scope.totalCart * $scope.vat / 100) + $scope.transportFee;
                     let model = {
                         OrderType: "Tổng hợp",

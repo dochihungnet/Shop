@@ -813,6 +813,7 @@
     <Content Include="assets\admin\images\avatars\avatar-8.png" />
     <Content Include="assets\admin\images\avatars\avatar-9.png" />
     <Content Include="assets\admin\images\brand-logo-2.png" />
+    <Content Include="assets\admin\images\empty_cart.png" />
     <Content Include="assets\admin\images\error\404-error.png" />
     <Content Include="assets\admin\images\error\404.jpg" />
     <Content Include="assets\admin\images\error\505-error.png" />

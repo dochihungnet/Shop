@@ -50,7 +50,7 @@
                                 <div class="user-name d-none d-sm-block">{{authentication.userName}}</div>
                             </div>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end" style="z-index: 10;">
                             <li>
                                 <a class="dropdown-item" href="#">
                                     <div class="d-flex align-items-center">
@@ -64,7 +64,7 @@
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item" href="pages-user-profile.html">
+                                <a class="dropdown-item" href="#">
                                     <div class="d-flex align-items-center">
                                         <div class="setting-icon"><i class="bi bi-person-fill"></i></div>
                                         <div class="setting-text ms-3"><span>Trang cá nhân</span></div>
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="index2.html">
+                                <a class="dropdown-item" href="#">
                                     <div class="d-flex align-items-center">
                                         <div class="setting-icon"><i class="bi bi-speedometer"></i></div>
                                         <div class="setting-text ms-3"><span>Tổng quan</span></div>
@@ -206,7 +206,7 @@
                                 <i class="bi bi-messenger"></i>
                             </div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end p-0">
+                        <div class="dropdown-menu dropdown-menu-end p-0" style="z-index: 10">
                             <div class="p-2 border-bottom m-2">
                                 <h5 class="h5 mb-0">Messages</h5>
                             </div>
@@ -439,7 +439,7 @@
     </header>
     <!--end top header-->
     <!--start navigation-->
-    <div class="nav-container">
+    <div class="nav-container" style="z-index: 9">
         <div class="mobile-topbar-header">
             <div>
                 <img src="/assets/admin/images/logo-icon.png" class="logo-icon" alt="logo icon">
@@ -454,7 +454,7 @@
         <nav class="topbar-nav">
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="javascript:;">
+                    <a ui-sref="home">
                         <div class="parent-icon">
                             <i class="bi bi-house-door"></i>
                         </div>
@@ -492,7 +492,7 @@
                             <a href="form-elements.html"><i class="bi bi-arrow-right-short"></i>Đặt hàng</a>
                         </li>
                         <li>
-                            <a href="form-input-group.html"><i class="bi bi-arrow-right-short"></i>Hóa đơn</a>
+                            <a ui-sref="orders"><i class="bi bi-arrow-right-short"></i>Đơn hàng</a>
                         </li>
                         <li>
                             <a href="form-input-group.html"><i class="bi bi-arrow-right-short"></i>Nhập hàng</a>
